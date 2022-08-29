@@ -111,6 +111,7 @@ hr {
 /*section*/
 .section{
     padding: 2rem;
+    /*border: 5rem;*/
 }
 
 .section h1 {
