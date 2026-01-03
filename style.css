@@ -1,169 +1,216 @@
-@import url("https://fonts.googleapis.com/css2?family=Baloo+Bhai+2&family=Bree+Serif&family=Koulen&family=Libre+Bodoni&family=Montserrat:wght@400;700&family=Open+Sans:wght@500&display=swap");
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
+/* CSS Variables - Silver/Monochrome Theme */
 :root {
-  --primary-color: #a78bfa;
-  --dark-gray: #64748b;
-  --off-white: #f1f5f9;
+    --bg-black: #0a0a0a;
+    --text-primary: #f5f5f5;
+    --text-secondary: #9ca3af;
+    --text-muted: #6b7280;
+    --silver-light: #e5e7eb;
+    --silver-medium: #c0c5ce;
+    --silver-dark: #8b92a0;
 }
 
+/* Body - Dark Theme with Refined Typography */
 body {
-  font-family: "Montserrat", sans-serif;
-  margin: 0px;
+    background-color: var(--bg-black);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.8;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-hr {
-  margin: 2rem 0rem;
-}
-
-/**spaces**/
-.margin-md {
-  margin: 2rem;
-}
-
-/** container**/
+/* Container - Mobile First */
 .container {
-  padding: 0rem, 1rem;
+    width: 100%;
+    padding: 2rem 1.5rem;
+    max-width: 580px;
 }
 
-.container-center {
-  max-width: 600px;
-  margin: auto;
+/* Content Wrapper */
+.content {
+    text-align: center;
 }
 
-/**links**/
-.link {
-  box-sizing: border-box;
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+/* Name/Heading - Thinner, More Elegant */
+.name {
+    font-size: 1.875rem;
+    font-weight: 300;
+    margin-bottom: 2.5rem;
+    color: var(--text-primary);
+    letter-spacing: 0.02em;
 }
 
-.link-primary {
-  background-color: var(--primary-color);
-  border-radius: 0.5rem;
-  color: white;
-  display: block;
-  max-width: 100px;
-  margin: auto;
-  margin-top:10px
+/* Message Section */
+.message {
+    margin-bottom: 3rem;
 }
 
-.link-secondary {
-  
-  color: var(--primary-color);
-  border-radius: 0.5rem;
-  border: 1px solid var(--primary-color);
-  display: block;
-  max-width: 140px;
-  margin: 1rem 1rem 1rem 0remm;
-  margin: auto;
-  margin-top:10px
+.main-text {
+    font-size: 1.125rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
 }
 
-.Project-btn {
-  display: flex;
-  justify-content: space-evenly;
+.subtitle {
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--text-secondary);
+    margin-bottom: 1.75rem;
+    font-style: italic;
+    letter-spacing: 0.01em;
 }
 
-/*lists*/
-.list-non-bullet {
-  list-style: none;
-  padding-inline-start: 0px;
+.info {
+    font-size: 0.9375rem;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.8;
+    max-width: 480px;
+    margin: 0 auto;
+    letter-spacing: 0.01em;
 }
 
-.list-item-inline {
-  display: inline;
-  padding: 0rem 0.5rem;
+/* CTA Section */
+.cta {
+    margin-bottom: 2.5rem;
 }
 
-/**navigation**/
-.navigation {
-  background-color: var(--primary-color);
-  color: white;
-  padding: 1rem;
-  border-bottom-left-radius: 1rem;
+.cta-text {
+    font-size: 0.9375rem;
+    font-weight: 300;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.01em;
 }
 
-.navigation .link {
-  color: white;
+/* Shimmer Animation Keyframes */
+@keyframes shimmer {
+    0% {
+        background-position: -200% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
 }
 
-.navigation .nav-pills {
-  text-align: right;
+/* GitHub Link - Animated Silver Metallic Button */
+.github-link {
+    display: inline-block;
+    padding: 0.875rem 2.25rem;
+    background: linear-gradient(
+        135deg,
+        #c0c5ce 0%,
+        #e5e7eb 25%,
+        #ffffff 50%,
+        #e5e7eb 75%,
+        #c0c5ce 100%
+    );
+    background-size: 200% auto;
+    color: #0a0a0a;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    font-weight: 400;
+    font-size: 0.9375rem;
+    letter-spacing: 0.025em;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    animation: shimmer 3s linear infinite;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
 }
 
-.navigation .nav-brand {
-  font-weight: bold;
+/* Hover State - Additional Glow */
+.github-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.25),
+                0 0 30px rgba(255, 255, 255, 0.15);
+    animation: shimmer 2s linear infinite;
 }
 
-.navigation .link-active {
-  font-weight: bold;
+.github-link:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
 }
 
-/*header*/
-.hero {
-  padding: 2rem;
-  padding-top: 5 rem;
+/* Thanks Text */
+.thanks {
+    font-size: 0.875rem;
+    font-weight: 300;
+    color: var(--text-muted);
+    margin-top: 1rem;
+    letter-spacing: 0.01em;
 }
 
-.hero .hero-img {
-  max-width: 80%;
-  max-width: 350px;
-  display: block;
-  margin: auto;
+/* Tablet and larger screens */
+@media (min-width: 768px) {
+    .container {
+        padding: 2.5rem 2rem;
+    }
+
+    .name {
+        font-size: 2.25rem;
+        margin-bottom: 3rem;
+        letter-spacing: 0.03em;
+    }
+
+    .main-text {
+        font-size: 1.25rem;
+    }
+
+    .subtitle {
+        font-size: 1.0625rem;
+    }
+
+    .info {
+        font-size: 1rem;
+    }
+
+    .cta-text {
+        font-size: 1rem;
+    }
+
+    .github-link {
+        font-size: 1rem;
+        padding: 1rem 2.75rem;
+    }
 }
 
-.hero .hero-heading {
-  text-align: center;
-  padding-top: 1rem;
-  color: var(--dark-gray);
+/* Desktop and larger */
+@media (min-width: 1024px) {
+    .name {
+        font-size: 2.75rem;
+        letter-spacing: 0.04em;
+    }
+
+    .main-text {
+        font-size: 1.375rem;
+    }
+
+    .subtitle {
+        font-size: 1.125rem;
+    }
+
+    .info {
+        font-size: 1.0625rem;
+    }
 }
 
-.hero .hero-heading .heading-inverted {
-  color: var(--primary-color);
+/* Focus visible for accessibility */
+.github-link:focus-visible {
+    outline: 2px solid var(--silver-light);
+    outline-offset: 4px;
 }
-
-/*section*/
-.section {
-  padding: 2rem;
-  /*border: 5rem;*/
-}
-
-.section h1 {
-  text-align: center;
-}
-
-.ow {
-  background-color: var(--off-white);
-}
-
-/*footers*/
-
-.footer {
-  background-color: var(--primary-color);
-  padding: 4rem 1rem;
-  text-align: center;
-  color: white;
-  border-top-right-radius: 1rem;
-}
-
-.footer .link {
-  color: white;
-}
-
-.footer .footer-header {
-  font-weight: bold;
-  font-size: large;
-}
-
-.footer ul {
-  padding-inline-start: 0px;
-}
-
-.list-item-inline a img{
-  width:50px;
-  height:50px
-}
-
-/*projects*/

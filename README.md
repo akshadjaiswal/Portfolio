@@ -1,67 +1,56 @@
 # Akshad Jaiswal - Portfolio
 
-Welcome to my portfolio! This repository showcases my personal portfolio website built using **HTML** and **CSS**. It's designed to display my skills, projects, and learning journey. Feel free to explore the code and visit the live website.
+A minimal portfolio placeholder page built with HTML and CSS.
 
-## About Me
+## About
 
-Hi, I'm **Akshad Jaiswal**. I'm from **Pune**, India, and I'm currently pursuing my **Master's in Computer Applications (MCA)** at **DYPIMR**. I am passionate about **Full Stack Development**, and this portfolio highlights the skills I've acquired and the projects I’ve worked on.
+This is a simple "under construction" page while the main portfolio is being rebuilt. It features a clean, dark-themed design with a humorous message about the portfolio being in progress.
 
-### Technologies Used:
-- **HTML5**
-- **CSS3**
-- **Responsive Design** (Mobile-first)
-- **Git** & **GitHub**
+## Tech Stack
+
+- HTML5
+- CSS3 (Mobile-first responsive design)
+- Pure vanilla code - no frameworks or dependencies
 
 ## Features
 
-- **Home Page**: Introduction and overview of my skills, experience, and projects.
-- **Projects Page**: A showcase of projects I have worked on, with links to repositories and descriptions.
-- **Blogs Page**: A section dedicated to sharing insights and technical blogs I write as I continue to learn.
-
-## Project Overview
-
-This portfolio website serves two purposes:
-1. **Personal Branding**: A clean, simple, and responsive website that serves as my personal brand online.
-2. **Project Showcase**: Displays my technical skills, ongoing learning journey, and projects.
+- Mobile-first responsive design
+- Dark theme with sleek UI
+- Centered layout works on all screen sizes
+- Direct link to GitHub profile
+- Fast loading with no external dependencies
 
 ## Getting Started
 
-To view the website locally:
+To view locally:
 
 1. Clone the repository:
-    ```bash
-    git clone https://github.com/akshadjaiswal/Portfolio.git
-    ```
+   ```bash
+   git clone https://github.com/akshadjaiswal/Portfolio.git
+   ```
 
-2. Navigate into the project directory:
-    ```bash
-    cd Portfolio
-    ```
+2. Navigate to the project directory:
+   ```bash
+   cd Portfolio
+   ```
 
-3. Open the `index.html` file in your browser.
+3. Open `index.html` in your browser
 
-## Demo
+That's it! No build process required.
 
-You can view the live version of my portfolio here:  
-[Live Portfolio](https://akshadjaiswal-website.netlify.app/)
+## Deployment
 
-## How to Contribute
-
-If you'd like to contribute to this repository, feel free to fork it, create a pull request, or suggest improvements.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This site is ready to deploy to any static hosting platform:
+- GitHub Pages
+- Netlify
+- Vercel
+- Any static file hosting
 
 ## Contact
 
-You can reach me at:  
-[Email](mailto:your-email@example.com)  
-[GitHub](https://github.com/akshadjaiswal)  
-[LinkedIn](https://www.linkedin.com/in/akshad-jaiswal/)
-[Twitter](https://twitter.com/akshad_999)
+For now, check out my work on GitHub:
+**[github.com/akshadjaiswal](https://github.com/akshadjaiswal)**
 
 ---
 
-Thank you for checking out my portfolio! If you have any feedback or suggestions, feel free to reach out.
-
+Thanks for stopping by!
