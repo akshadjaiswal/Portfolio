@@ -1,169 +1,176 @@
-@import url("https://fonts.googleapis.com/css2?family=Baloo+Bhai+2&family=Bree+Serif&family=Koulen&family=Libre+Bodoni&family=Montserrat:wght@400;700&family=Open+Sans:wght@500&display=swap");
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
+/* CSS Variables */
 :root {
-  --primary-color: #a78bfa;
-  --dark-gray: #64748b;
-  --off-white: #f1f5f9;
+    --bg-black: #0a0a0a;
+    --text-light: #e5e5e5;
+    --text-muted: #a0a0a0;
+    --accent-purple: #a78bfa;
+    --accent-hover: #8b5cf6;
 }
 
+/* Body - Dark Theme */
 body {
-  font-family: "Montserrat", sans-serif;
-  margin: 0px;
+    background-color: var(--bg-black);
+    color: var(--text-light);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-hr {
-  margin: 2rem 0rem;
-}
-
-/**spaces**/
-.margin-md {
-  margin: 2rem;
-}
-
-/** container**/
+/* Container - Mobile First */
 .container {
-  padding: 0rem, 1rem;
+    width: 100%;
+    padding: 1.5rem;
+    max-width: 600px;
 }
 
-.container-center {
-  max-width: 600px;
-  margin: auto;
+/* Content Wrapper */
+.content {
+    text-align: center;
 }
 
-/**links**/
-.link {
-  box-sizing: border-box;
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+/* Name/Heading */
+.name {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: var(--text-light);
+    letter-spacing: -0.02em;
 }
 
-.link-primary {
-  background-color: var(--primary-color);
-  border-radius: 0.5rem;
-  color: white;
-  display: block;
-  max-width: 100px;
-  margin: auto;
-  margin-top:10px
+/* Message Section */
+.message {
+    margin-bottom: 2.5rem;
 }
 
-.link-secondary {
-  
-  color: var(--primary-color);
-  border-radius: 0.5rem;
-  border: 1px solid var(--primary-color);
-  display: block;
-  max-width: 140px;
-  margin: 1rem 1rem 1rem 0remm;
-  margin: auto;
-  margin-top:10px
+.main-text {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    color: var(--text-light);
 }
 
-.Project-btn {
-  display: flex;
-  justify-content: space-evenly;
+.subtitle {
+    font-size: 1.125rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    font-style: italic;
 }
 
-/*lists*/
-.list-non-bullet {
-  list-style: none;
-  padding-inline-start: 0px;
+.info {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 500px;
+    margin: 0 auto;
 }
 
-.list-item-inline {
-  display: inline;
-  padding: 0rem 0.5rem;
+/* CTA Section */
+.cta {
+    margin-bottom: 2rem;
 }
 
-/**navigation**/
-.navigation {
-  background-color: var(--primary-color);
-  color: white;
-  padding: 1rem;
-  border-bottom-left-radius: 1rem;
+.cta-text {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
 }
 
-.navigation .link {
-  color: white;
+/* GitHub Link - Styled as Button */
+.github-link {
+    display: inline-block;
+    padding: 0.875rem 2rem;
+    background-color: var(--accent-purple);
+    color: var(--bg-black);
+    text-decoration: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    letter-spacing: 0.01em;
 }
 
-.navigation .nav-pills {
-  text-align: right;
+.github-link:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(167, 139, 250, 0.3);
 }
 
-.navigation .nav-brand {
-  font-weight: bold;
+.github-link:active {
+    transform: translateY(0);
 }
 
-.navigation .link-active {
-  font-weight: bold;
+/* Thanks Text */
+.thanks {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-top: 1rem;
 }
 
-/*header*/
-.hero {
-  padding: 2rem;
-  padding-top: 5 rem;
+/* Tablet and larger screens */
+@media (min-width: 768px) {
+    .container {
+        padding: 2rem;
+    }
+
+    .name {
+        font-size: 2.5rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .main-text {
+        font-size: 1.5rem;
+    }
+
+    .subtitle {
+        font-size: 1.25rem;
+    }
+
+    .info {
+        font-size: 1.125rem;
+    }
+
+    .cta-text {
+        font-size: 1.125rem;
+    }
+
+    .github-link {
+        font-size: 1.125rem;
+        padding: 1rem 2.5rem;
+    }
 }
 
-.hero .hero-img {
-  max-width: 80%;
-  max-width: 350px;
-  display: block;
-  margin: auto;
+/* Desktop and larger */
+@media (min-width: 1024px) {
+    .name {
+        font-size: 3rem;
+    }
+
+    .main-text {
+        font-size: 1.75rem;
+    }
+
+    .subtitle {
+        font-size: 1.375rem;
+    }
 }
 
-.hero .hero-heading {
-  text-align: center;
-  padding-top: 1rem;
-  color: var(--dark-gray);
+/* Focus visible for accessibility */
+.github-link:focus-visible {
+    outline: 2px solid var(--accent-purple);
+    outline-offset: 4px;
 }
-
-.hero .hero-heading .heading-inverted {
-  color: var(--primary-color);
-}
-
-/*section*/
-.section {
-  padding: 2rem;
-  /*border: 5rem;*/
-}
-
-.section h1 {
-  text-align: center;
-}
-
-.ow {
-  background-color: var(--off-white);
-}
-
-/*footers*/
-
-.footer {
-  background-color: var(--primary-color);
-  padding: 4rem 1rem;
-  text-align: center;
-  color: white;
-  border-top-right-radius: 1rem;
-}
-
-.footer .link {
-  color: white;
-}
-
-.footer .footer-header {
-  font-weight: bold;
-  font-size: large;
-}
-
-.footer ul {
-  padding-inline-start: 0px;
-}
-
-.list-item-inline a img{
-  width:50px;
-  height:50px
-}
-
-/*projects*/
