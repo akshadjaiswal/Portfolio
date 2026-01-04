@@ -9,6 +9,8 @@ export const PERSONAL_INFO = {
   email: 'your.email@example.com', // Update with your email
   githubUsername: 'akshadjaiswal',
   calComLink: 'https://cal.com/akshad-jaiswal/15min',
+  coverQuote: 'Building the future, one line of code at a time.', // Update with your quote
+  bio: 'I build from zero. Whether it\'s frontend, backend, full-stack applications, or AI-powered experiences, I work across the entire development lifecycle. From UI/UX to deployment to user feedback, I care less about technology debates and more about delivering results that people love using.',
 };
 
 // Social links
@@ -44,7 +46,7 @@ export const ANIMATION_CONFIG = {
 
 // Layout configuration
 export const LAYOUT_CONFIG = {
-  maxWidth: '640px',
+  maxWidth: '800px',
   sectionSpacing: '64px',
   cardSpacing: '24px',
 };

@@ -18,7 +18,7 @@ module.exports = {
         }
       },
       maxWidth: {
-        'portfolio': '640px'
+        'portfolio': '800px'
       },
       fontWeight: {
         light: '300',

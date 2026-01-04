@@ -45,9 +45,12 @@ Edit `/lib/data/projects.ts` to add/update your projects
 
 ### Images
 Add images to `/public/images/`:
+- **Cover image**: `/public/images/cover.jpg` (1920x1080px, landscape/nature photo)
 - Profile photo: `/public/images/profile/avatar.jpg`
 - Project thumbnails: `/public/images/projects/[slug]/hero.jpg`
 - Project screenshots: `/public/images/projects/[slug]/screenshot-*.jpg`
+
+**Important**: Add your cover image to `/public/images/cover.jpg` for the hero section to display properly.
 
 ## Build for Production
 

@@ -17,7 +17,7 @@ export default function Experience() {
           title="Experience"
           subtitle="My professional journey"
         />
-        <div className="space-y-6">
+        <div className="space-y-4">
           {sortedExperiences.map((exp) => (
             <ExperienceCard key={exp.id} experience={exp} />
           ))}

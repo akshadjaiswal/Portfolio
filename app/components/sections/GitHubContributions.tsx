@@ -19,7 +19,7 @@ export default function GitHubContributions() {
           <GitHubCalendar
             username={PERSONAL_INFO.githubUsername}
             theme={{
-              dark: ['#0A0A0A', '#1A1A1A', '#404040', '#808080', '#C0C0C0'],
+              dark: ['#0A0A0A', '#0e4429', '#006d32', '#26a641', '#39d353'],
             }}
             colorScheme="dark"
             blockSize={12}

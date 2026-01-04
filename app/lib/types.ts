@@ -4,6 +4,8 @@ export interface Experience {
   id: string;
   company: string;
   companyUrl?: string;
+  logo: string;              // Path to company logo
+  logoAlt?: string;          // Alt text (optional, defaults to company name)
   role: string;
   duration: string;          // "Jan 2023 - Present"
   startDate: string;         // ISO format for sorting
