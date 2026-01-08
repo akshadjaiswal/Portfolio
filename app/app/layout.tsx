@@ -1,13 +1,26 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { PERSONAL_INFO } from '@/lib/constants'
 
-const inter = Inter({ subsets: ['latin'], weight: ['300', '400', '500', '600'] })
-import { QueryProvider } from '@/lib/query-provider'
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
-  title: 'app',
-  description: 'Built with DevStart CLI',
+  title: `${PERSONAL_INFO.name} - Software Developer`,
+  description: `Portfolio of ${PERSONAL_INFO.name}, software developer specializing in modern web applications`,
+  openGraph: {
+    title: `${PERSONAL_INFO.name} - Software Developer`,
+    description: `Portfolio of ${PERSONAL_INFO.name}, software developer specializing in modern web applications`,
+    images: ['/og-image.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    creator: '@akshad_999',
+  },
 }
 
 export default function RootLayout({
@@ -17,7 +30,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}><QueryProvider>{children}</QueryProvider></body>
+      <body className={inter.className}>{children}</body>
     </html>
   )
 }

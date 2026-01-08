@@ -1,0 +1,117 @@
+import { Project } from '../types';
+
+export const PROJECTS: Project[] = [
+  {
+    id: 'proj-1',
+    slug: 'ecommerce-platform',
+    title: 'E-Commerce Platform',
+    tagline: 'Scalable shopping experience for modern brands',
+    description: 'Full-stack e-commerce solution with real-time inventory management, payment processing, and admin dashboard.',
+    thumbnail: '/images/projects/ecommerce-platform/hero.jpg',
+    technologies: ['Next.js', 'TypeScript', 'Stripe', 'Prisma', 'PostgreSQL', 'Tailwind CSS'],
+    category: 'Web',
+    featured: true,
+    liveUrl: 'https://example.com',
+    githubUrl: 'https://github.com/akshadjaiswal/ecommerce-platform',
+    fullDescription: 'A comprehensive e-commerce platform built with Next.js 14 and modern web technologies. Features include product catalog management, shopping cart, checkout flow with Stripe integration, order tracking, and an admin dashboard for inventory management.',
+    problem: 'Small businesses struggle with expensive e-commerce platforms that charge high monthly fees and transaction costs. They need an affordable, scalable solution that can grow with their business.',
+    solution: 'Built a self-hosted e-commerce platform using Next.js and PostgreSQL that businesses can deploy on their own infrastructure. Integrated Stripe for payment processing with transparent pricing. Created an intuitive admin interface for managing products, orders, and customers.',
+    impact: 'Reduced operational costs by 70% compared to traditional e-commerce platforms. Platform now handles 10,000+ monthly transactions with 99.9% uptime. Average page load time under 1.5 seconds.',
+    images: [
+      '/images/projects/ecommerce-platform/screenshot-1.jpg',
+      '/images/projects/ecommerce-platform/screenshot-2.jpg',
+      '/images/projects/ecommerce-platform/screenshot-3.jpg',
+    ],
+    createdAt: '2024-03-15'
+  },
+  {
+    id: 'proj-2',
+    slug: 'task-management-app',
+    title: 'Task Management App',
+    tagline: 'Collaborative productivity tool for remote teams',
+    description: 'Real-time task management application with team collaboration, deadline tracking, and progress visualization.',
+    thumbnail: '/images/projects/task-management-app/hero.jpg',
+    technologies: ['React', 'Firebase', 'Material-UI', 'TypeScript'],
+    category: 'Web',
+    featured: true,
+    liveUrl: 'https://example.com',
+    githubUrl: 'https://github.com/akshadjaiswal/task-app',
+    fullDescription: 'A real-time collaborative task management application designed for remote teams. Features include kanban boards, calendar views, team chat, file attachments, and detailed analytics.',
+    problem: 'Remote teams often struggle with task visibility and coordination. Existing tools are either too complex or too simple, lacking the right balance of features and usability.',
+    solution: 'Developed a focused task management tool with real-time synchronization using Firebase. Implemented an intuitive drag-and-drop interface with multiple view options. Added smart notifications to keep team members informed without overwhelming them.',
+    impact: 'Used by 500+ teams across 20 countries. Average team productivity increased by 35% based on user surveys. 4.8/5 star rating on product review sites.',
+    images: [
+      '/images/projects/task-management-app/screenshot-1.jpg',
+      '/images/projects/task-management-app/screenshot-2.jpg',
+    ],
+    testimonial: {
+      text: 'This tool transformed how our team collaborates. Setup took 10 minutes, and we saw immediate improvements in project visibility.',
+      author: 'Sarah Johnson',
+      role: 'Product Manager at TechCorp'
+    },
+    createdAt: '2023-11-20'
+  },
+  {
+    id: 'proj-3',
+    slug: 'portfolio-generator',
+    title: 'Portfolio Generator',
+    tagline: 'Create beautiful developer portfolios in minutes',
+    description: 'Open-source tool for developers to generate customizable portfolio websites using templates and their GitHub data.',
+    thumbnail: '/images/projects/portfolio-generator/hero.jpg',
+    technologies: ['Next.js', 'Tailwind CSS', 'GitHub API', 'MDX'],
+    category: 'Open Source',
+    featured: true,
+    githubUrl: 'https://github.com/akshadjaiswal/portfolio-generator',
+    fullDescription: 'An open-source portfolio generator that helps developers create professional portfolio websites quickly. Automatically imports projects from GitHub, supports custom themes, and generates optimized static sites.',
+    problem: 'Many developers struggle to create and maintain portfolio websites. Building from scratch takes time, and template solutions lack flexibility or require design skills.',
+    solution: 'Created a CLI tool that generates customizable portfolio sites from templates. Integrated GitHub API to automatically populate project data. Built theme system allowing easy customization while maintaining best practices.',
+    impact: 'Downloaded 10,000+ times via npm. Used by developers in 50+ countries. Received 500+ GitHub stars and active community contributions.',
+    images: [
+      '/images/projects/portfolio-generator/screenshot-1.jpg',
+      '/images/projects/portfolio-generator/screenshot-2.jpg',
+    ],
+    createdAt: '2023-08-10'
+  },
+  {
+    id: 'proj-4',
+    slug: 'weather-dashboard',
+    title: 'Weather Dashboard',
+    tagline: 'Real-time weather data with beautiful visualizations',
+    description: 'Interactive weather dashboard with 7-day forecasts, historical data, and location-based alerts.',
+    thumbnail: '/images/projects/weather-dashboard/hero.jpg',
+    technologies: ['React', 'Chart.js', 'OpenWeather API', 'Tailwind CSS'],
+    category: 'Web',
+    featured: false,
+    liveUrl: 'https://example.com',
+    githubUrl: 'https://github.com/akshadjaiswal/weather-dashboard',
+    fullDescription: 'A comprehensive weather dashboard that provides real-time weather data, forecasts, and historical trends with beautiful data visualizations.',
+    problem: 'Most weather apps show basic current conditions but lack detailed historical data and trend analysis that weather enthusiasts and professionals need.',
+    solution: 'Integrated OpenWeather API with custom data processing to show hourly, daily, and weekly trends. Added Chart.js visualizations for temperature, precipitation, and wind patterns. Implemented location-based alerts for severe weather.',
+    impact: 'Serves 5,000+ daily active users. Average session time of 4 minutes. Featured in "Top 10 Weather Apps for Developers" article.',
+    images: [
+      '/images/projects/weather-dashboard/screenshot-1.jpg',
+    ],
+    createdAt: '2023-05-15'
+  },
+  {
+    id: 'proj-5',
+    slug: 'code-snippet-manager',
+    title: 'Code Snippet Manager',
+    tagline: 'Organize and share your code snippets',
+    description: 'Browser extension and web app for saving, organizing, and sharing code snippets with syntax highlighting.',
+    thumbnail: '/images/projects/code-snippet-manager/hero.jpg',
+    technologies: ['Svelte', 'Supabase', 'Prism.js', 'Chrome Extension API'],
+    category: 'Tool',
+    featured: false,
+    githubUrl: 'https://github.com/akshadjaiswal/snippet-manager',
+    fullDescription: 'A cross-platform code snippet manager with browser extension and web interface. Features include syntax highlighting, tags, folders, and public/private sharing.',
+    problem: 'Developers constantly save useful code snippets across different tools - notes apps, gists, bookmarks. There is no unified solution for quick access and organization.',
+    solution: 'Built a browser extension with keyboard shortcuts for instant snippet capture. Created web app for organization with tags and folders. Added syntax highlighting for 50+ languages. Implemented Supabase for cloud sync across devices.',
+    impact: '2,000+ Chrome Web Store installations. 4.5/5 star rating. Active user base growing 15% monthly.',
+    images: [
+      '/images/projects/code-snippet-manager/screenshot-1.jpg',
+      '/images/projects/code-snippet-manager/screenshot-2.jpg',
+    ],
+    createdAt: '2023-02-28'
+  }
+];
