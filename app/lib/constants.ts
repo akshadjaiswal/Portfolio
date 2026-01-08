@@ -10,7 +10,7 @@ export const PERSONAL_INFO = {
   githubUsername: 'akshadjaiswal',
   calComLink: 'https://cal.com/akshad-jaiswal/15min',
   coverQuote: 'Building the future, one line of code at a time.', // Update with your quote
-  bio: 'I build from zero. Whether it\'s frontend, backend, full-stack applications, or AI-powered experiences, I work across the entire development lifecycle. From UI/UX to deployment to user feedback, I care less about technology debates and more about delivering results that people love using.',
+  bio: 'Full-stack engineer who enjoys working end-to-end: product discovery, fast prototypes, scalable backends, and polished UX.Founding SDE at a startup while freelancing, so I juggle delivery speed, reliability, and cost every day.I like keeping things simple: ship small, learn fast, and iterate with real user feedback.',
 };
 
 // Social links
