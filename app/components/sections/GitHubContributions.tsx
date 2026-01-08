@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import { GitHubCalendar } from 'react-github-calendar';
 import { ExternalLink } from 'lucide-react';
 import Container from '../ui/Container';
@@ -8,6 +9,42 @@ import SectionHeader from '../ui/SectionHeader';
 import { PERSONAL_INFO } from '@/lib/constants';
 
 export default function GitHubContributions() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Scroll to the right (most recent contributions) after calendar renders
+    const scrollToRight = () => {
+      if (containerRef.current) {
+        // Try multiple possible selectors for the scrollable container
+        const possibleSelectors = [
+          'article',
+          '.react-activity-calendar',
+          '[class*="activity-calendar"]',
+          'div[style*="overflow"]'
+        ];
+
+        for (const selector of possibleSelectors) {
+          const scrollable = containerRef.current.querySelector(selector) as HTMLElement;
+          if (scrollable && scrollable.scrollWidth > scrollable.clientWidth) {
+            scrollable.scrollLeft = scrollable.scrollWidth;
+            break;
+          }
+        }
+      }
+    };
+
+    // Try multiple times with increasing delays to ensure calendar is fully rendered
+    const timer1 = setTimeout(scrollToRight, 100);
+    const timer2 = setTimeout(scrollToRight, 300);
+    const timer3 = setTimeout(scrollToRight, 500);
+
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      clearTimeout(timer3);
+    };
+  }, []);
+
   return (
     <Section id="github">
       <Container>
@@ -15,7 +52,7 @@ export default function GitHubContributions() {
           title="GitHub Activity"
           subtitle="My open source contributions"
         />
-        <div className="flex justify-center mb-6">
+        <div ref={containerRef} className="flex justify-center mb-6 overflow-hidden">
           <GitHubCalendar
             username={PERSONAL_INFO.githubUsername}
             theme={{

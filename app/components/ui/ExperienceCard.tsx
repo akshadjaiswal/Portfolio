@@ -40,7 +40,7 @@ export default function ExperienceCard({ experience }: ExperienceCardProps) {
       tabIndex={0}
       aria-expanded={isExpanded}
       aria-label={`${experience.company} - ${experience.role}. ${isExpanded ? 'Collapse' : 'Expand'} details`}
-      className="border border-portfolio-border rounded-lg cursor-pointer hover:border-portfolio-silver transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-portfolio-silver focus:ring-offset-2 focus:ring-offset-portfolio-bg"
+      className="rounded-lg cursor-pointer bg-portfolio-surface/30 hover:bg-portfolio-surface/50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-portfolio-silver focus:ring-offset-2 focus:ring-offset-portfolio-bg"
     >
       {/* Collapsed State Content */}
       <div className="p-4 sm:p-6">
@@ -121,20 +121,20 @@ export default function ExperienceCard({ experience }: ExperienceCardProps) {
             }}
             className="overflow-hidden"
           >
-            <div className="px-4 sm:px-6 pb-4 sm:pb-6 pt-4 border-t border-portfolio-border/50">
+            <div className="px-4 sm:px-6 pb-4 sm:pb-6 pt-4">
               {/* Description */}
               <p className="text-portfolio-text leading-relaxed mb-6">
                 {experience.description}
               </p>
 
               {/* Achievements */}
-              {experience.achievements.length > 0 && (
+              {!!experience.achievements?.length && (
                 <div className="mb-6">
                   <h4 className="text-sm font-medium text-portfolio-silver mb-3">
                     Key Achievements
                   </h4>
                   <ul className="space-y-2">
-                    {experience.achievements.map((achievement, index) => (
+                    {experience.achievements?.map((achievement, index) => (
                       <li
                         key={index}
                         className="text-sm text-portfolio-muted flex items-start gap-2"
@@ -148,13 +148,13 @@ export default function ExperienceCard({ experience }: ExperienceCardProps) {
               )}
 
               {/* Technologies */}
-              {experience.technologies.length > 0 && (
+              {!!experience.technologies?.length && (
                 <div>
                   <h4 className="text-sm font-medium text-portfolio-silver mb-3">
                     Technologies
                   </h4>
                   <div className="flex flex-wrap gap-2">
-                    {experience.technologies.map((tech) => (
+                    {experience.technologies?.map((tech) => (
                       <span
                         key={tech}
                         className="px-3 py-1.5 bg-portfolio-surface border border-portfolio-border rounded-full text-xs text-portfolio-text font-mono"

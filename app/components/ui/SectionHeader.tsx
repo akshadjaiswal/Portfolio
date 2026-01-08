@@ -5,7 +5,7 @@ interface SectionHeaderProps {
 
 export default function SectionHeader({ title, subtitle }: SectionHeaderProps) {
   return (
-    <div className="mb-12">
+    <div className="mb-6 md:mb-8">
       <h2 className="text-2xl md:text-3xl font-medium text-portfolio-text mb-2">
         {title}
       </h2>

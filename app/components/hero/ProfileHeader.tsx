@@ -25,7 +25,7 @@ export default function ProfileHeader() {
         >
           {/* Cover Image */}
           <Image
-            src="/images/cover.jpg"
+            src="/mountains%20%F0%9F%8C%84%F0%9F%AB%B6%F0%9F%8F%BB.jpeg"
             alt="Cover"
             fill
             className="object-cover"
@@ -65,7 +65,7 @@ export default function ProfileHeader() {
           >
             <div className="relative w-36 h-36 md:w-40 md:h-40">
               <Image
-                src="/images/profile/avatar.jpg"
+                src="/images/profile-pic.jpg"
                 alt={PERSONAL_INFO.name}
                 fill
                 className="rounded-full object-cover border-[3px] border-portfolio-silver shadow-2xl"
@@ -82,7 +82,7 @@ export default function ProfileHeader() {
               duration: ANIMATION_CONFIG.fadeInDuration,
               delay: 0.4,
             }}
-            className="text-center space-y-4 pb-16"
+            className="text-center space-y-4 pb-8 md:pb-10"
           >
             {/* Name */}
             <h1 className="text-4xl md:text-5xl font-medium text-portfolio-text">
@@ -106,7 +106,7 @@ export default function ProfileHeader() {
             </p>
 
             {/* Social Links */}
-            <div className="flex justify-center gap-4 pt-6">
+            <div className="flex justify-center gap-4 pt-4">
               {SOCIAL_LINKS.map((link) => {
                 const Icon = iconMap[link.icon as keyof typeof iconMap];
                 return (

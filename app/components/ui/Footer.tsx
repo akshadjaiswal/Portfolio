@@ -21,7 +21,7 @@ export default function Footer() {
               © {currentYear} {PERSONAL_INFO.name}
             </p>
             <p className="text-xs text-portfolio-muted">
-              Built with Next.js · Deployed on Vercel
+              Built by Akshad 
             </p>
           </div>
         </div>

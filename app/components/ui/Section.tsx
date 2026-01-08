@@ -10,7 +10,7 @@ export default function Section({ children, className, id }: SectionProps) {
   return (
     <section
       id={id}
-      className={cn('py-16 md:py-24', className)}
+      className={cn('py-6 md:py-10', className)}
     >
       {children}
     </section>

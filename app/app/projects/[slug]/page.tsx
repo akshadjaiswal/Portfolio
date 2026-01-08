@@ -4,11 +4,17 @@ import Image from 'next/image';
 import { ArrowLeft, ExternalLink, Github } from 'lucide-react';
 import { Metadata } from 'next';
 import Container from '@/components/ui/Container';
-import { PROJECTS } from '@/lib/data/projects';
+import GitHubStats from '@/components/ui/GitHubStats';
+import ProjectMetadata from '@/components/ui/ProjectMetadata';
+import VideoEmbed from '@/components/ui/VideoEmbed';
+import ImageGallery from '@/components/ui/ImageGallery';
+import { fetchProjectBySlug, fetchAllProjects } from '@/lib/services/github';
+import { GITHUB_PROJECT_REPOS } from '@/lib/data/projects';
 import { PERSONAL_INFO } from '@/lib/constants';
 
 export async function generateStaticParams() {
-  return PROJECTS.map((project) => ({
+  const projects = await fetchAllProjects(GITHUB_PROJECT_REPOS);
+  return projects.map((project) => ({
     slug: project.slug,
   }));
 }
@@ -16,9 +22,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const project = PROJECTS.find((p) => p.slug === params.slug);
+  const { slug } = await params;
+  const project = await fetchProjectBySlug(slug);
 
   if (!project) {
     return {
@@ -37,12 +44,13 @@ export async function generateMetadata({
   };
 }
 
-export default function ProjectDetailPage({
+export default async function ProjectDetailPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const project = PROJECTS.find((p) => p.slug === params.slug);
+  const { slug } = await params;
+  const project = await fetchProjectBySlug(slug);
 
   if (!project) {
     notFound();
@@ -72,10 +80,10 @@ export default function ProjectDetailPage({
 
         {/* Header */}
         <div className="mb-12">
-          <h1 className="text-3xl md:text-4xl font-medium text-portfolio-text mb-3">
+          <h1 className="text-2xl md:text-3xl font-medium text-portfolio-text mb-3">
             {project.title}
           </h1>
-          <p className="text-xl text-portfolio-muted mb-6">
+          <p className="text-base md:text-lg text-portfolio-muted mb-6">
             {project.tagline}
           </p>
 
@@ -91,14 +99,14 @@ export default function ProjectDetailPage({
             ))}
           </div>
 
-          {/* Links */}
-          <div className="flex gap-4">
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4">
             {project.liveUrl && (
               <a
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-portfolio-silver text-portfolio-bg rounded-lg hover:bg-opacity-90 transition-all"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-portfolio-silver text-portfolio-bg rounded-lg hover:bg-opacity-90 transition-all font-medium"
               >
                 <ExternalLink size={20} />
                 <span>Live Demo</span>
@@ -109,7 +117,7 @@ export default function ProjectDetailPage({
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 border border-portfolio-border text-portfolio-text rounded-lg hover:border-portfolio-silver hover:bg-portfolio-surface transition-all"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-portfolio-border text-portfolio-text rounded-lg hover:border-portfolio-silver hover:bg-portfolio-surface transition-all font-medium"
               >
                 <Github size={20} />
                 <span>GitHub</span>
@@ -118,55 +126,105 @@ export default function ProjectDetailPage({
           </div>
         </div>
 
+        {/* Metadata Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+          <ProjectMetadata
+            category={project.category}
+            createdAt={project.createdAt}
+            lastUpdated={project.lastUpdated}
+            autoFetched={project.autoFetched}
+          />
+          <GitHubStats
+            stars={project.githubStars}
+            forks={project.githubForks}
+            primaryLanguage={project.primaryLanguage}
+            languages={project.languages}
+            lastUpdated={project.lastUpdated}
+            repositoryUrl={project.repositoryUrl}
+          />
+        </div>
+
+        {/* Video Demo */}
+        {project.videoUrl && (
+          <section className="mb-12">
+            <h2 className="text-xl md:text-2xl font-medium text-portfolio-text mb-4">
+              Video Demo
+            </h2>
+            <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
+            <VideoEmbed videoUrl={project.videoUrl} title={project.title} />
+          </section>
+        )}
+
         {/* Overview */}
         <section className="mb-12">
-          <h2 className="text-2xl font-medium text-portfolio-text mb-4">
+          <h2 className="text-xl md:text-2xl font-medium text-portfolio-text mb-4">
             Overview
           </h2>
           <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
-          <p className="text-portfolio-text leading-relaxed">
+          <p className="text-portfolio-text leading-relaxed text-base md:text-lg">
             {project.fullDescription}
           </p>
         </section>
 
         {/* The Challenge */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-medium text-portfolio-text mb-4">
-            The Challenge
-          </h2>
-          <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
-          <p className="text-portfolio-text leading-relaxed">
-            {project.problem}
-          </p>
-        </section>
+        {project.problem && (
+          <section className="mb-12">
+            <h2 className="text-xl md:text-2xl font-medium text-portfolio-text mb-4">
+              The Challenge
+            </h2>
+            <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
+            <p className="text-portfolio-text leading-relaxed text-base md:text-lg">
+              {project.problem}
+            </p>
+          </section>
+        )}
 
         {/* The Solution */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-medium text-portfolio-text mb-4">
-            The Solution
-          </h2>
-          <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
-          <p className="text-portfolio-text leading-relaxed">
-            {project.solution}
-          </p>
-        </section>
+        {project.solution && (
+          <section className="mb-12">
+            <h2 className="text-xl md:text-2xl font-medium text-portfolio-text mb-4">
+              The Solution
+            </h2>
+            <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
+            <p className="text-portfolio-text leading-relaxed text-base md:text-lg">
+              {project.solution}
+            </p>
+          </section>
+        )}
 
         {/* Impact */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-medium text-portfolio-text mb-4">
-            Impact
-          </h2>
-          <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
-          <p className="text-portfolio-text leading-relaxed">
-            {project.impact}
-          </p>
-        </section>
+        {project.impact && (
+          <section className="mb-12">
+            <h2 className="text-xl md:text-2xl font-medium text-portfolio-text mb-4">
+              Impact
+            </h2>
+            <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
+            <p className="text-portfolio-text leading-relaxed text-base md:text-lg">
+              {project.impact}
+            </p>
+          </section>
+        )}
+
+        {/* Image Gallery */}
+        {project.images && project.images.length > 1 && (
+          <section className="mb-12">
+            <h2 className="text-xl md:text-2xl font-medium text-portfolio-text mb-4">
+              Gallery
+            </h2>
+            <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
+            <ImageGallery images={project.images} projectTitle={project.title} />
+          </section>
+        )}
 
         {/* Testimonial */}
         {project.testimonial && (
           <section className="mb-12">
+            <h2 className="text-xl md:text-2xl font-medium text-portfolio-text mb-4">
+              Testimonial
+            </h2>
+            <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
             <div className="border border-portfolio-border rounded-lg p-8 bg-portfolio-surface">
-              <p className="text-lg text-portfolio-text italic mb-4">
+              <p className="text-base md:text-lg text-portfolio-text italic mb-4">
                 &ldquo;{project.testimonial.text}&rdquo;
               </p>
               <div className="text-sm text-portfolio-muted">
