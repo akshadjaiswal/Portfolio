@@ -8,7 +8,9 @@ const nextConfig = {
         hostname: 'github.com',
       }
     ]
-  }
+  },
+  // Ensure proper static generation
+  output: 'standalone',
 }
 
 module.exports = nextConfig

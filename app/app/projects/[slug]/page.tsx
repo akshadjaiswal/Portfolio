@@ -12,6 +12,11 @@ import { fetchProjectBySlug, fetchAllProjects } from '@/lib/services/github';
 import { GITHUB_PROJECT_REPOS } from '@/lib/data/projects';
 import { PERSONAL_INFO } from '@/lib/constants';
 
+// Enable static generation for these routes
+export const dynamic = 'force-static';
+export const dynamicParams = false; // Only generate params from generateStaticParams
+export const revalidate = 3600; // Revalidate every hour
+
 export async function generateStaticParams() {
   const projects = await fetchAllProjects(GITHUB_PROJECT_REPOS);
   return projects.map((project) => ({
