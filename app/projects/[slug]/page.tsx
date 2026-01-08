@@ -12,6 +12,9 @@ import { fetchProjectBySlug, fetchAllProjects } from '@/lib/services/github';
 import { GITHUB_PROJECT_REPOS } from '@/lib/data/projects';
 import { PERSONAL_INFO } from '@/lib/constants';
 
+// Enable on-demand generation as fallback if static params fail
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
   try {
     const projects = await fetchAllProjects(GITHUB_PROJECT_REPOS);
