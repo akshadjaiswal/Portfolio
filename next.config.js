@@ -9,8 +9,6 @@ const nextConfig = {
       }
     ]
   },
-  // Ensure proper static generation
-  output: 'standalone',
 }
 
 module.exports = nextConfig
