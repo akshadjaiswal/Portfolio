@@ -38,16 +38,29 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 export async function fetchRepositoryData(repoUrl: string): Promise<GitHubRepo> {
   const repoPath = repoUrl.replace('https://github.com/', '');
 
+  // Build headers - only add Authorization if token exists
+  const headers: HeadersInit = {
+    Accept: 'application/vnd.github.v3+json',
+  };
+
+  if (GITHUB_TOKEN) {
+    headers.Authorization = `Bearer ${GITHUB_TOKEN}`;
+  }
+
   const response = await fetch(`${GITHUB_API_BASE}/repos/${repoPath}`, {
-    headers: {
-      Authorization: `Bearer ${GITHUB_TOKEN}`,
-      Accept: 'application/vnd.github.v3+json',
-    },
+    headers,
     next: { revalidate: 3600 }, // Cache for 1 hour
   });
 
   if (!response.ok) {
-    throw new Error(`Failed to fetch repository: ${repoPath}`);
+    const errorText = await response.text();
+    console.error(`GitHub API Error for ${repoPath}:`, {
+      status: response.status,
+      statusText: response.statusText,
+      error: errorText,
+      hasToken: !!GITHUB_TOKEN,
+    });
+    throw new Error(`Failed to fetch repository: ${repoPath} (Status: ${response.status})`);
   }
 
   return response.json();
@@ -57,15 +70,21 @@ export async function fetchRepositoryData(repoUrl: string): Promise<GitHubRepo> 
  * Fetch repository languages
  */
 async function fetchRepositoryLanguages(repoPath: string): Promise<GitHubLanguages> {
+  const headers: HeadersInit = {
+    Accept: 'application/vnd.github.v3+json',
+  };
+
+  if (GITHUB_TOKEN) {
+    headers.Authorization = `Bearer ${GITHUB_TOKEN}`;
+  }
+
   const response = await fetch(`${GITHUB_API_BASE}/repos/${repoPath}/languages`, {
-    headers: {
-      Authorization: `Bearer ${GITHUB_TOKEN}`,
-      Accept: 'application/vnd.github.v3+json',
-    },
+    headers,
     next: { revalidate: 3600 },
   });
 
   if (!response.ok) {
+    console.error(`Failed to fetch languages for ${repoPath}: ${response.status}`);
     return {};
   }
 
@@ -77,15 +96,21 @@ async function fetchRepositoryLanguages(repoPath: string): Promise<GitHubLanguag
  */
 async function fetchRepositoryReadme(repoPath: string): Promise<string> {
   try {
+    const headers: HeadersInit = {
+      Accept: 'application/vnd.github.v3+json',
+    };
+
+    if (GITHUB_TOKEN) {
+      headers.Authorization = `Bearer ${GITHUB_TOKEN}`;
+    }
+
     const response = await fetch(`${GITHUB_API_BASE}/repos/${repoPath}/readme`, {
-      headers: {
-        Authorization: `Bearer ${GITHUB_TOKEN}`,
-        Accept: 'application/vnd.github.v3+json',
-      },
+      headers,
       next: { revalidate: 3600 },
     });
 
     if (!response.ok) {
+      console.error(`Failed to fetch README for ${repoPath}: ${response.status}`);
       return '';
     }
 

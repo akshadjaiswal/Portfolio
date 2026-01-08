@@ -12,16 +12,23 @@ import { fetchProjectBySlug, fetchAllProjects } from '@/lib/services/github';
 import { GITHUB_PROJECT_REPOS } from '@/lib/data/projects';
 import { PERSONAL_INFO } from '@/lib/constants';
 
-// Enable static generation for these routes
-export const dynamic = 'force-static';
-export const dynamicParams = false; // Only generate params from generateStaticParams
+// Use ISR (Incremental Static Regeneration) instead of force-static
+// This allows pages to be generated on-demand if not pre-rendered
+export const dynamicParams = true; // Generate pages on-demand if not in generateStaticParams
 export const revalidate = 3600; // Revalidate every hour
 
 export async function generateStaticParams() {
-  const projects = await fetchAllProjects(GITHUB_PROJECT_REPOS);
-  return projects.map((project) => ({
-    slug: project.slug,
-  }));
+  try {
+    const projects = await fetchAllProjects(GITHUB_PROJECT_REPOS);
+    console.log(`✓ Successfully fetched ${projects.length} projects for static generation`);
+    return projects.map((project) => ({
+      slug: project.slug,
+    }));
+  } catch (error) {
+    console.error('Failed to generate static params:', error);
+    // Return empty array to allow dynamic rendering as fallback
+    return [];
+  }
 }
 
 export async function generateMetadata({
