@@ -49,7 +49,6 @@ export async function fetchRepositoryData(repoUrl: string): Promise<GitHubRepo> 
 
   const response = await fetch(`${GITHUB_API_BASE}/repos/${repoPath}`, {
     headers,
-    next: { revalidate: 3600 }, // Cache for 1 hour
   });
 
   if (!response.ok) {
@@ -80,7 +79,6 @@ async function fetchRepositoryLanguages(repoPath: string): Promise<GitHubLanguag
 
   const response = await fetch(`${GITHUB_API_BASE}/repos/${repoPath}/languages`, {
     headers,
-    next: { revalidate: 3600 },
   });
 
   if (!response.ok) {
@@ -106,7 +104,6 @@ async function fetchRepositoryReadme(repoPath: string): Promise<string> {
 
     const response = await fetch(`${GITHUB_API_BASE}/repos/${repoPath}/readme`, {
       headers,
-      next: { revalidate: 3600 },
     });
 
     if (!response.ok) {

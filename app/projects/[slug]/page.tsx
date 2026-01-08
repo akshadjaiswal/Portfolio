@@ -12,11 +12,6 @@ import { fetchProjectBySlug, fetchAllProjects } from '@/lib/services/github';
 import { GITHUB_PROJECT_REPOS } from '@/lib/data/projects';
 import { PERSONAL_INFO } from '@/lib/constants';
 
-// Use ISR (Incremental Static Regeneration) instead of force-static
-// This allows pages to be generated on-demand if not pre-rendered
-export const dynamicParams = true; // Generate pages on-demand if not in generateStaticParams
-export const revalidate = 3600; // Revalidate every hour
-
 export async function generateStaticParams() {
   try {
     const projects = await fetchAllProjects(GITHUB_PROJECT_REPOS);

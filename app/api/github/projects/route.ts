@@ -32,6 +32,3 @@ export async function GET() {
     );
   }
 }
-
-// Enable caching for 1 hour
-export const revalidate = 3600;
