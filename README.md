@@ -1,56 +1,89 @@
-# Akshad Jaiswal - Portfolio
+# Portfolio Website
 
-A minimal portfolio placeholder page built with HTML and CSS.
-
-## About
-
-This is a simple "under construction" page while the main portfolio is being rebuilt. It features a clean, dark-themed design with a humorous message about the portfolio being in progress.
+Modern, minimalist portfolio built with Next.js 16, TypeScript, and Tailwind CSS.
 
 ## Tech Stack
 
-- HTML5
-- CSS3 (Mobile-first responsive design)
-- Pure vanilla code - no frameworks or dependencies
-
-## Features
-
-- Mobile-first responsive design
-- Dark theme with sleek UI
-- Centered layout works on all screen sizes
-- Direct link to GitHub profile
-- Fast loading with no external dependencies
+- **Framework:** Next.js 16 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Animations:** Framer Motion
+- **Icons:** Lucide React
+- **GitHub Calendar:** react-github-calendar
 
 ## Getting Started
 
-To view locally:
-
-1. Clone the repository:
+1. Install dependencies:
    ```bash
-   git clone https://github.com/akshadjaiswal/Portfolio.git
+   npm install
    ```
 
-2. Navigate to the project directory:
+2. Set up environment variables:
+   - Copy `.env.local.example` to `.env.local`
+   - Update `NEXT_PUBLIC_CAL_LINK` with your Cal.com username
+
+3. Run the development server:
    ```bash
-   cd Portfolio
+   npm run dev
    ```
 
-3. Open `index.html` in your browser
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-That's it! No build process required.
+## Customization
 
-## Deployment
+### Personal Information
+Update `/lib/constants.ts` with your information:
+- Name, tagline, location
+- Social media links
+- Cal.com link
 
-This site is ready to deploy to any static hosting platform:
-- GitHub Pages
-- Netlify
-- Vercel
-- Any static file hosting
+### Experience Data
+Edit `/lib/data/experience.ts` to add/update your work experience
 
-## Contact
+### Projects Data
+Edit `/lib/data/projects.ts` to add/update your projects
 
-For now, check out my work on GitHub:
-**[github.com/akshadjaiswal](https://github.com/akshadjaiswal)**
+### Images
+Add images to `/public/images/`:
+- **Cover image**: `/public/images/cover.jpg` (1920x1080px, landscape/nature photo)
+- Profile photo: `/public/images/profile/avatar.jpg`
+- Project thumbnails: `/public/images/projects/[slug]/hero.jpg`
+- Project screenshots: `/public/images/projects/[slug]/screenshot-*.jpg`
 
----
+**Important**: Add your cover image to `/public/images/cover.jpg` for the hero section to display properly.
 
-Thanks for stopping by!
+## Build for Production
+
+```bash
+npm run build
+npm start
+```
+
+## Deploy
+
+Deploy to Vercel with one click:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
+
+## Project Structure
+
+```
+app/
+├── app/              # Next.js app router pages
+├── components/       # React components
+│   ├── animations/   # Animation wrappers
+│   ├── hero/        # Hero section
+│   ├── sections/    # Main sections
+│   └── ui/          # UI components
+├── lib/             # Utilities and data
+│   ├── data/        # Static data files
+│   ├── constants.ts # Configuration
+│   ├── types.ts     # TypeScript types
+│   └── utils.ts     # Helper functions
+└── public/          # Static assets
+    └── images/      # Image files
+```
+
+## License
+
+MIT
