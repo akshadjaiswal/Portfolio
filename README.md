@@ -1,89 +1,89 @@
-# Portfolio Website
+# 👋 Hi, I'm Akshad Jaiswal
 
-Modern, minimalist portfolio built with Next.js 16, TypeScript, and Tailwind CSS.
+**Full-stack engineer** who enjoys working end-to-end: product discovery, fast prototypes, scalable backends, and polished UX.
+
+Currently founding SDE at a startup while freelancing on the side. I juggle delivery speed, reliability, and cost every day. My philosophy? **Keep things simple: ship small, learn fast, iterate with real user feedback.**
+
+## What's This?
+
+My personal portfolio built with Next.js 16. Projects auto-sync from GitHub because manually updating portfolios is so 2015.
+
+**Live:** [akshad-work.vercel.app](https://akshad-work.vercel.app) 
+
+## The Fun Stuff
+
+- Building things that actually work (and work well)
+- India-based, globally-minded
+- Believes good code is simple code
+- Cal.com evangelist (because async > meetings)
 
 ## Tech Stack
 
-- **Framework:** Next.js 16 (App Router)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS
-- **Animations:** Framer Motion
-- **Icons:** Lucide React
-- **GitHub Calendar:** react-github-calendar
+Built with the good stuff:
 
-## Getting Started
+- **Next.js 16** - App Router, because I like living on the edge
+- **TypeScript** - For when JavaScript gets too wild
+- **Tailwind CSS** - Utility-first is the way
+- **React Query** - Smart data fetching
+- **Framer Motion** - Smooth animations
+- **GitHub API** - Projects fetch themselves
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-2. Set up environment variables:
-   - Copy `.env.local.example` to `.env.local`
-   - Update `NEXT_PUBLIC_CAL_LINK` with your Cal.com username
-
-3. Run the development server:
-   ```bash
-   npm run dev
-   ```
-
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
-
-## Customization
-
-### Personal Information
-Update `/lib/constants.ts` with your information:
-- Name, tagline, location
-- Social media links
-- Cal.com link
-
-### Experience Data
-Edit `/lib/data/experience.ts` to add/update your work experience
-
-### Projects Data
-Edit `/lib/data/projects.ts` to add/update your projects
-
-### Images
-Add images to `/public/images/`:
-- **Cover image**: `/public/images/cover.jpg` (1920x1080px, landscape/nature photo)
-- Profile photo: `/public/images/profile/avatar.jpg`
-- Project thumbnails: `/public/images/projects/[slug]/hero.jpg`
-- Project screenshots: `/public/images/projects/[slug]/screenshot-*.jpg`
-
-**Important**: Add your cover image to `/public/images/cover.jpg` for the hero section to display properly.
-
-## Build for Production
+## Quick Start
 
 ```bash
-npm run build
-npm start
+# Clone and install
+git clone https://github.com/akshadjaiswal/Portfolio.git
+cd Portfolio
+npm install
+
+# Set up environment
+cp .env.local.example .env.local
+# Add your GITHUB_TOKEN to .env.local
+
+# Run locally
+npm run dev
+# Open http://localhost:3000
 ```
 
-## Deploy
+## Make It Yours
 
-Deploy to Vercel with one click:
+1. **Personal Info** - Edit `/lib/constants.ts` with your details
+2. **Projects** - Update repos list in `/lib/data/projects.ts` (or let GitHub API do it)
+3. **Experience** - Edit `/lib/data/experience.ts` with your work history
+4. **Styling** - Customize colors in `/app/globals.css`
+
+## Deploy to Vercel
+
+```bash
+# Push to GitHub, then:
+# 1. Import repo to Vercel
+# 2. Add environment variables:
+#    - GITHUB_TOKEN (your personal access token)
+#    - NEXT_PUBLIC_GITHUB_USERNAME (your GitHub username)
+# 3. Deploy!
+```
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
 
-## Project Structure
+## Architecture
 
-```
-app/
-├── app/              # Next.js app router pages
-├── components/       # React components
-│   ├── animations/   # Animation wrappers
-│   ├── hero/        # Hero section
-│   ├── sections/    # Main sections
-│   └── ui/          # UI components
-├── lib/             # Utilities and data
-│   ├── data/        # Static data files
-│   ├── constants.ts # Configuration
-│   ├── types.ts     # TypeScript types
-│   └── utils.ts     # Helper functions
-└── public/          # Static assets
-    └── images/      # Image files
-```
+This portfolio uses a **dynamic runtime architecture** 
+
+- **No static generation** - Avoids 404 errors from build failures
+- **API Routes** - `/api/github/projects` fetches data at runtime
+- **React Query** - Client-side data fetching with caching
+- **Fallback Data** - Works even when GitHub API is down
+
+**Why?** Because builds should never fail due to external API issues.
+
+## Connect
+
+- **GitHub:** [@akshadjaiswal](https://github.com/akshadjaiswal)
+- **LinkedIn:** [akshadsantoshjaiswal](https://linkedin.com/in/akshadsantoshjaiswal)
+- **Twitter/X:** [@akshad_999](https://x.com/akshad_999)
+- **Cal.com:** [Book a call](https://cal.com/akshad-jaiswal/15min)
+
 
 ## License
 
-MIT
+MIT - Feel free to fork, clone, and make it your own!
