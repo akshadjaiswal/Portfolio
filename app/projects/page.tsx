@@ -1,22 +1,26 @@
+'use client';
+
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
 import Container from '@/components/ui/Container';
 import ProjectCard from '@/components/ui/ProjectCard';
-import { fetchAllProjects } from '@/lib/services/github';
-import { GITHUB_PROJECT_REPOS } from '@/lib/data/projects';
+import { Project } from '@/lib/types';
 
-async function getProjects() {
-  try {
-    const projects = await fetchAllProjects(GITHUB_PROJECT_REPOS);
-    return projects;
-  } catch (error) {
-    console.error('Failed to fetch projects:', error);
-    return [];
+async function fetchProjects(): Promise<Project[]> {
+  const response = await fetch('/api/github/projects');
+  if (!response.ok) {
+    throw new Error('Failed to fetch projects');
   }
+  return response.json();
 }
 
-export default async function ProjectsPage() {
-  const projects = await getProjects();
+export default function ProjectsPage() {
+  const { data: projects = [], isLoading, error } = useQuery({
+    queryKey: ['projects'],
+    queryFn: fetchProjects,
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  });
 
   // Sort by creation date (most recent first)
   const sortedProjects = [...projects].sort((a, b) =>
@@ -39,7 +43,22 @@ export default async function ProjectsPage() {
         </h1>
         <div className="w-16 h-0.5 bg-portfolio-silver mb-12" />
 
-        {sortedProjects.length > 0 ? (
+        {isLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[1, 2, 3, 4].map((i) => (
+              <div
+                key={i}
+                className="h-96 bg-portfolio-surface border border-portfolio-border rounded-lg animate-pulse"
+              />
+            ))}
+          </div>
+        ) : error ? (
+          <div className="text-center py-12">
+            <p className="text-portfolio-muted">
+              Failed to load projects. Please try again later.
+            </p>
+          </div>
+        ) : sortedProjects.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {sortedProjects.map((project) => (
               <ProjectCard key={project.id} project={project} />

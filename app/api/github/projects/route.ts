@@ -1,34 +1,48 @@
-import { NextResponse } from 'next/server';
-import { fetchAllProjects } from '@/lib/services/github';
+import { NextRequest, NextResponse } from 'next/server';
+import { fetchAllProjects, fetchProjectBySlug } from '@/lib/services/github';
+import { GITHUB_PROJECT_REPOS, FALLBACK_PROJECTS } from '@/lib/data/projects';
 
-// GitHub repository URLs to fetch
-const GITHUB_PROJECT_REPOS = [
-  'https://github.com/akshadjaiswal/remind-well',
-  'https://github.com/akshadjaiswal/dev-wrapped',
-  'https://github.com/akshadjaiswal/excuse-generator-pro',
-  'https://github.com/akshadjaiswal/glide-data-grid',
-  'https://github.com/akshadjaiswal/devstart',
-];
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    const { searchParams } = new URL(request.url);
+    const slug = searchParams.get('slug');
+
+    // If slug is provided, fetch single project
+    if (slug) {
+      const project = await fetchProjectBySlug(slug);
+
+      if (!project) {
+        // Try finding in fallback data
+        const fallbackProject = FALLBACK_PROJECTS.find(p => p.slug === slug);
+        if (fallbackProject) {
+          return NextResponse.json(fallbackProject);
+        }
+        return NextResponse.json(
+          { error: 'Project not found' },
+          { status: 404 }
+        );
+      }
+
+      return NextResponse.json(project);
+    }
+
+    // Fetch all projects
     const projects = await fetchAllProjects(GITHUB_PROJECT_REPOS);
 
-    return NextResponse.json({
-      success: true,
-      projects,
-      count: projects.length,
-    });
-  } catch (error) {
-    console.error('Error fetching GitHub projects:', error);
+    // If GitHub API completely failed, use fallback
+    if (projects.length === 0) {
+      console.warn('API: Using fallback project data');
+      return NextResponse.json(FALLBACK_PROJECTS);
+    }
 
-    return NextResponse.json(
-      {
-        success: false,
-        error: 'Failed to fetch projects from GitHub',
-        projects: [],
-      },
-      { status: 500 }
-    );
+    return NextResponse.json(projects);
+  } catch (error) {
+    console.error('API Error fetching projects:', error);
+
+    // Return fallback data on error
+    return NextResponse.json(FALLBACK_PROJECTS);
   }
 }

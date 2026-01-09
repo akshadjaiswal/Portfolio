@@ -1,24 +1,28 @@
+'use client';
+
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
 import Container from '../ui/Container';
 import Section from '../ui/Section';
 import SectionHeader from '../ui/SectionHeader';
 import ProjectCard from '../ui/ProjectCard';
-import { fetchAllProjects } from '@/lib/services/github';
-import { GITHUB_PROJECT_REPOS } from '@/lib/data/projects';
+import { Project } from '@/lib/types';
 
-async function getProjects() {
-  try {
-    const projects = await fetchAllProjects(GITHUB_PROJECT_REPOS);
-    return projects;
-  } catch (error) {
-    console.error('Error fetching projects:', error);
-    return [];
+async function fetchProjects(): Promise<Project[]> {
+  const response = await fetch('/api/github/projects');
+  if (!response.ok) {
+    throw new Error('Failed to fetch projects');
   }
+  return response.json();
 }
 
-export default async function Projects() {
-  const projects = await getProjects();
+export default function Projects() {
+  const { data: projects = [], isLoading } = useQuery({
+    queryKey: ['projects'],
+    queryFn: fetchProjects,
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  });
 
   // Get featured projects only
   const featuredProjects = projects.filter((p) => p.featured).slice(0, 3);
@@ -31,7 +35,16 @@ export default async function Projects() {
           subtitle="Projects I'm proud to have built"
         />
 
-        {featuredProjects.length > 0 ? (
+        {isLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            {[1, 2, 3].map((i) => (
+              <div
+                key={i}
+                className="h-96 bg-portfolio-surface border border-portfolio-border rounded-lg animate-pulse"
+              />
+            ))}
+          </div>
+        ) : featuredProjects.length > 0 ? (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               {featuredProjects.map((project) => (
@@ -54,7 +67,7 @@ export default async function Projects() {
         ) : (
           <div className="text-center py-12">
             <p className="text-portfolio-muted">
-              Loading projects... Please check back soon.
+              No projects available at the moment.
             </p>
           </div>
         )}

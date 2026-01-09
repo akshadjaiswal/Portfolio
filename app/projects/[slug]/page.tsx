@@ -1,68 +1,51 @@
-import { notFound } from 'next/navigation';
+'use client';
+
+import { notFound, useParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, ExternalLink, Github } from 'lucide-react';
-import { Metadata } from 'next';
+import { useQuery } from '@tanstack/react-query';
 import Container from '@/components/ui/Container';
 import GitHubStats from '@/components/ui/GitHubStats';
 import ProjectMetadata from '@/components/ui/ProjectMetadata';
 import VideoEmbed from '@/components/ui/VideoEmbed';
 import ImageGallery from '@/components/ui/ImageGallery';
-import { fetchProjectBySlug, fetchAllProjects } from '@/lib/services/github';
-import { GITHUB_PROJECT_REPOS } from '@/lib/data/projects';
-import { PERSONAL_INFO } from '@/lib/constants';
+import { Project } from '@/lib/types';
 
-// Enable on-demand generation as fallback if static params fail
-export const dynamicParams = true;
-
-export async function generateStaticParams() {
-  try {
-    const projects = await fetchAllProjects(GITHUB_PROJECT_REPOS);
-    console.log(`✓ Successfully fetched ${projects.length} projects for static generation`);
-    return projects.map((project) => ({
-      slug: project.slug,
-    }));
-  } catch (error) {
-    console.error('Failed to generate static params:', error);
-    // Return empty array to allow dynamic rendering as fallback
-    return [];
+async function fetchProjectBySlug(slug: string): Promise<Project> {
+  const response = await fetch(`/api/github/projects?slug=${slug}`);
+  if (!response.ok) {
+    throw new Error('Project not found');
   }
+  return response.json();
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const project = await fetchProjectBySlug(slug);
+export default function ProjectDetailPage() {
+  const params = useParams();
+  const slug = params.slug as string;
 
-  if (!project) {
-    return {
-      title: 'Project Not Found',
-    };
+  const { data: project, isLoading, error } = useQuery({
+    queryKey: ['project', slug],
+    queryFn: () => fetchProjectBySlug(slug),
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  });
+
+  if (isLoading) {
+    return (
+      <main className="min-h-screen bg-portfolio-bg py-16">
+        <Container>
+          <div className="animate-pulse">
+            <div className="h-8 w-32 bg-portfolio-surface rounded mb-12" />
+            <div className="aspect-video bg-portfolio-surface rounded-lg mb-8" />
+            <div className="h-8 w-3/4 bg-portfolio-surface rounded mb-4" />
+            <div className="h-6 w-1/2 bg-portfolio-surface rounded mb-6" />
+          </div>
+        </Container>
+      </main>
+    );
   }
 
-  return {
-    title: `${project.title} - ${PERSONAL_INFO.name}`,
-    description: project.description,
-    openGraph: {
-      title: project.title,
-      description: project.description,
-      images: [project.thumbnail],
-    },
-  };
-}
-
-export default async function ProjectDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const project = await fetchProjectBySlug(slug);
-
-  if (!project) {
+  if (error || !project) {
     notFound();
   }
 
