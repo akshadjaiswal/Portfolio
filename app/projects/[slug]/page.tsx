@@ -1,21 +1,20 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { notFound, useParams } from 'next/navigation';
-import Link from 'next/link';
-import Image from 'next/image';
-import { ArrowLeft, ExternalLink, Github } from 'lucide-react';
-import { useQuery } from '@tanstack/react-query';
-import Container from '@/components/ui/Container';
-import ProjectMetadata from '@/components/ui/ProjectMetadata';
-import VideoEmbed from '@/components/ui/VideoEmbed';
-import ImageGallery from '@/components/ui/ImageGallery';
-import { Project } from '@/lib/types';
+import { notFound, useParams } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
+import { ArrowLeft, ExternalLink, Github } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import Container from "@/components/ui/Container";
+import ProjectMetadata from "@/components/ui/ProjectMetadata";
+import VideoEmbed from "@/components/ui/VideoEmbed";
+import ImageGallery from "@/components/ui/ImageGallery";
+import { Project } from "@/lib/types";
 
 async function fetchProjectBySlug(slug: string): Promise<Project> {
   const response = await fetch(`/api/github/projects?slug=${slug}`);
   if (!response.ok) {
-    throw new Error('Project not found');
+    throw new Error("Project not found");
   }
   return response.json();
 }
@@ -23,10 +22,13 @@ async function fetchProjectBySlug(slug: string): Promise<Project> {
 export default function ProjectDetailPage() {
   const params = useParams();
   const slug = params.slug as string;
-  const [isOverviewExpanded, setIsOverviewExpanded] = useState(false);
 
-  const { data: project, isLoading, error } = useQuery({
-    queryKey: ['project', slug],
+  const {
+    data: project,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["project", slug],
     queryFn: () => fetchProjectBySlug(slug),
     staleTime: 1000 * 60 * 5, // 5 minutes
   });
@@ -77,9 +79,6 @@ export default function ProjectDetailPage() {
           <h1 className="text-2xl md:text-3xl font-medium text-portfolio-text mb-3">
             {project.title}
           </h1>
-          <p className="text-base md:text-lg text-portfolio-muted mb-6">
-            {project.tagline}
-          </p>
 
           {/* Technologies */}
           <div className="flex flex-wrap gap-2 mb-6">
@@ -120,6 +119,15 @@ export default function ProjectDetailPage() {
           </div>
         </div>
 
+        <section className="mb-12">
+          <h2 className="text-xl md:text-2xl font-medium text-portfolio-text mb-4">
+            Overview
+          </h2>
+          <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
+          <p className="text-portfolio-text leading-relaxed text-base md:text-lg whitespace-pre-wrap">
+            {project.tagline}
+          </p>
+        </section>
         {/* Metadata Card */}
         <div className="mb-12">
           <ProjectMetadata
@@ -140,35 +148,6 @@ export default function ProjectDetailPage() {
             <VideoEmbed videoUrl={project.videoUrl} title={project.title} />
           </section>
         )}
-
-        {/* Overview */}
-        <section className="mb-12">
-          <h2 className="text-xl md:text-2xl font-medium text-portfolio-text mb-4">
-            Overview
-          </h2>
-          <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
-
-          <div className="relative">
-            <p className={`text-portfolio-text leading-relaxed text-base md:text-lg transition-all duration-300 ${
-              isOverviewExpanded ? '' : 'line-clamp-3'
-            }`}>
-              {project.fullDescription}
-            </p>
-
-            {project.fullDescription && project.fullDescription.length > 200 && (
-              <button
-                onClick={() => setIsOverviewExpanded(!isOverviewExpanded)}
-                className="mt-3 text-portfolio-silver hover:text-portfolio-text transition-colors text-sm font-medium inline-flex items-center gap-1"
-              >
-                {isOverviewExpanded ? (
-                  <>Show less</>
-                ) : (
-                  <>Read more</>
-                )}
-              </button>
-            )}
-          </div>
-        </section>
 
         {/* The Challenge */}
         {project.problem && (
@@ -216,7 +195,10 @@ export default function ProjectDetailPage() {
               Gallery
             </h2>
             <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
-            <ImageGallery images={project.images} projectTitle={project.title} />
+            <ImageGallery
+              images={project.images}
+              projectTitle={project.title}
+            />
           </section>
         )}
 
