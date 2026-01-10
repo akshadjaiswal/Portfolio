@@ -404,3 +404,19 @@ export async function fetchProjectBySlug(slug: string): Promise<Project | null> 
   const projects = await fetchAllProjects(GITHUB_PROJECT_REPOS);
   return projects.find(p => p.slug === slug) || null;
 }
+
+/**
+ * Fetch learning repository star count from GitHub API
+ */
+export async function fetchLearningRepo(owner: string, name: string): Promise<{ stars: number }> {
+  try {
+    const repoUrl = `https://github.com/${owner}/${name}`;
+    const repo = await fetchRepositoryData(repoUrl);
+    return {
+      stars: repo.stargazers_count,
+    };
+  } catch (error) {
+    console.error(`Failed to fetch learning repo ${owner}/${name}:`, error);
+    return { stars: 0 };
+  }
+}
