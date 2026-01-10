@@ -1,12 +1,12 @@
 'use client';
 
+import { useState } from 'react';
 import { notFound, useParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, ExternalLink, Github } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import Container from '@/components/ui/Container';
-import GitHubStats from '@/components/ui/GitHubStats';
 import ProjectMetadata from '@/components/ui/ProjectMetadata';
 import VideoEmbed from '@/components/ui/VideoEmbed';
 import ImageGallery from '@/components/ui/ImageGallery';
@@ -23,6 +23,7 @@ async function fetchProjectBySlug(slug: string): Promise<Project> {
 export default function ProjectDetailPage() {
   const params = useParams();
   const slug = params.slug as string;
+  const [isOverviewExpanded, setIsOverviewExpanded] = useState(false);
 
   const { data: project, isLoading, error } = useQuery({
     queryKey: ['project', slug],
@@ -119,21 +120,13 @@ export default function ProjectDetailPage() {
           </div>
         </div>
 
-        {/* Metadata Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        {/* Metadata Card */}
+        <div className="mb-12">
           <ProjectMetadata
             category={project.category}
             createdAt={project.createdAt}
             lastUpdated={project.lastUpdated}
             autoFetched={project.autoFetched}
-          />
-          <GitHubStats
-            stars={project.githubStars}
-            forks={project.githubForks}
-            primaryLanguage={project.primaryLanguage}
-            languages={project.languages}
-            lastUpdated={project.lastUpdated}
-            repositoryUrl={project.repositoryUrl}
           />
         </div>
 
@@ -154,9 +147,27 @@ export default function ProjectDetailPage() {
             Overview
           </h2>
           <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
-          <p className="text-portfolio-text leading-relaxed text-base md:text-lg">
-            {project.fullDescription}
-          </p>
+
+          <div className="relative">
+            <p className={`text-portfolio-text leading-relaxed text-base md:text-lg transition-all duration-300 ${
+              isOverviewExpanded ? '' : 'line-clamp-3'
+            }`}>
+              {project.fullDescription}
+            </p>
+
+            {project.fullDescription && project.fullDescription.length > 200 && (
+              <button
+                onClick={() => setIsOverviewExpanded(!isOverviewExpanded)}
+                className="mt-3 text-portfolio-silver hover:text-portfolio-text transition-colors text-sm font-medium inline-flex items-center gap-1"
+              >
+                {isOverviewExpanded ? (
+                  <>Show less</>
+                ) : (
+                  <>Read more</>
+                )}
+              </button>
+            )}
+          </div>
         </section>
 
         {/* The Challenge */}

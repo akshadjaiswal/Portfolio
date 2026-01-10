@@ -9,19 +9,15 @@ import { ANIMATION_CONFIG } from '@/lib/constants';
 
 interface ExperienceCardProps {
   experience: Experience;
+  isExpanded: boolean;
+  onToggle: () => void;
 }
 
-export default function ExperienceCard({ experience }: ExperienceCardProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
-  };
-
+export default function ExperienceCard({ experience, isExpanded, onToggle }: ExperienceCardProps) {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      toggleExpand();
+      onToggle();
     }
   };
 
@@ -34,16 +30,16 @@ export default function ExperienceCard({ experience }: ExperienceCardProps) {
         duration: ANIMATION_CONFIG.fadeInDuration,
         ease: ANIMATION_CONFIG.easing,
       }}
-      onClick={toggleExpand}
+      onClick={onToggle}
       onKeyDown={handleKeyDown}
       role="button"
       tabIndex={0}
       aria-expanded={isExpanded}
       aria-label={`${experience.company} - ${experience.role}. ${isExpanded ? 'Collapse' : 'Expand'} details`}
-      className="rounded-lg cursor-pointer bg-portfolio-surface/30 hover:bg-portfolio-surface/50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-portfolio-silver focus:ring-offset-2 focus:ring-offset-portfolio-bg"
+      className="rounded-lg cursor-pointer bg-transparent hover:bg-portfolio-surface/20 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-portfolio-silver focus:ring-offset-2 focus:ring-offset-portfolio-bg border-l-2 border-transparent hover:border-portfolio-silver"
     >
       {/* Collapsed State Content */}
-      <div className="p-4 sm:p-6">
+      <div className="p-3 sm:p-4">
         <div className="flex items-start gap-3 sm:gap-4">
           {/* Company Logo */}
           <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-md overflow-hidden bg-portfolio-surface border border-portfolio-border">

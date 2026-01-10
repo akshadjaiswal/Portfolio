@@ -2,7 +2,6 @@ import ProfileHeader from '@/components/hero/ProfileHeader';
 import Experience from '@/components/sections/Experience';
 import Projects from '@/components/sections/Projects';
 import GitHubContributions from '@/components/sections/GitHubContributions';
-import BookCall from '@/components/sections/BookCall';
 import Footer from '@/components/ui/Footer';
 
 export default function Home() {
@@ -12,7 +11,6 @@ export default function Home() {
       <Experience />
       <Projects />
       <GitHubContributions />
-      <BookCall />
       <Footer />
     </main>
   );
