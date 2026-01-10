@@ -78,3 +78,12 @@ export interface SocialLink {
   username: string;
   icon: string;              // Lucide icon name
 }
+
+export interface LearningRepo {
+  owner: string;
+  name: string;
+  url: string;
+  description: string;
+  label: string;
+  stars?: number; // Fetched from API
+}
