@@ -36,7 +36,7 @@ export default function ExperienceCard({ experience, isExpanded, onToggle }: Exp
       tabIndex={0}
       aria-expanded={isExpanded}
       aria-label={`${experience.company} - ${experience.role}. ${isExpanded ? 'Collapse' : 'Expand'} details`}
-      className="rounded-lg cursor-pointer bg-transparent hover:bg-portfolio-surface/20 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-portfolio-silver focus:ring-offset-2 focus:ring-offset-portfolio-bg border-l-2 border-transparent hover:border-portfolio-silver"
+      className="rounded-lg cursor-pointer bg-transparent hover:bg-portfolio-surface/20 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-portfolio-silver focus:ring-offset-2 focus:ring-offset-portfolio-bg"
     >
       {/* Collapsed State Content */}
       <div className="p-3 sm:p-4">

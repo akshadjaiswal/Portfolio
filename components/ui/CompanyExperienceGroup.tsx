@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, ChevronDown } from 'lucide-react';
+import { ExternalLink, ChevronDown, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import { Experience, Position } from '@/lib/types';
 import { ANIMATION_CONFIG } from '@/lib/constants';
@@ -43,7 +43,7 @@ function PositionCard({ position, companyName, isExpanded, onToggle }: PositionC
       tabIndex={0}
       aria-expanded={isExpanded}
       aria-label={`${companyName} - ${position.role}. ${isExpanded ? 'Collapse' : 'Expand'} details`}
-      className="rounded-lg cursor-pointer bg-transparent hover:bg-portfolio-surface/20 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-portfolio-silver focus:ring-offset-2 focus:ring-offset-portfolio-bg ml-4 md:ml-6 border-l-2 border-transparent hover:border-portfolio-silver"
+      className="rounded-lg cursor-pointer bg-transparent hover:bg-portfolio-surface/20 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-portfolio-silver focus:ring-offset-2 focus:ring-offset-portfolio-bg ml-4 md:ml-6"
     >
       {/* Collapsed State Content */}
       <div className="p-3 sm:p-4">
@@ -147,11 +147,13 @@ export default function CompanyExperienceGroup({ experience, isExpanded, onToggl
   }
 
   const handlePositionToggle = (positionId: string) => {
-    if (!isExpanded) {
+    setExpandedPositionId(expandedPositionId === positionId ? null : positionId);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
       onToggle();
-      setExpandedPositionId(positionId);
-    } else {
-      setExpandedPositionId(expandedPositionId === positionId ? null : positionId);
     }
   };
 
@@ -166,8 +168,16 @@ export default function CompanyExperienceGroup({ experience, isExpanded, onToggl
       }}
       className="rounded-lg bg-transparent p-3 sm:p-4 space-y-4"
     >
-      {/* Company Header */}
-      <div className="flex items-start gap-3 sm:gap-4">
+      {/* Company Header - Clickable */}
+      <div
+        className="flex items-start gap-3 sm:gap-4 cursor-pointer hover:bg-portfolio-surface/10 p-2 -m-2 rounded-lg transition-colors"
+        onClick={onToggle}
+        onKeyDown={handleKeyDown}
+        role="button"
+        tabIndex={0}
+        aria-expanded={isExpanded}
+        aria-label={`${experience.company}. ${isExpanded ? 'Collapse' : 'Expand'} positions`}
+      >
         {/* Company Logo */}
         <div className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-md overflow-hidden bg-portfolio-surface border border-portfolio-border">
           <Image
@@ -216,6 +226,15 @@ export default function CompanyExperienceGroup({ experience, isExpanded, onToggl
             )}
           </div>
         </div>
+
+        {/* Chevron Icon */}
+        <motion.div
+          animate={{ rotate: isExpanded ? 90 : 0 }}
+          transition={{ duration: 0.2, ease: 'easeInOut' }}
+          className="flex-shrink-0 text-portfolio-muted"
+        >
+          <ChevronRight size={20} />
+        </motion.div>
       </div>
 
       {/* Position Cards */}
