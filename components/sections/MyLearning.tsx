@@ -25,8 +25,8 @@ export default function MyLearning() {
       <Section id="learning">
         <Container>
           <SectionHeader
-            title="My Learning"
-            subtitle="What I'm currently exploring"
+            title="My Learning Resources"
+            subtitle="Educational content I've created"
           />
           <div className="space-y-2">
             {[1, 2, 3].map((i) => (
@@ -45,8 +45,8 @@ export default function MyLearning() {
     <Section id="learning">
       <Container>
         <SectionHeader
-          title="My Learning"
-          subtitle="What I'm currently exploring"
+          title="My Learning Resources"
+          subtitle="Educational content I've created"
         />
         <div className="divide-y divide-portfolio-border">
           {repos.map((repo, index) => (

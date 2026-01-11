@@ -52,30 +52,6 @@ npm run dev
 3. **Experience** - Edit `/lib/data/experience.ts` with your work history
 4. **Styling** - Customize colors in `/app/globals.css`
 
-## Deploy to Vercel
-
-```bash
-# Push to GitHub, then:
-# 1. Import repo to Vercel
-# 2. Add environment variables:
-#    - GITHUB_TOKEN (your personal access token)
-#    - NEXT_PUBLIC_GITHUB_USERNAME (your GitHub username)
-# 3. Deploy!
-```
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
-
-## Architecture
-
-This portfolio uses a **dynamic runtime architecture** 
-
-- **No static generation** - Avoids 404 errors from build failures
-- **API Routes** - `/api/github/projects` fetches data at runtime
-- **React Query** - Client-side data fetching with caching
-- **Fallback Data** - Works even when GitHub API is down
-
-**Why?** Because builds should never fail due to external API issues.
-
 ## Connect
 
 - **GitHub:** [@akshadjaiswal](https://github.com/akshadjaiswal)
