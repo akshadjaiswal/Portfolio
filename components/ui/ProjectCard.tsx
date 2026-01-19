@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Sparkles } from 'lucide-react';
 import { Project } from '@/lib/types';
 import { ANIMATION_CONFIG } from '@/lib/constants';
 
@@ -34,6 +35,16 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
             <span className="text-white font-medium text-sm">View Project</span>
           </div>
+
+          {/* Fresh Build Badge */}
+          {project.freshBuild && (
+            <div className="absolute top-3 right-3 z-10">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-portfolio-surface/90 backdrop-blur-sm border border-portfolio-border rounded-full text-xs text-portfolio-silver">
+                <Sparkles size={12} className="text-portfolio-silver" />
+                <span>Fresh Build</span>
+              </div>
+            </div>
+          )}
         </div>
       </Link>
 

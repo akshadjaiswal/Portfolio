@@ -298,6 +298,7 @@ function extractThumbnailFromReadme(readme: string, repoName: string): string {
   const imageNameMap: { [key: string]: string } = {
     'excuse-generator-pro': 'excuse-generator',
     'devstart': 'devstart-cli',
+    'git-history-visualizer': 'git-history-visualizer',
   };
 
   const imageName = imageNameMap[repoName] || repoName;
@@ -362,6 +363,7 @@ export async function transformGitHubRepoToProject(
     lastUpdated: repo.updated_at,
     autoFetched: true,
     repositoryUrl: repo.html_url,
+    freshBuild: repo.name === 'git-history-visualizer',
   };
 }
 

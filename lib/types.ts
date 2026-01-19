@@ -70,6 +70,7 @@ export interface Project {
   lastUpdated?: string;
   autoFetched?: boolean;     // Indicates if fetched from GitHub
   repositoryUrl?: string;    // Full GitHub URL
+  freshBuild?: boolean;      // Indicates if project should show "Fresh Build" badge
 }
 
 export interface SocialLink {

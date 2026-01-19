@@ -2,6 +2,7 @@ import { Project } from '../types';
 
 // GitHub repository URLs to fetch projects from
 export const GITHUB_PROJECT_REPOS = [
+  'https://github.com/akshadjaiswal/git-history-visualizer',
   'https://github.com/akshadjaiswal/remind-well',
   'https://github.com/akshadjaiswal/dev-wrapped',
   'https://github.com/akshadjaiswal/excuse-generator-pro',
@@ -16,6 +17,26 @@ export const GITHUB_PROJECT_REPOS = [
 // Fallback projects in case GitHub API fails
 // These will be replaced by auto-fetched GitHub projects
 export const FALLBACK_PROJECTS: Project[] = [
+  {
+    id: '10',
+    slug: 'git-history-visualizer',
+    title: 'Git History Visualizer',
+    tagline: 'Transform GitHub repos into beautiful dashboards',
+    description: 'Git History Visualizer is a Next.js web application that transforms GitHub repositories into beautiful, insightful dashboards. Visualize commit patterns, contributor activity, and repository metrics through an elegant pastel-colored interface.',
+    fullDescription: 'Git History Visualizer is a Next.js web application that transforms GitHub repositories into beautiful, insightful dashboards. Visualize commit patterns, contributor activity, and repository metrics through an elegant pastel-colored interface.',
+    thumbnail: '/images/projects/git-history-visualizer.png',
+    technologies: ['Next.js', 'TypeScript', 'GitHub API', 'TailwindCSS', 'Recharts'],
+    category: 'Web Development',
+    featured: true,
+    liveUrl: undefined,
+    githubUrl: 'https://github.com/akshadjaiswal/git-history-visualizer',
+    createdAt: '2026-01-19T00:00:00Z',
+    images: ['/images/projects/git-history-visualizer.png'],
+    autoFetched: false,
+    githubStars: 0,
+    githubForks: 0,
+    freshBuild: true,
+  },
   {
     id: '1',
     slug: 'remind-well',

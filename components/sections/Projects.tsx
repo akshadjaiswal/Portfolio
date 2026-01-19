@@ -25,7 +25,7 @@ export default function Projects() {
   });
 
   // Get featured projects only
-  const featuredProjects = projects.filter((p) => p.featured).slice(0, 3);
+  const featuredProjects = projects.filter((p) => p.featured).slice(0, 4);
 
   return (
     <Section id="projects">
@@ -37,7 +37,7 @@ export default function Projects() {
 
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            {[1, 2, 3].map((i) => (
+            {[1, 2, 3, 4].map((i) => (
               <div
                 key={i}
                 className="h-96 bg-portfolio-surface border border-portfolio-border rounded-lg animate-pulse"
