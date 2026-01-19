@@ -352,7 +352,7 @@ export async function transformGitHubRepoToProject(
     category: 'Web Development',
     liveUrl: deploymentUrl || undefined,
     githubUrl: repo.html_url,
-    featured: repo.stargazers_count > 0, // Feature repos with stars
+    featured: repo.name === 'git-history-visualizer' || repo.stargazers_count > 0,
     createdAt: repo.created_at,
     images: [thumbnail],
 
