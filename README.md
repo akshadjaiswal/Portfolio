@@ -2,11 +2,11 @@
 
 **Full-stack engineer** who enjoys working end-to-end: product discovery, fast prototypes, scalable backends, and polished UX.
 
-Currently founding SDE at a startup while freelancing on the side. I juggle delivery speed, reliability, and cost every day. My philosophy? **Keep things simple: ship small, learn fast, iterate with real user feedback.**
+Currently founding SDE at a startup while freelancing on the side. I juggle delivery speed, reliability and cost every day. My philosophy? **Keep things simple: ship small, learn fast, iterate with real user feedback.**
 
 ## What's This?
 
-My personal portfolio built with Next.js 16. Projects auto-sync from GitHub because manually updating portfolios is so 2015.
+My personal portfolio built with Next.js. Projects auto-sync from GitHub because manually updating portfolios is so 2015.
 
 **Live:** [akshad-work.vercel.app](https://akshad-work.vercel.app) 
 
