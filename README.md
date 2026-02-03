@@ -1,5 +1,7 @@
 # 👋 Hi, I'm Akshad Jaiswal
 
+**I ship meaningful things daily** 🙋🏻
+
 **Full-stack engineer** who enjoys working end-to-end: product discovery, fast prototypes, scalable backends, and polished UX.
 
 Currently founding SDE at a startup while freelancing on the side. I juggle delivery speed, reliability and cost every day. My philosophy? **Keep things simple: ship small, learn fast, iterate with real user feedback.**
