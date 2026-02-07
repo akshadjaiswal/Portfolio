@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ExternalLink, Star, Github } from 'lucide-react';
 import { LearningRepo } from '@/lib/types';
 import { ANIMATION_CONFIG } from '@/lib/constants';
+import { AnimatedCounter } from './AnimatedCounter';
 
 interface LearningRepoRowProps {
   repo: LearningRepo;
@@ -43,9 +44,9 @@ export default function LearningRepoRow({ repo, index }: LearningRepoRowProps) {
 
       {/* Stars */}
       {repo.stars !== undefined && repo.stars > 0 && (
-        <div className="flex items-center gap-1.5 text-portfolio-muted flex-shrink-0">
+        <div className="flex items-center gap-1.5 text-portfolio-light-accent dark:text-portfolio-silver flex-shrink-0">
           <Star size={16} className="fill-current" />
-          <span className="text-sm font-medium">{repo.stars}</span>
+          <AnimatedCounter end={repo.stars} duration={1500} className="text-sm font-medium" />
         </div>
       )}
 
@@ -53,7 +54,7 @@ export default function LearningRepoRow({ repo, index }: LearningRepoRowProps) {
       <div className="flex-shrink-0">
         <ExternalLink
           size={18}
-          className="text-portfolio-muted group-hover:text-portfolio-light-accent dark:text-portfolio-silver transition-colors"
+          className="text-portfolio-light-text/60 dark:text-portfolio-muted group-hover:text-portfolio-light-accent dark:group-hover:text-portfolio-silver transition-colors"
         />
       </div>
     </motion.a>

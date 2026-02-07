@@ -7,9 +7,11 @@ import Container from '../ui/Container';
 import Section from '../ui/Section';
 import SectionHeader from '../ui/SectionHeader';
 import { PERSONAL_INFO } from '@/lib/constants';
+import { useThemeStore } from '@/lib/stores/theme-store';
 
 export default function GitHubContributions() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { resolvedTheme } = useThemeStore();
 
   useEffect(() => {
     // Scroll to the right (most recent contributions) after calendar renders
@@ -56,9 +58,10 @@ export default function GitHubContributions() {
           <GitHubCalendar
             username={PERSONAL_INFO.githubUsername}
             theme={{
+              light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
               dark: ['#0A0A0A', '#0e4429', '#006d32', '#26a641', '#39d353'],
             }}
-            colorScheme="dark"
+            colorScheme={resolvedTheme === 'dark' ? 'dark' : 'light'}
             blockSize={12}
             blockMargin={4}
           />

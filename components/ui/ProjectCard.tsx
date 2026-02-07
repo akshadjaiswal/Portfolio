@@ -14,13 +14,14 @@ interface ProjectCardProps {
 export default function ProjectCard({ project }: ProjectCardProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{
         duration: ANIMATION_CONFIG.fadeInDuration,
         ease: ANIMATION_CONFIG.easing,
       }}
+      whileHover={{ scale: 1.02, y: -4 }}
       className="border border-portfolio-light-border dark:border-portfolio-border rounded-lg overflow-hidden hover:border-portfolio-light-accent dark:hover:border-portfolio-silver transition-all duration-300 group bg-portfolio-light-surface dark:bg-transparent"
     >
       {/* Thumbnail with Overlay */}

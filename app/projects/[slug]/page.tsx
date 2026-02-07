@@ -57,7 +57,7 @@ export default function ProjectDetailPage() {
       <Container>
         <Link
           href="/projects"
-          className="inline-flex items-center gap-2 text-portfolio-silver hover:text-portfolio-light-text dark:text-portfolio-text transition-colors mb-12"
+          className="inline-flex items-center gap-2 text-portfolio-light-text/70 dark:text-portfolio-silver hover:text-portfolio-light-accent dark:hover:text-portfolio-text transition-colors mb-12"
         >
           <ArrowLeft size={20} />
           <span>Back to Projects</span>
@@ -85,7 +85,7 @@ export default function ProjectDetailPage() {
             {project.technologies.map((tech) => (
               <span
                 key={tech}
-                className="px-3 py-1 bg-portfolio-surface border border-portfolio-light-border dark:border-portfolio-border rounded-full text-sm text-portfolio-light-text dark:text-portfolio-text font-mono"
+                className="px-3 py-1 bg-portfolio-light-surface dark:bg-portfolio-surface border border-portfolio-light-border dark:border-portfolio-border rounded-full text-sm text-portfolio-light-text dark:text-portfolio-text font-mono"
               >
                 {tech}
               </span>
@@ -99,7 +99,7 @@ export default function ProjectDetailPage() {
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-portfolio-silver text-portfolio-bg rounded-lg hover:bg-opacity-90 transition-all font-medium"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-portfolio-light-accent dark:bg-portfolio-silver text-white dark:text-portfolio-bg rounded-lg hover:bg-opacity-90 transition-all font-medium"
               >
                 <ExternalLink size={20} />
                 <span>Live Demo</span>
@@ -110,7 +110,7 @@ export default function ProjectDetailPage() {
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-portfolio-light-border dark:border-portfolio-border text-portfolio-light-text dark:text-portfolio-text rounded-lg hover:border-portfolio-silver hover:bg-portfolio-surface transition-all font-medium"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-portfolio-light-border dark:border-portfolio-border text-portfolio-light-text dark:text-portfolio-text rounded-lg hover:border-portfolio-light-accent dark:hover:border-portfolio-silver hover:bg-portfolio-light-surface dark:hover:bg-portfolio-surface transition-all font-medium"
               >
                 <Github size={20} />
                 <span>GitHub</span>
@@ -209,11 +209,11 @@ export default function ProjectDetailPage() {
               Testimonial
             </h2>
             <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
-            <div className="border border-portfolio-light-border dark:border-portfolio-border rounded-lg p-8 bg-portfolio-surface">
+            <div className="border border-portfolio-light-border dark:border-portfolio-border rounded-lg p-8 bg-portfolio-light-surface dark:bg-portfolio-surface">
               <p className="text-base md:text-lg text-portfolio-light-text dark:text-portfolio-text italic mb-4">
                 &ldquo;{project.testimonial.text}&rdquo;
               </p>
-              <div className="text-sm text-portfolio-muted">
+              <div className="text-sm text-portfolio-light-text/70 dark:text-portfolio-muted">
                 <p className="font-medium">{project.testimonial.author}</p>
                 <p>{project.testimonial.role}</p>
               </div>
