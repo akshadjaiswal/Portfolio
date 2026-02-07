@@ -4,6 +4,7 @@ import './globals.css'
 import { PERSONAL_INFO } from '@/lib/constants'
 import { QueryProvider } from '@/lib/query-provider'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
+import { ClientLayout } from '@/components/providers/ClientLayout'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -96,7 +97,9 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} ${spaceGrotesk.variable} ${inter.className}`}>
         <ThemeProvider>
-          <QueryProvider>{children}</QueryProvider>
+          <QueryProvider>
+            <ClientLayout>{children}</ClientLayout>
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>
