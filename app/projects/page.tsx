@@ -28,17 +28,17 @@ export default function ProjectsPage() {
   );
 
   return (
-    <main className="min-h-screen bg-portfolio-bg py-16">
+    <main className="min-h-screen bg-portfolio-light-bg dark:bg-portfolio-bg py-16">
       <Container>
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-portfolio-silver hover:text-portfolio-text transition-colors mb-12"
+          className="inline-flex items-center gap-2 text-portfolio-silver hover:text-portfolio-light-text dark:text-portfolio-text transition-colors mb-12"
         >
           <ArrowLeft size={20} />
           <span>Back to Home</span>
         </Link>
 
-        <h1 className="text-2xl md:text-3xl font-medium text-portfolio-text mb-4">
+        <h1 className="text-2xl md:text-3xl font-medium text-portfolio-light-text dark:text-portfolio-text mb-4">
           All Projects
         </h1>
         <div className="w-16 h-0.5 bg-portfolio-silver mb-12" />

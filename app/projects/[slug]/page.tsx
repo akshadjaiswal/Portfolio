@@ -35,7 +35,7 @@ export default function ProjectDetailPage() {
 
   if (isLoading) {
     return (
-      <main className="min-h-screen bg-portfolio-bg py-16">
+      <main className="min-h-screen bg-portfolio-light-bg dark:bg-portfolio-bg py-16">
         <Container>
           <div className="animate-pulse">
             <div className="h-8 w-32 bg-portfolio-surface rounded mb-12" />
@@ -53,11 +53,11 @@ export default function ProjectDetailPage() {
   }
 
   return (
-    <main className="min-h-screen bg-portfolio-bg py-16">
+    <main className="min-h-screen bg-portfolio-light-bg dark:bg-portfolio-bg py-16">
       <Container>
         <Link
           href="/projects"
-          className="inline-flex items-center gap-2 text-portfolio-silver hover:text-portfolio-text transition-colors mb-12"
+          className="inline-flex items-center gap-2 text-portfolio-silver hover:text-portfolio-light-text dark:text-portfolio-text transition-colors mb-12"
         >
           <ArrowLeft size={20} />
           <span>Back to Projects</span>
@@ -76,7 +76,7 @@ export default function ProjectDetailPage() {
 
         {/* Header */}
         <div className="mb-12">
-          <h1 className="text-2xl md:text-3xl font-medium text-portfolio-text mb-3">
+          <h1 className="text-2xl md:text-3xl font-medium text-portfolio-light-text dark:text-portfolio-text mb-3">
             {project.title}
           </h1>
 
@@ -85,7 +85,7 @@ export default function ProjectDetailPage() {
             {project.technologies.map((tech) => (
               <span
                 key={tech}
-                className="px-3 py-1 bg-portfolio-surface border border-portfolio-border rounded-full text-sm text-portfolio-text font-mono"
+                className="px-3 py-1 bg-portfolio-surface border border-portfolio-light-border dark:border-portfolio-border rounded-full text-sm text-portfolio-light-text dark:text-portfolio-text font-mono"
               >
                 {tech}
               </span>
@@ -110,7 +110,7 @@ export default function ProjectDetailPage() {
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-portfolio-border text-portfolio-text rounded-lg hover:border-portfolio-silver hover:bg-portfolio-surface transition-all font-medium"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-portfolio-light-border dark:border-portfolio-border text-portfolio-light-text dark:text-portfolio-text rounded-lg hover:border-portfolio-silver hover:bg-portfolio-surface transition-all font-medium"
               >
                 <Github size={20} />
                 <span>GitHub</span>
@@ -120,11 +120,11 @@ export default function ProjectDetailPage() {
         </div>
 
         <section className="mb-12">
-          <h2 className="text-xl md:text-2xl font-medium text-portfolio-text mb-4">
+          <h2 className="text-xl md:text-2xl font-medium text-portfolio-light-text dark:text-portfolio-text mb-4">
             Overview
           </h2>
           <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
-          <p className="text-portfolio-text leading-relaxed text-base md:text-lg whitespace-pre-wrap">
+          <p className="text-portfolio-light-text dark:text-portfolio-text leading-relaxed text-base md:text-lg whitespace-pre-wrap">
             {project.tagline}
           </p>
         </section>
@@ -141,7 +141,7 @@ export default function ProjectDetailPage() {
         {/* Video Demo */}
         {project.videoUrl && (
           <section className="mb-12">
-            <h2 className="text-xl md:text-2xl font-medium text-portfolio-text mb-4">
+            <h2 className="text-xl md:text-2xl font-medium text-portfolio-light-text dark:text-portfolio-text mb-4">
               Video Demo
             </h2>
             <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
@@ -152,11 +152,11 @@ export default function ProjectDetailPage() {
         {/* The Challenge */}
         {project.problem && (
           <section className="mb-12">
-            <h2 className="text-xl md:text-2xl font-medium text-portfolio-text mb-4">
+            <h2 className="text-xl md:text-2xl font-medium text-portfolio-light-text dark:text-portfolio-text mb-4">
               The Challenge
             </h2>
             <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
-            <p className="text-portfolio-text leading-relaxed text-base md:text-lg">
+            <p className="text-portfolio-light-text dark:text-portfolio-text leading-relaxed text-base md:text-lg">
               {project.problem}
             </p>
           </section>
@@ -165,11 +165,11 @@ export default function ProjectDetailPage() {
         {/* The Solution */}
         {project.solution && (
           <section className="mb-12">
-            <h2 className="text-xl md:text-2xl font-medium text-portfolio-text mb-4">
+            <h2 className="text-xl md:text-2xl font-medium text-portfolio-light-text dark:text-portfolio-text mb-4">
               The Solution
             </h2>
             <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
-            <p className="text-portfolio-text leading-relaxed text-base md:text-lg">
+            <p className="text-portfolio-light-text dark:text-portfolio-text leading-relaxed text-base md:text-lg">
               {project.solution}
             </p>
           </section>
@@ -178,11 +178,11 @@ export default function ProjectDetailPage() {
         {/* Impact */}
         {project.impact && (
           <section className="mb-12">
-            <h2 className="text-xl md:text-2xl font-medium text-portfolio-text mb-4">
+            <h2 className="text-xl md:text-2xl font-medium text-portfolio-light-text dark:text-portfolio-text mb-4">
               Impact
             </h2>
             <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
-            <p className="text-portfolio-text leading-relaxed text-base md:text-lg">
+            <p className="text-portfolio-light-text dark:text-portfolio-text leading-relaxed text-base md:text-lg">
               {project.impact}
             </p>
           </section>
@@ -191,7 +191,7 @@ export default function ProjectDetailPage() {
         {/* Image Gallery */}
         {project.images && project.images.length > 1 && (
           <section className="mb-12">
-            <h2 className="text-xl md:text-2xl font-medium text-portfolio-text mb-4">
+            <h2 className="text-xl md:text-2xl font-medium text-portfolio-light-text dark:text-portfolio-text mb-4">
               Gallery
             </h2>
             <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
@@ -205,12 +205,12 @@ export default function ProjectDetailPage() {
         {/* Testimonial */}
         {project.testimonial && (
           <section className="mb-12">
-            <h2 className="text-xl md:text-2xl font-medium text-portfolio-text mb-4">
+            <h2 className="text-xl md:text-2xl font-medium text-portfolio-light-text dark:text-portfolio-text mb-4">
               Testimonial
             </h2>
             <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
-            <div className="border border-portfolio-border rounded-lg p-8 bg-portfolio-surface">
-              <p className="text-base md:text-lg text-portfolio-text italic mb-4">
+            <div className="border border-portfolio-light-border dark:border-portfolio-border rounded-lg p-8 bg-portfolio-surface">
+              <p className="text-base md:text-lg text-portfolio-light-text dark:text-portfolio-text italic mb-4">
                 &ldquo;{project.testimonial.text}&rdquo;
               </p>
               <div className="text-sm text-portfolio-muted">

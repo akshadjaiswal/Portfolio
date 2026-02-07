@@ -43,7 +43,7 @@ function PositionCard({ position, companyName, isExpanded, onToggle }: PositionC
       tabIndex={0}
       aria-expanded={isExpanded}
       aria-label={`${companyName} - ${position.role}. ${isExpanded ? 'Collapse' : 'Expand'} details`}
-      className="rounded-lg cursor-pointer bg-transparent hover:bg-portfolio-surface/20 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-portfolio-silver focus:ring-offset-2 focus:ring-offset-portfolio-bg ml-4 md:ml-6"
+      className="rounded-lg cursor-pointer bg-transparent hover:bg-portfolio-light-surface dark:bg-portfolio-surface/20 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-portfolio-silver focus:ring-offset-2 focus:ring-offset-portfolio-bg ml-4 md:ml-6"
     >
       {/* Collapsed State Content */}
       <div className="p-3 sm:p-4">
@@ -53,7 +53,7 @@ function PositionCard({ position, companyName, isExpanded, onToggle }: PositionC
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4">
               {/* Left: Role */}
               <div className="flex-1 min-w-0">
-                <h3 className="text-base sm:text-lg font-medium text-portfolio-text">
+                <h3 className="text-base sm:text-lg font-medium text-portfolio-light-text dark:text-portfolio-text">
                   {position.role}
                 </h3>
                 <p className="text-sm text-portfolio-muted mt-0.5">
@@ -63,7 +63,7 @@ function PositionCard({ position, companyName, isExpanded, onToggle }: PositionC
 
               {/* Right: Date */}
               <div className="text-left sm:text-right flex-shrink-0">
-                <p className="text-xs sm:text-sm text-portfolio-text font-medium">
+                <p className="text-xs sm:text-sm text-portfolio-light-text dark:text-portfolio-text font-medium">
                   {position.duration}
                 </p>
               </div>
@@ -105,7 +105,7 @@ function PositionCard({ position, companyName, isExpanded, onToggle }: PositionC
                         key={index}
                         className="text-sm text-portfolio-muted flex items-start gap-2"
                       >
-                        <span className="text-portfolio-silver mt-0.5">→</span>
+                        <span className="text-portfolio-light-accent dark:text-portfolio-silver mt-0.5">→</span>
                         <span className="flex-1">{achievement}</span>
                       </li>
                     ))}
@@ -116,14 +116,14 @@ function PositionCard({ position, companyName, isExpanded, onToggle }: PositionC
               {/* Technologies */}
               {position.technologies.length > 0 && (
                 <div>
-                  <h4 className="text-sm font-medium text-portfolio-silver mb-3">
+                  <h4 className="text-sm font-medium text-portfolio-light-accent dark:text-portfolio-silver mb-3">
                     Technologies
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {position.technologies.map((tech) => (
                       <span
                         key={tech}
-                        className="px-3 py-1.5 bg-portfolio-surface border border-portfolio-border rounded-full text-xs text-portfolio-text font-mono"
+                        className="px-3 py-1.5 bg-portfolio-light-surface dark:bg-portfolio-surface border border-portfolio-light-border dark:border-portfolio-border rounded-full text-xs text-portfolio-light-text dark:text-portfolio-text font-mono"
                       >
                         {tech}
                       </span>
@@ -170,7 +170,7 @@ export default function CompanyExperienceGroup({ experience, isExpanded, onToggl
     >
       {/* Company Header - Clickable */}
       <div
-        className="flex items-start gap-3 sm:gap-4 cursor-pointer hover:bg-portfolio-surface/10 p-2 -m-2 rounded-lg transition-colors"
+        className="flex items-start gap-3 sm:gap-4 cursor-pointer hover:bg-portfolio-light-surface dark:bg-portfolio-surface/10 p-2 -m-2 rounded-lg transition-colors"
         onClick={onToggle}
         onKeyDown={handleKeyDown}
         role="button"
@@ -179,7 +179,7 @@ export default function CompanyExperienceGroup({ experience, isExpanded, onToggl
         aria-label={`${experience.company}. ${isExpanded ? 'Collapse' : 'Expand'} positions`}
       >
         {/* Company Logo */}
-        <div className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-md overflow-hidden bg-portfolio-surface border border-portfolio-border">
+        <div className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-md overflow-hidden bg-portfolio-light-surface dark:bg-portfolio-surface border border-portfolio-light-border dark:border-portfolio-border">
           <Image
             src={experience.logo}
             alt={experience.logoAlt || `${experience.company} logo`}
@@ -194,13 +194,13 @@ export default function CompanyExperienceGroup({ experience, isExpanded, onToggl
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 sm:gap-4">
             {/* Company Name */}
             <div className="flex-1 min-w-0">
-              <h2 className="text-lg sm:text-xl font-medium text-portfolio-text">
+              <h2 className="text-lg sm:text-xl font-medium text-portfolio-light-text dark:text-portfolio-text">
                 {experience.companyUrl ? (
                   <a
                     href={experience.companyUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-portfolio-silver transition-colors inline-flex items-center gap-1.5"
+                    className="hover:text-portfolio-light-accent dark:text-portfolio-silver transition-colors inline-flex items-center gap-1.5"
                   >
                     {experience.company}
                     <ExternalLink size={16} />
@@ -219,7 +219,7 @@ export default function CompanyExperienceGroup({ experience, isExpanded, onToggl
             {/* Total Duration */}
             {experience.totalDuration && (
               <div className="text-left sm:text-right flex-shrink-0">
-                <p className="text-sm font-medium text-portfolio-text">
+                <p className="text-sm font-medium text-portfolio-light-text dark:text-portfolio-text">
                   {experience.totalDuration}
                 </p>
               </div>

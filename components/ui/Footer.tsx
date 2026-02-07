@@ -10,7 +10,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-portfolio-border py-12">
+    <footer className="border-t border-portfolio-light-border dark:border-portfolio-border py-12">
       <Container>
         <div className="space-y-8">
           {/* Schedule Call Button */}
@@ -21,15 +21,15 @@ export default function Footer() {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group inline-flex items-center gap-2 px-6 py-3 bg-portfolio-surface border border-portfolio-border rounded-lg text-portfolio-text hover:border-portfolio-silver hover:bg-portfolio-surface/50 transition-all duration-200"
+              className="group inline-flex items-center gap-2 px-6 py-3 bg-portfolio-light-surface dark:bg-portfolio-surface border border-portfolio-light-border dark:border-portfolio-border rounded-lg text-portfolio-light-text dark:text-portfolio-text hover:border-portfolio-light-accent dark:hover:border-portfolio-silver hover:bg-portfolio-light-surface/50 dark:hover:bg-portfolio-surface/50 transition-all duration-200"
             >
               <Calendar
                 size={18}
-                className="text-portfolio-silver group-hover:text-portfolio-text transition-colors"
+                className="text-portfolio-light-accent dark:text-portfolio-silver group-hover:text-portfolio-light-text dark:group-hover:text-portfolio-text transition-colors"
               />
               <span className="font-medium">Schedule a Call</span>
               <motion.div
-                className="w-0 group-hover:w-2 h-2 bg-portfolio-silver rounded-full transition-all duration-200"
+                className="w-0 group-hover:w-2 h-2 bg-portfolio-light-accent dark:bg-portfolio-silver rounded-full transition-all duration-200"
                 initial={{ width: 0 }}
                 whileHover={{ width: 8 }}
               />
@@ -37,7 +37,7 @@ export default function Footer() {
           </div>
 
           <div className="text-center">
-            <h3 className="text-xl font-medium text-portfolio-text mb-6">
+            <h3 className="text-xl font-medium text-portfolio-light-text dark:text-portfolio-text mb-6">
               Let&apos;s Connect
             </h3>
             <SocialLinks />
