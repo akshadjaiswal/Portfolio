@@ -21,11 +21,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         duration: ANIMATION_CONFIG.fadeInDuration,
         ease: ANIMATION_CONFIG.easing,
       }}
-      className="border border-portfolio-border rounded-lg overflow-hidden hover:border-portfolio-silver transition-all duration-300 group"
+      className="border border-portfolio-light-border dark:border-portfolio-border rounded-lg overflow-hidden hover:border-portfolio-light-accent dark:hover:border-portfolio-silver transition-all duration-300 group bg-portfolio-light-surface dark:bg-transparent"
     >
       {/* Thumbnail with Overlay */}
       <Link href={`/projects/${project.slug}`}>
-        <div className="relative h-48 overflow-hidden bg-portfolio-surface">
+        <div className="relative h-48 overflow-hidden bg-portfolio-light-surface dark:bg-portfolio-surface">
           <Image
             src={project.thumbnail}
             alt={project.title}
@@ -39,8 +39,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           {/* Fresh Build Badge */}
           {project.freshBuild && (
             <div className="absolute top-3 right-3 z-10">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-portfolio-surface/90 backdrop-blur-sm border border-portfolio-border rounded-full text-xs text-portfolio-silver">
-                <Sparkles size={12} className="text-portfolio-silver" />
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-portfolio-light-surface/90 dark:bg-portfolio-surface/90 backdrop-blur-sm border border-portfolio-light-border dark:border-portfolio-border rounded-full text-xs text-portfolio-light-accent dark:text-portfolio-silver">
+                <Sparkles size={12} className="text-portfolio-light-accent dark:text-portfolio-silver" />
                 <span>Fresh Build</span>
               </div>
             </div>
@@ -51,14 +51,14 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       {/* Content */}
       <div className="p-4">
         <Link href={`/projects/${project.slug}`}>
-          <h3 className="text-lg font-medium text-portfolio-text mb-1.5 group-hover:text-portfolio-silver transition-colors">
+          <h3 className="text-lg font-medium text-portfolio-light-text dark:text-portfolio-text mb-1.5 group-hover:text-portfolio-light-accent dark:group-hover:text-portfolio-silver transition-colors">
             {project.title}
           </h3>
         </Link>
         <p className="text-xs text-portfolio-muted mb-3">
           {project.tagline}
         </p>
-        <p className="text-sm text-portfolio-text mb-3 leading-relaxed line-clamp-2">
+        <p className="text-sm text-portfolio-light-text dark:text-portfolio-text mb-3 leading-relaxed line-clamp-2">
           {project.description}
         </p>
 
@@ -67,7 +67,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           {project.technologies.slice(0, 4).map((tech) => (
             <span
               key={tech}
-              className="px-2 py-0.5 bg-portfolio-surface border border-portfolio-border rounded text-xs text-portfolio-text font-mono"
+              className="px-2 py-0.5 bg-portfolio-light-surface dark:bg-portfolio-surface border border-portfolio-light-border dark:border-portfolio-border rounded text-xs text-portfolio-light-text dark:text-portfolio-text font-mono"
             >
               {tech}
             </span>

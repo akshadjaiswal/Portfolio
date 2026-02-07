@@ -14,7 +14,7 @@ const iconMap = {
 
 export default function ProfileHeader() {
   return (
-    <div className="relative bg-portfolio-bg">
+    <div className="relative bg-portfolio-light-bg dark:bg-portfolio-bg">
       <div className="max-w-portfolio mx-auto px-4 sm:px-6">
         {/* Centered Cover Image Section */}
         <motion.div
@@ -85,7 +85,7 @@ export default function ProfileHeader() {
             className="text-center space-y-4 pb-8 md:pb-10"
           >
             {/* Name */}
-            <h1 className="text-4xl md:text-5xl font-medium text-portfolio-text">
+            <h1 className="text-4xl md:text-5xl font-medium text-portfolio-light-text dark:text-portfolio-text">
               {PERSONAL_INFO.name}
             </h1>
 
@@ -101,7 +101,7 @@ export default function ProfileHeader() {
             </div>
 
             {/* Bio */}
-            <p className="text-base md:text-lg text-portfolio-text leading-relaxed max-w-2xl mx-auto pt-4">
+            <p className="text-base md:text-lg text-portfolio-light-text dark:text-portfolio-text leading-relaxed max-w-2xl mx-auto pt-4">
               {PERSONAL_INFO.bio}
             </p>
 
@@ -118,9 +118,9 @@ export default function ProfileHeader() {
                     aria-label={`${link.platform} profile`}
                     whileHover={{ scale: 1.1, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className="w-12 h-12 rounded-full border border-portfolio-border flex items-center justify-center hover:bg-portfolio-surface hover:border-portfolio-silver transition-all duration-200"
+                    className="w-12 h-12 rounded-full border border-portfolio-light-border dark:border-portfolio-border flex items-center justify-center hover:bg-portfolio-light-surface dark:hover:bg-portfolio-surface hover:border-portfolio-light-accent dark:hover:border-portfolio-silver transition-all duration-200"
                   >
-                    <Icon size={20} className="text-portfolio-text" />
+                    <Icon size={20} className="text-portfolio-light-text dark:text-portfolio-text" />
                   </motion.a>
                 );
               })}

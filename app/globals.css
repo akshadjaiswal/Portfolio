@@ -3,8 +3,32 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --transition-theme: 300ms;
+  }
+
+  html {
+    color-scheme: light dark;
+  }
+
   body {
-    @apply bg-portfolio-bg text-portfolio-text antialiased;
+    @apply bg-portfolio-light-bg dark:bg-portfolio-bg text-portfolio-light-text dark:text-portfolio-text antialiased transition-colors duration-300;
+  }
+
+  /* Smooth theme transitions for all elements */
+  html.transitioning *,
+  html.transitioning *::before,
+  html.transitioning *::after {
+    transition: background-color var(--transition-theme) cubic-bezier(0.4, 0, 0.2, 1),
+                border-color var(--transition-theme) cubic-bezier(0.4, 0, 0.2, 1),
+                color var(--transition-theme) cubic-bezier(0.4, 0, 0.2, 1),
+                fill var(--transition-theme) cubic-bezier(0.4, 0, 0.2, 1),
+                stroke var(--transition-theme) cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  /* Exclude Framer Motion elements from theme transitions */
+  html.transitioning [data-framer-motion] * {
+    transition: none !important;
   }
 
   body::before {
@@ -42,16 +66,16 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: theme('colors.portfolio.bg');
+    @apply bg-portfolio-light-bg dark:bg-portfolio-bg;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: theme('colors.portfolio.border');
+    @apply bg-portfolio-light-border dark:bg-portfolio-border;
     border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: theme('colors.portfolio.silver');
+    @apply bg-portfolio-light-accent dark:bg-portfolio-silver;
   }
 }
 
