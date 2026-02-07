@@ -68,7 +68,7 @@ export default function GitHubContributions() {
             href={`https://github.com/${PERSONAL_INFO.githubUsername}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-portfolio-silver hover:text-portfolio-text transition-colors"
+            className="inline-flex items-center gap-2 text-portfolio-light-accent dark:text-portfolio-silver hover:text-portfolio-light-text dark:text-portfolio-text transition-colors"
           >
             <span>View on GitHub</span>
             <ExternalLink size={16} />

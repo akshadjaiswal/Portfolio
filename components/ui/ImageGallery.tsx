@@ -34,7 +34,7 @@ export default function ImageGallery({ images, projectTitle }: ImageGalleryProps
             ease: ANIMATION_CONFIG.easing,
             delay: index * 0.1,
           }}
-          className="relative aspect-video rounded-lg overflow-hidden bg-portfolio-surface border border-portfolio-border hover:border-portfolio-silver transition-colors group"
+          className="relative aspect-video rounded-lg overflow-hidden bg-portfolio-light-surface dark:bg-portfolio-surface border border-portfolio-light-border dark:border-portfolio-border hover:border-portfolio-light-accent dark:hover:border-portfolio-silver transition-colors group"
         >
           <Image
             src={image}

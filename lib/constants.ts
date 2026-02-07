@@ -42,6 +42,24 @@ export const ANIMATION_CONFIG = {
   staggerDelay: 0.1,
   slideDistance: 20,
   easing: [0.4, 0, 0.2, 1] as [number, number, number, number],
+
+  // Extended animation presets
+  pageTransitionDuration: 0.4,
+  themeTransitionDuration: 0.3,
+  hoverDuration: 0.2,
+  microInteractionDuration: 0.15,
+  scrollRevealDuration: 0.5,
+  pulseDuration: 2,
+
+  // Spring configurations
+  spring: {
+    stiffness: 300,
+    damping: 20,
+  },
+  springButton: {
+    stiffness: 400,
+    damping: 10,
+  },
 };
 
 // Layout configuration

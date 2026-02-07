@@ -24,16 +24,16 @@ export default function LearningRepoRow({ repo, index }: LearningRepoRowProps) {
         ease: ANIMATION_CONFIG.easing,
         delay: index * 0.1,
       }}
-      className="group flex items-center gap-4 p-4 rounded-lg hover:bg-portfolio-surface/20 transition-all duration-200"
+      className="group flex items-center gap-4 p-4 rounded-lg hover:bg-portfolio-light-surface dark:bg-portfolio-surface/20 transition-all duration-200"
     >
       {/* GitHub Logo */}
       <div className="flex-shrink-0">
-        <Github size={24} className="text-portfolio-silver" />
+        <Github size={24} className="text-portfolio-light-accent dark:text-portfolio-silver" />
       </div>
 
       {/* Repo Info */}
       <div className="flex-1 min-w-0">
-        <h3 className="text-base font-medium text-portfolio-text group-hover:text-portfolio-silver transition-colors">
+        <h3 className="text-base font-medium text-portfolio-light-text dark:text-portfolio-text group-hover:text-portfolio-light-accent dark:text-portfolio-silver transition-colors">
           {repo.name}
         </h3>
         <p className="text-sm text-portfolio-muted mt-0.5 line-clamp-1">
@@ -53,7 +53,7 @@ export default function LearningRepoRow({ repo, index }: LearningRepoRowProps) {
       <div className="flex-shrink-0">
         <ExternalLink
           size={18}
-          className="text-portfolio-muted group-hover:text-portfolio-silver transition-colors"
+          className="text-portfolio-muted group-hover:text-portfolio-light-accent dark:text-portfolio-silver transition-colors"
         />
       </div>
     </motion.a>

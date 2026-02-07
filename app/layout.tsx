@@ -3,6 +3,8 @@ import { Inter, Space_Grotesk } from 'next/font/google'
 import './globals.css'
 import { PERSONAL_INFO } from '@/lib/constants'
 import { QueryProvider } from '@/lib/query-provider'
+import { ThemeProvider } from '@/components/providers/ThemeProvider'
+import { ClientLayout } from '@/components/providers/ClientLayout'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -55,9 +57,50 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Prevent FOUC (Flash of Unstyled Content) */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  const theme = localStorage.getItem('portfolio-theme');
+                  if (theme) {
+                    const parsed = JSON.parse(theme);
+                    const userTheme = parsed.state.theme;
+
+                    let resolvedTheme = 'dark';
+                    if (userTheme === 'system') {
+                      resolvedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+                        ? 'dark'
+                        : 'light';
+                    } else {
+                      resolvedTheme = userTheme;
+                    }
+
+                    if (resolvedTheme === 'dark') {
+                      document.documentElement.classList.add('dark');
+                    }
+                  } else {
+                    // Default to dark theme
+                    document.documentElement.classList.add('dark');
+                  }
+                } catch (e) {
+                  // If there's an error, default to dark theme
+                  document.documentElement.classList.add('dark');
+                }
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className={`${inter.variable} ${spaceGrotesk.variable} ${inter.className}`}>
-        <QueryProvider>{children}</QueryProvider>
+        <ThemeProvider>
+          <QueryProvider>
+            <ClientLayout>{children}</ClientLayout>
+          </QueryProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

@@ -40,7 +40,7 @@ export default function Projects() {
             {[1, 2, 3, 4].map((i) => (
               <div
                 key={i}
-                className="h-96 bg-portfolio-surface border border-portfolio-border rounded-lg animate-pulse"
+                className="h-96 bg-portfolio-light-surface dark:bg-portfolio-surface border border-portfolio-light-border dark:border-portfolio-border rounded-lg animate-pulse"
               />
             ))}
           </div>
@@ -56,7 +56,7 @@ export default function Projects() {
               <div className="text-center">
                 <Link
                   href="/projects"
-                  className="inline-flex items-center gap-2 text-portfolio-silver hover:text-portfolio-text transition-colors"
+                  className="inline-flex items-center gap-2 text-portfolio-light-accent dark:text-portfolio-silver hover:text-portfolio-light-text dark:text-portfolio-text transition-colors"
                 >
                   <span>View All Projects</span>
                   <ArrowRight size={20} />

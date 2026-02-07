@@ -21,9 +21,9 @@ export default function SocialLinks() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`${link.platform} profile`}
-            className="w-12 h-12 rounded-full border border-portfolio-border flex items-center justify-center hover:bg-portfolio-surface hover:border-portfolio-silver transition-all duration-200"
+            className="w-12 h-12 rounded-full border border-portfolio-light-border dark:border-portfolio-border flex items-center justify-center hover:bg-portfolio-light-surface dark:bg-portfolio-surface hover:border-portfolio-light-accent dark:hover:border-portfolio-silver transition-all duration-200"
           >
-            <Icon size={20} className="text-portfolio-text" />
+            <Icon size={20} className="text-portfolio-light-text dark:text-portfolio-text" />
           </a>
         );
       })}

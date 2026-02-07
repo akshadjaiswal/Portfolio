@@ -28,7 +28,7 @@ export default function VideoEmbed({ videoUrl, title }: VideoEmbedProps) {
   // Don't render if no valid embed URL
   if (!embedUrl) {
     return (
-      <div className="rounded-lg bg-portfolio-surface/30 border border-portfolio-border p-6 text-center">
+      <div className="rounded-lg bg-portfolio-light-surface dark:bg-portfolio-surface/30 border border-portfolio-light-border dark:border-portfolio-border p-6 text-center">
         <p className="text-portfolio-muted">
           Unable to load video. Please check the URL.
         </p>
@@ -39,7 +39,7 @@ export default function VideoEmbed({ videoUrl, title }: VideoEmbedProps) {
   // Render direct video
   if (videoType === 'direct') {
     return (
-      <div className="relative aspect-video rounded-lg overflow-hidden bg-portfolio-surface">
+      <div className="relative aspect-video rounded-lg overflow-hidden bg-portfolio-light-surface dark:bg-portfolio-surface">
         <video
           src={embedUrl}
           controls
@@ -54,7 +54,7 @@ export default function VideoEmbed({ videoUrl, title }: VideoEmbedProps) {
 
   // Render iframe for YouTube/Vimeo
   return (
-    <div className="relative aspect-video rounded-lg overflow-hidden bg-portfolio-surface">
+    <div className="relative aspect-video rounded-lg overflow-hidden bg-portfolio-light-surface dark:bg-portfolio-surface">
       <iframe
         src={embedUrl}
         title={title}

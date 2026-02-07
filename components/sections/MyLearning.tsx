@@ -32,7 +32,7 @@ export default function MyLearning() {
             {[1, 2, 3].map((i) => (
               <div
                 key={i}
-                className="h-16 bg-portfolio-surface/20 rounded-lg animate-pulse"
+                className="h-16 bg-portfolio-light-surface dark:bg-portfolio-surface/20 rounded-lg animate-pulse"
               />
             ))}
           </div>
