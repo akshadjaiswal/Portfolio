@@ -12,6 +12,8 @@ import { SkillsCloud } from '@/components/projects/SkillsCloud';
 import { FilterSync } from '@/components/projects/FilterSync';
 import { useFilterStore } from '@/lib/stores/filter-store';
 import { Project } from '@/lib/types';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { ErrorFallback } from '@/components/ui/ErrorFallback';
 
 async function fetchProjects(): Promise<Project[]> {
   const response = await fetch('/api/github/projects');
@@ -58,10 +60,22 @@ export default function ProjectsPage() {
 
   return (
     <main className="min-h-screen bg-portfolio-light-bg dark:bg-portfolio-bg py-16">
-      <Suspense fallback={null}>
-        <FilterSync />
-      </Suspense>
-      <Container>
+      <ErrorBoundary
+        fallback={
+          <Container>
+            <div className="py-16">
+              <ErrorFallback
+                title="Projects page unavailable"
+                message="We couldn't load the projects page. This might be due to network issues or GitHub API rate limiting."
+              />
+            </div>
+          </Container>
+        }
+      >
+        <Suspense fallback={null}>
+          <FilterSync />
+        </Suspense>
+        <Container>
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-portfolio-silver hover:text-portfolio-light-text dark:text-portfolio-text transition-colors mb-12"
@@ -142,7 +156,8 @@ export default function ProjectsPage() {
             <p className="text-portfolio-muted">No projects found. Please check back later.</p>
           </div>
         )}
-      </Container>
+        </Container>
+      </ErrorBoundary>
     </main>
   );
 }

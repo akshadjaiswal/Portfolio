@@ -5,6 +5,8 @@ import { PERSONAL_INFO } from '@/lib/constants'
 import { QueryProvider } from '@/lib/query-provider'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import { ClientLayout } from '@/components/providers/ClientLayout'
+import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -30,11 +32,24 @@ export const metadata: Metadata = {
   openGraph: {
     title: `${PERSONAL_INFO.name} - Software Developer`,
     description: `Portfolio of ${PERSONAL_INFO.name}, software developer specializing in modern web applications`,
-    images: ['/og-image.png'],
+    type: 'website',
+    locale: 'en_US',
+    siteName: `${PERSONAL_INFO.name}'s Portfolio`,
+    images: [
+      {
+        url: `/api/og?title=${encodeURIComponent(PERSONAL_INFO.name)}&description=${encodeURIComponent('Full-Stack Developer & Technical Innovator')}`,
+        width: 1200,
+        height: 630,
+        alt: `${PERSONAL_INFO.name} - Portfolio`,
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     creator: '@akshad_999',
+    title: `${PERSONAL_INFO.name} - Software Developer`,
+    description: `Portfolio of ${PERSONAL_INFO.name}, software developer specializing in modern web applications`,
+    images: [`/api/og?title=${encodeURIComponent(PERSONAL_INFO.name)}&description=${encodeURIComponent('Full-Stack Developer & Technical Innovator')}`],
   },
   icons: {
     icon: [
@@ -101,6 +116,10 @@ export default function RootLayout({
             <ClientLayout>{children}</ClientLayout>
           </QueryProvider>
         </ThemeProvider>
+        {/* Vercel Analytics - Track page views and visitor data */}
+        <Analytics />
+        {/* Vercel Speed Insights - Monitor Core Web Vitals */}
+        <SpeedInsights />
       </body>
     </html>
   )

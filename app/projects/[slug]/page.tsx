@@ -10,6 +10,8 @@ import ProjectMetadata from "@/components/ui/ProjectMetadata";
 import VideoEmbed from "@/components/ui/VideoEmbed";
 import ImageGallery from "@/components/ui/ImageGallery";
 import { Project } from "@/lib/types";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { ErrorFallback } from "@/components/ui/ErrorFallback";
 
 async function fetchProjectBySlug(slug: string): Promise<Project> {
   const response = await fetch(`/api/github/projects?slug=${slug}`);
@@ -54,7 +56,28 @@ export default function ProjectDetailPage() {
 
   return (
     <main className="min-h-screen bg-portfolio-light-bg dark:bg-portfolio-bg py-16">
-      <Container>
+      <ErrorBoundary
+        fallback={
+          <Container>
+            <div className="py-16">
+              <ErrorFallback
+                title="Project details unavailable"
+                message="We couldn't load this project's details. Please try refreshing the page or go back to all projects."
+              />
+              <div className="mt-6 text-center">
+                <Link
+                  href="/projects"
+                  className="inline-flex items-center gap-2 text-portfolio-silver hover:text-portfolio-text transition-colors"
+                >
+                  <ArrowLeft size={20} />
+                  Back to All Projects
+                </Link>
+              </div>
+            </div>
+          </Container>
+        }
+      >
+        <Container>
         <Link
           href="/projects"
           className="inline-flex items-center gap-2 text-portfolio-light-text/70 dark:text-portfolio-silver hover:text-portfolio-light-accent dark:hover:text-portfolio-text transition-colors mb-12"
@@ -220,7 +243,8 @@ export default function ProjectDetailPage() {
             </div>
           </section>
         )}
-      </Container>
+        </Container>
+      </ErrorBoundary>
     </main>
   );
 }
