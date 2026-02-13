@@ -1,5 +1,6 @@
 'use client';
 
+import { useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useFilterStore } from '@/lib/stores/filter-store';
 
@@ -9,6 +10,12 @@ interface SkillsCloudProps {
 
 export function SkillsCloud({ technologies }: SkillsCloudProps) {
   const { selectedTechnologies, toggleTechnology } = useFilterStore();
+
+  // Memoize click handler to prevent recreation
+  const handleClick = useCallback((techName: string) => {
+    console.log('[SkillsCloud] Clicked:', techName);
+    toggleTechnology(techName);
+  }, [toggleTechnology]);
 
   // Calculate font sizes based on count (min: 0.875rem, max: 1.5rem)
   const maxCount = Math.max(...technologies.map((t) => t.count));
@@ -29,7 +36,8 @@ export function SkillsCloud({ technologies }: SkillsCloudProps) {
         return (
           <motion.button
             key={tech.name}
-            onClick={() => toggleTechnology(tech.name)}
+            type="button"
+            onClick={() => handleClick(tech.name)}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{
               opacity: 1,
@@ -42,6 +50,8 @@ export function SkillsCloud({ technologies }: SkillsCloudProps) {
               delay: index * 0.02,
               duration: 0.3,
             }}
+            layout={false}
+            style={{ pointerEvents: 'auto', touchAction: 'manipulation' }}
             className={`
               px-3 py-1.5 rounded-full transition-colors font-medium
               ${

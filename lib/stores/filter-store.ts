@@ -22,12 +22,16 @@ export const useFilterStore = create<FilterStore>((set, get) => ({
 
   setSearchQuery: (query) => set({ searchQuery: query }),
 
-  toggleTechnology: (tech) =>
-    set((state) => ({
-      selectedTechnologies: state.selectedTechnologies.includes(tech)
+  toggleTechnology: (tech) => {
+    console.log('[FilterStore] Toggle technology:', tech);
+    set((state) => {
+      const newTechnologies = state.selectedTechnologies.includes(tech)
         ? state.selectedTechnologies.filter((t) => t !== tech)
-        : [...state.selectedTechnologies, tech],
-    })),
+        : [...state.selectedTechnologies, tech];
+      console.log('[FilterStore] New technologies:', newTechnologies);
+      return { selectedTechnologies: newTechnologies };
+    });
+  },
 
   toggleCategory: (category) =>
     set((state) => ({

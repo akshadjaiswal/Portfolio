@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { useFilterStore } from '@/lib/stores/filter-store';
 
@@ -10,32 +10,42 @@ export function useFilterParams() {
   const searchParams = useSearchParams();
   const store = useFilterStore();
   const isInitialized = useRef(false);
+  const [hasMounted, setHasMounted] = useState(false);
+
+  // Track when component has mounted
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   // Sync URL to store on mount (only once)
   useEffect(() => {
-    if (isInitialized.current) return;
+    if (!hasMounted || isInitialized.current) return;
     isInitialized.current = true;
 
-    const search = searchParams.get('search') || '';
-    const tech = searchParams.get('tech')?.split(',').filter(Boolean) || [];
-    const categories = searchParams.get('category')?.split(',').filter(Boolean) || [];
+    try {
+      const search = searchParams?.get('search') ?? '';
+      const tech = searchParams?.get('tech')?.split(',').filter(Boolean) ?? [];
+      const categories = searchParams?.get('category')?.split(',').filter(Boolean) ?? [];
 
-    if (search) store.setSearchQuery(search);
-    tech.forEach((t) => {
-      if (!store.selectedTechnologies.includes(t)) {
-        store.toggleTechnology(t);
-      }
-    });
-    categories.forEach((c) => {
-      if (!store.selectedCategories.includes(c)) {
-        store.toggleCategory(c);
-      }
-    });
-  }, [searchParams]); // Only on mount with searchParams
+      if (search) store.setSearchQuery(search);
+      tech.forEach((t) => {
+        if (!store.selectedTechnologies.includes(t)) {
+          store.toggleTechnology(t);
+        }
+      });
+      categories.forEach((c) => {
+        if (!store.selectedCategories.includes(c)) {
+          store.toggleCategory(c);
+        }
+      });
+    } catch (error) {
+      console.error('[useFilterParams] Error parsing URL params:', error);
+    }
+  }, [hasMounted, searchParams, store]); // Only on mount with searchParams
 
   // Sync store to URL on changes (debounced)
   useEffect(() => {
-    if (!isInitialized.current) return;
+    if (!hasMounted || !isInitialized.current) return;
 
     const timeout = setTimeout(() => {
       const params = new URLSearchParams();
@@ -59,6 +69,7 @@ export function useFilterParams() {
 
     return () => clearTimeout(timeout);
   }, [
+    hasMounted,
     store.searchQuery,
     store.selectedTechnologies,
     store.selectedCategories,
