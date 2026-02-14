@@ -32,6 +32,11 @@ export async function GET(request: NextRequest) {
     const displayTitle = title.length > 60 ? title.substring(0, 57) + '...' : title
     const displayDesc = description.length > 120 ? description.substring(0, 117) + '...' : description
 
+    // Fetch profile picture
+    const profileImageUrl = new URL('/images/profile-pic.jpg', request.url).href
+    const profileImageData = await fetch(profileImageUrl).then((res) => res.arrayBuffer())
+    const profileImageBase64 = `data:image/jpeg;base64,${Buffer.from(profileImageData).toString('base64')}`
+
     return new ImageResponse(
       (
         <div
@@ -46,54 +51,70 @@ export async function GET(request: NextRequest) {
             padding: '60px 80px',
           }}
         >
-          {/* Top Section: Title & Description */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            {/* Category Badge */}
-            {category && (
-              <div
-                style={{
-                  display: 'flex',
-                  backgroundColor: '#2A2A2A',
-                  border: '1px solid #3A3A3A',
-                  borderRadius: 8,
-                  padding: '8px 16px',
-                  fontSize: 18,
-                  color: '#C0C0C0',
-                  fontWeight: 500,
-                  width: 'fit-content',
-                }}
-              >
-                {category}
-              </div>
-            )}
-
-            {/* Title */}
-            <div
+          {/* Top Section: Profile Picture + Title & Description */}
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 32, width: '100%' }}>
+            {/* Profile Picture */}
+            <img
+              src={profileImageBase64}
+              alt="Profile"
               style={{
-                fontSize: 64,
-                fontWeight: 700,
-                color: '#FFFFFF',
-                lineHeight: 1.2,
-                letterSpacing: '-0.02em',
-                maxWidth: 1000,
+                width: 140,
+                height: 140,
+                borderRadius: '50%',
+                border: '4px solid #C0C0C0',
+                objectFit: 'cover',
               }}
-            >
-              {displayTitle}
-            </div>
+            />
 
-            {/* Description */}
-            {description && (
+            {/* Text Content */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16, flex: 1 }}>
+              {/* Category Badge */}
+              {category && (
+                <div
+                  style={{
+                    display: 'flex',
+                    backgroundColor: '#2A2A2A',
+                    border: '1px solid #3A3A3A',
+                    borderRadius: 8,
+                    padding: '8px 16px',
+                    fontSize: 18,
+                    color: '#C0C0C0',
+                    fontWeight: 500,
+                    width: 'fit-content',
+                  }}
+                >
+                  {category}
+                </div>
+              )}
+
+              {/* Title */}
               <div
                 style={{
-                  fontSize: 28,
-                  color: '#A0A0A0',
-                  lineHeight: 1.4,
+                  fontSize: 56,
+                  fontWeight: 700,
+                  color: '#FFFFFF',
+                  lineHeight: 1.2,
+                  letterSpacing: '-0.02em',
                   maxWidth: 900,
                 }}
               >
-                {displayDesc}
+                {displayTitle}
               </div>
-            )}
+
+              {/* Description */}
+              {description && (
+                <div
+                  style={{
+                    fontSize: 26,
+                    color: '#A0A0A0',
+                    lineHeight: 1.4,
+                    maxWidth: 850,
+                  }}
+                >
+                  {displayDesc}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Bottom Section: Tech Stack & Branding */}
