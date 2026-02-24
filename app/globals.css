@@ -45,13 +45,23 @@
     background-repeat: repeat;
   }
 
-  h1,
-  h2,
+  h1 {
+    @apply font-heading font-semibold;
+  }
+
+  h2 {
+    @apply font-heading font-medium;
+  }
+
   h3,
   h4,
   h5,
   h6 {
-    @apply font-heading font-medium;
+    @apply font-heading font-normal;
+  }
+
+  body {
+    @apply font-light;
   }
 }
 
