@@ -213,3 +213,49 @@ export const FALLBACK_PROJECTS: Project[] = [
 // This file is now primarily used for configuration
 // Actual projects are fetched from GitHub via the API route
 export const PROJECTS: Project[] = FALLBACK_PROJECTS;
+
+/**
+ * Get related projects based on shared technologies, category, and complexity
+ */
+export function getRelatedProjects(
+  currentProject: Project,
+  allProjects: Project[],
+  limit = 3
+): Project[] {
+  // Exclude current project
+  const candidates = allProjects.filter((p) => p.id !== currentProject.id);
+
+  // Calculate relevance score for each project
+  const scoredProjects = candidates.map((project) => {
+    let score = 0;
+
+    // Shared technologies (most important)
+    const sharedTechs = project.technologies.filter((tech) =>
+      currentProject.technologies.includes(tech)
+    );
+    score += sharedTechs.length * 3;
+
+    // Same category
+    if (project.category === currentProject.category) {
+      score += 2;
+    }
+
+    // Same complexity level
+    if (project.complexity && currentProject.complexity && project.complexity === currentProject.complexity) {
+      score += 1;
+    }
+
+    // Prefer featured projects slightly
+    if (project.featured) {
+      score += 0.5;
+    }
+
+    return { project, score };
+  });
+
+  // Sort by score and return top results
+  return scoredProjects
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map((item) => item.project);
+}

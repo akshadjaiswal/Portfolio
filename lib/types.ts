@@ -71,6 +71,35 @@ export interface Project {
   autoFetched?: boolean;     // Indicates if fetched from GitHub
   repositoryUrl?: string;    // Full GitHub URL
   freshBuild?: boolean;      // Indicates if project should show "Fresh Build" badge
+
+  // GitHub stats display
+  githubStats?: {
+    stars: number;
+    forks: number;
+    language: string;
+    lastUpdated: string;
+  };
+
+  // Project metadata badges
+  complexity?: 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert';
+  impactLevel?: 'Personal' | 'Team' | 'Production' | 'Enterprise';
+  status?: 'In Development' | 'Completed' | 'Maintained' | 'Archived';
+
+  // Project metrics
+  metrics?: {
+    label: string;
+    value: string;
+    description: string;
+    trend?: 'up' | 'down' | 'neutral';
+  }[];
+
+  // Technical decisions (optional)
+  technicalDecisions?: {
+    challenge: string;
+    options: string[];
+    decision: string;
+    outcome: string;
+  }[];
 }
 
 export interface SocialLink {

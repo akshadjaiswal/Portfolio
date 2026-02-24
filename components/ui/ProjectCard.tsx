@@ -3,15 +3,18 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, Star, GitFork } from 'lucide-react';
 import { Project } from '@/lib/types';
 import { ANIMATION_CONFIG } from '@/lib/constants';
+import ProjectBadge from './ProjectBadge';
 
 interface ProjectCardProps {
   project: Project;
+  variant?: 'default' | 'featured';
 }
 
-export default function ProjectCard({ project }: ProjectCardProps) {
+export default function ProjectCard({ project, variant = 'default' }: ProjectCardProps) {
+  const isFeatured = variant === 'featured';
   return (
     <motion.div
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -22,7 +25,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         ease: ANIMATION_CONFIG.easing,
       }}
       whileHover={{ scale: 1.02, y: -4 }}
-      className="border border-portfolio-light-border dark:border-portfolio-border rounded-lg overflow-hidden hover:border-portfolio-light-accent dark:hover:border-portfolio-silver transition-all duration-300 group bg-portfolio-light-surface dark:bg-transparent shadow-card dark:shadow-dark-card hover:shadow-card-hover dark:hover:shadow-dark-card-hover active:scale-[0.98]"
+      className={`rounded-lg overflow-hidden transition-all duration-300 group bg-portfolio-light-surface dark:bg-transparent shadow-card dark:shadow-dark-card hover:shadow-card-hover dark:hover:shadow-dark-card-hover active:scale-[0.98] ${
+        isFeatured
+          ? 'border-2 border-transparent bg-gradient-to-r from-portfolio-accent-primary/20 to-portfolio-accent-secondary/20 p-[2px] hover:from-portfolio-accent-primary/40 hover:to-portfolio-accent-secondary/40'
+          : 'border border-portfolio-light-border dark:border-portfolio-border hover:border-portfolio-light-accent dark:hover:border-portfolio-silver'
+      }`}
     >
       {/* Thumbnail with Overlay */}
       <Link href={`/projects/${project.slug}`}>
@@ -37,15 +44,18 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             <span className="text-white font-medium text-sm">View Project</span>
           </div>
 
-          {/* Fresh Build Badge */}
-          {project.freshBuild && (
-            <div className="absolute top-3 right-3 z-10">
+          {/* Badges */}
+          <div className="absolute top-3 right-3 z-10 flex gap-2">
+            {project.freshBuild && (
               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-portfolio-light-surface/90 dark:bg-portfolio-surface/90 backdrop-blur-sm border border-portfolio-light-border dark:border-portfolio-border rounded-full text-xs text-portfolio-light-accent dark:text-portfolio-silver">
                 <Sparkles size={12} className="text-portfolio-light-accent dark:text-portfolio-silver" />
                 <span>Fresh Build</span>
               </div>
-            </div>
-          )}
+            )}
+            {project.complexity && (
+              <ProjectBadge variant="complexity" value={project.complexity} />
+            )}
+          </div>
         </div>
       </Link>
 
@@ -59,12 +69,12 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         <p className="text-xs text-portfolio-muted mb-3">
           {project.tagline}
         </p>
-        <p className="text-sm text-portfolio-light-text dark:text-portfolio-text mb-3 leading-relaxed line-clamp-2">
+        <p className={`text-sm text-portfolio-light-text dark:text-portfolio-text mb-3 leading-relaxed ${isFeatured ? 'line-clamp-3' : 'line-clamp-2'}`}>
           {project.description}
         </p>
 
         {/* Technologies */}
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-1.5 mb-3">
           {project.technologies.slice(0, 4).map((tech) => (
             <span
               key={tech}
@@ -79,6 +89,29 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             </span>
           )}
         </div>
+
+        {/* GitHub Stats */}
+        {(isFeatured || project.githubStats || project.githubStars !== undefined) && (
+          <div className="flex items-center gap-4 text-sm text-portfolio-muted pt-3 border-t border-portfolio-light-border dark:border-portfolio-border">
+            {(project.githubStats?.stars || project.githubStars !== undefined) && (
+              <span className="flex items-center gap-1">
+                <Star className="w-4 h-4" />
+                {project.githubStats?.stars || project.githubStars || 0}
+              </span>
+            )}
+            {(project.githubStats?.forks || project.githubForks !== undefined) && (
+              <span className="flex items-center gap-1">
+                <GitFork className="w-4 h-4" />
+                {project.githubStats?.forks || project.githubForks || 0}
+              </span>
+            )}
+            {(project.githubStats?.language || project.primaryLanguage) && (
+              <span className="text-xs">
+                {project.githubStats?.language || project.primaryLanguage}
+              </span>
+            )}
+          </div>
+        )}
       </div>
     </motion.div>
   );

@@ -68,3 +68,59 @@ export const LAYOUT_CONFIG = {
   sectionSpacing: '64px',
   cardSpacing: '24px',
 };
+
+// Tech stack categorization
+export const TECH_CATEGORIES: Record<string, 'frontend' | 'backend' | 'devops' | 'tools'> = {
+  // Frontend
+  'React': 'frontend',
+  'Next.js': 'frontend',
+  'TypeScript': 'frontend',
+  'JavaScript': 'frontend',
+  'Tailwind': 'frontend',
+  'TailwindCSS': 'frontend',
+  'Vue': 'frontend',
+  'Svelte': 'frontend',
+  'HTML': 'frontend',
+  'CSS': 'frontend',
+  'Framer Motion': 'frontend',
+  'Redux': 'frontend',
+  'Zustand': 'frontend',
+
+  // Backend
+  'Node.js': 'backend',
+  'Python': 'backend',
+  'FastAPI': 'backend',
+  'Express': 'backend',
+  'Django': 'backend',
+  'PostgreSQL': 'backend',
+  'MongoDB': 'backend',
+  'MySQL': 'backend',
+  'Redis': 'backend',
+  'GraphQL': 'backend',
+  'Supabase': 'backend',
+  'Prisma': 'backend',
+
+  // DevOps
+  'Docker': 'devops',
+  'AWS': 'devops',
+  'Vercel': 'devops',
+  'CI/CD': 'devops',
+  'GitHub Actions': 'devops',
+  'Kubernetes': 'devops',
+
+  // Tools
+  'Git': 'tools',
+  'Figma': 'tools',
+  'Jest': 'tools',
+  'Testing Library': 'tools',
+  'Storybook': 'tools',
+  'Webpack': 'tools',
+  'Vite': 'tools',
+};
+
+export const CATEGORY_COLORS = {
+  frontend: 'from-blue-500 to-blue-600',
+  backend: 'from-purple-500 to-purple-600',
+  devops: 'from-green-500 to-green-600',
+  tools: 'from-orange-500 to-orange-600',
+};
