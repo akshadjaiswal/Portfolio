@@ -31,7 +31,7 @@ export default function Experience() {
 
         <div className="relative">
           <div
-            className="absolute left-3 sm:left-6 top-0 bottom-0 w-0.5 bg-portfolio-border"
+            className="absolute left-3 sm:left-6 top-0 bottom-0 w-0.5 bg-portfolio-border opacity-30"
             aria-hidden="true"
           />
 

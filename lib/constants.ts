@@ -64,7 +64,7 @@ export const ANIMATION_CONFIG = {
 
 // Layout configuration
 export const LAYOUT_CONFIG = {
-  maxWidth: '1200px',
+  maxWidth: '800px',
   sectionSpacing: '64px',
   cardSpacing: '24px',
 };

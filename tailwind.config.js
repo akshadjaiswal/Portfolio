@@ -42,7 +42,7 @@ module.exports = {
         }
       },
       maxWidth: {
-        'portfolio': '1200px'
+        'portfolio': '800px'
       },
       fontWeight: {
         light: '300',

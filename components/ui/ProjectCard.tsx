@@ -33,7 +33,7 @@ export default function ProjectCard({ project, variant = 'default' }: ProjectCar
     >
       {/* Thumbnail with Overlay */}
       <Link href={`/projects/${project.slug}`}>
-        <div className="relative h-48 overflow-hidden bg-portfolio-light-surface dark:bg-portfolio-surface">
+        <div className="relative aspect-video overflow-hidden bg-portfolio-light-surface dark:bg-portfolio-surface">
           <Image
             src={project.thumbnail}
             alt={project.title}
