@@ -48,7 +48,8 @@ export async function GET(request: NextRequest) {
     // Merge in manual-only projects (e.g. private repos not in GITHUB_PROJECT_REPOS)
     const fetchedSlugs = new Set(projects.map(p => p.slug));
     const manualProjects = FALLBACK_PROJECTS.filter(p => !fetchedSlugs.has(p.slug));
-    const allProjects = [...projects, ...manualProjects];
+    const allProjects = [...projects, ...manualProjects]
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
     return NextResponse.json(allProjects, { headers: NO_CACHE_HEADERS });
   } catch (error) {
