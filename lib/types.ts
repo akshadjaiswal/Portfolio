@@ -116,4 +116,5 @@ export interface LearningRepo {
   description: string;
   label: string;
   stars?: number; // Fetched from API
+  appUrl?: string; // Live documentation app URL
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ExternalLink, Star, Github } from 'lucide-react';
+import { ExternalLink, Star, Github, Globe } from 'lucide-react';
 import { LearningRepo } from '@/lib/types';
 import { ANIMATION_CONFIG } from '@/lib/constants';
 import { AnimatedCounter } from './AnimatedCounter';
@@ -13,10 +13,7 @@ interface LearningRepoRowProps {
 
 export default function LearningRepoRow({ repo, index }: LearningRepoRowProps) {
   return (
-    <motion.a
-      href={repo.url}
-      target="_blank"
-      rel="noopener noreferrer"
+    <motion.div
       initial={{ opacity: 0, x: -20 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
@@ -27,20 +24,28 @@ export default function LearningRepoRow({ repo, index }: LearningRepoRowProps) {
       }}
       className="group flex items-center gap-4 p-4 rounded-lg hover:bg-portfolio-light-surface dark:bg-portfolio-surface/20 transition-all duration-200"
     >
-      {/* GitHub Logo */}
-      <div className="flex-shrink-0">
-        <Github size={24} className="text-portfolio-light-accent dark:text-portfolio-silver" />
-      </div>
+      {/* GitHub repo link: icon + info */}
+      <a
+        href={repo.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-4 flex-1 min-w-0"
+      >
+        {/* GitHub Logo */}
+        <div className="flex-shrink-0">
+          <Github size={24} className="text-portfolio-light-accent dark:text-portfolio-silver" />
+        </div>
 
-      {/* Repo Info */}
-      <div className="flex-1 min-w-0">
-        <h3 className="text-base font-medium text-portfolio-light-text dark:text-portfolio-text group-hover:text-portfolio-light-accent dark:text-portfolio-silver transition-colors">
-          {repo.name}
-        </h3>
-        <p className="text-sm text-portfolio-muted mt-0.5 line-clamp-1">
-          {repo.description}
-        </p>
-      </div>
+        {/* Repo Info */}
+        <div className="flex-1 min-w-0">
+          <h3 className="text-base font-medium text-portfolio-light-text dark:text-portfolio-text group-hover:text-portfolio-light-accent dark:text-portfolio-silver transition-colors">
+            {repo.name}
+          </h3>
+          <p className="text-sm text-portfolio-muted mt-0.5 line-clamp-1">
+            {repo.description}
+          </p>
+        </div>
+      </a>
 
       {/* Stars */}
       {repo.stars !== undefined && repo.stars > 0 && (
@@ -50,13 +55,34 @@ export default function LearningRepoRow({ repo, index }: LearningRepoRowProps) {
         </div>
       )}
 
-      {/* External Link Icon */}
-      <div className="flex-shrink-0">
+      {/* Live App CTA — only shown when appUrl is present */}
+      {repo.appUrl && (
+        <a
+          href={repo.appUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Open live app for ${repo.name}`}
+          className="flex-shrink-0 flex items-center gap-1 text-xs px-2.5 py-1 rounded-full border border-portfolio-light-accent/40 dark:border-portfolio-silver/30 text-portfolio-light-accent dark:text-portfolio-silver hover:bg-portfolio-light-accent/10 dark:hover:bg-portfolio-silver/10 transition-colors duration-200 cursor-pointer"
+        >
+          <Globe size={12} />
+          <span>Live App</span>
+        </a>
+      )}
+
+      {/* External Link Icon — links to GitHub repo */}
+      <a
+        href={repo.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        tabIndex={-1}
+        aria-hidden="true"
+        className="flex-shrink-0"
+      >
         <ExternalLink
           size={18}
           className="text-portfolio-light-text/60 dark:text-portfolio-muted group-hover:text-portfolio-light-accent dark:group-hover:text-portfolio-silver transition-colors"
         />
-      </div>
-    </motion.a>
+      </a>
+    </motion.div>
   );
 }

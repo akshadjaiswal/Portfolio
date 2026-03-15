@@ -5,6 +5,7 @@ export const LEARNING_REPOS = [
     url: 'https://github.com/akshadjaiswal/Namaste-Nodejs',
     description: 'Deep dive into Node.js internals and core concepts',
     label: 'Node.js',
+    appUrl: 'https://namaste-nodejs.vercel.app/',
   },
   {
     owner: 'akshadjaiswal',
@@ -12,6 +13,7 @@ export const LEARNING_REPOS = [
     url: 'https://github.com/akshadjaiswal/Namaste-JavaScript',
     description: 'JavaScript fundamentals and advanced concepts',
     label: 'JavaScript',
+    appUrl: 'https://namaste-javascript.vercel.app/',
   },
   {
     owner: 'akshadjaiswal',
