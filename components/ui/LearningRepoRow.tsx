@@ -38,7 +38,7 @@ export default function LearningRepoRow({ repo, index }: LearningRepoRowProps) {
 
         {/* Repo Info */}
         <div className="flex-1 min-w-0">
-          <h3 className="text-base font-medium text-portfolio-light-text dark:text-portfolio-text group-hover:text-portfolio-light-accent dark:text-portfolio-silver transition-colors">
+          <h3 className="text-base font-medium text-portfolio-light-text dark:text-portfolio-text group-hover:text-portfolio-light-accent dark:group-hover:text-portfolio-silver transition-colors">
             {repo.name}
           </h3>
           <p className="text-sm text-portfolio-muted mt-0.5 line-clamp-1">
