@@ -45,7 +45,12 @@ export async function GET(request: NextRequest) {
       return NextResponse.json(FALLBACK_PROJECTS, { headers: NO_CACHE_HEADERS });
     }
 
-    return NextResponse.json(projects, { headers: NO_CACHE_HEADERS });
+    // Merge in manual-only projects (e.g. private repos not in GITHUB_PROJECT_REPOS)
+    const fetchedSlugs = new Set(projects.map(p => p.slug));
+    const manualProjects = FALLBACK_PROJECTS.filter(p => !fetchedSlugs.has(p.slug));
+    const allProjects = [...projects, ...manualProjects];
+
+    return NextResponse.json(allProjects, { headers: NO_CACHE_HEADERS });
   } catch (error) {
     console.error('API Error fetching projects:', error);
 
