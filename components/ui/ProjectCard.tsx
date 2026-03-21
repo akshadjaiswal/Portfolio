@@ -7,6 +7,7 @@ import { Sparkles, Star, GitFork } from 'lucide-react';
 import { Project } from '@/lib/types';
 import { ANIMATION_CONFIG } from '@/lib/constants';
 import ProjectBadge from './ProjectBadge';
+import { Tooltip, TooltipTrigger, TooltipContent } from './tooltip';
 
 interface ProjectCardProps {
   project: Project;
@@ -76,17 +77,26 @@ export default function ProjectCard({ project, variant = 'default' }: ProjectCar
         {/* Technologies */}
         <div className="flex flex-wrap gap-1.5 mb-3">
           {project.technologies.slice(0, 4).map((tech) => (
-            <span
-              key={tech}
-              className="px-2 py-0.5 bg-portfolio-light-surface dark:bg-portfolio-surface border border-portfolio-light-border dark:border-portfolio-border rounded text-xs text-portfolio-light-text dark:text-portfolio-text font-mono tracking-wider uppercase"
-            >
-              {tech}
-            </span>
+            <Tooltip key={tech}>
+              <TooltipTrigger asChild>
+                <span className="px-2 py-0.5 bg-portfolio-light-surface dark:bg-portfolio-surface border border-portfolio-light-border dark:border-portfolio-border rounded text-xs text-portfolio-light-text dark:text-portfolio-text font-mono tracking-wider uppercase cursor-default">
+                  {tech}
+                </span>
+              </TooltipTrigger>
+              <TooltipContent>{tech}</TooltipContent>
+            </Tooltip>
           ))}
           {project.technologies.length > 4 && (
-            <span className="px-2 py-0.5 text-xs text-portfolio-muted">
-              +{project.technologies.length - 4} more
-            </span>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span className="px-2 py-0.5 text-xs text-portfolio-muted cursor-default hover:text-portfolio-light-text dark:hover:text-portfolio-text transition-colors">
+                  +{project.technologies.length - 4} more
+                </span>
+              </TooltipTrigger>
+              <TooltipContent>
+                {project.technologies.slice(4).join(', ')}
+              </TooltipContent>
+            </Tooltip>
           )}
         </div>
 

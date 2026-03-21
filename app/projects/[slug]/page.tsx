@@ -9,6 +9,7 @@ import Container from "@/components/ui/Container";
 import ProjectMetadata from "@/components/ui/ProjectMetadata";
 import VideoEmbed from "@/components/ui/VideoEmbed";
 import ImageGallery from "@/components/ui/ImageGallery";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Project } from "@/lib/types";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ErrorFallback } from "@/components/ui/ErrorFallback";
@@ -142,15 +143,37 @@ export default function ProjectDetailPage() {
           </div>
         </div>
 
-        <section className="mb-12">
-          <h2 className="text-xl md:text-2xl font-medium text-portfolio-light-text dark:text-portfolio-text mb-4">
-            Overview
-          </h2>
-          <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
-          <p className="text-portfolio-light-text dark:text-portfolio-text leading-relaxed text-base md:text-lg whitespace-pre-wrap">
-            {project.tagline}
-          </p>
-        </section>
+        {/* Tabbed content sections */}
+        {(() => {
+          const tabs = [
+            { value: 'overview', label: 'Overview', content: project.tagline, always: true },
+            { value: 'challenge', label: 'Challenge', content: project.problem, always: false },
+            { value: 'solution', label: 'Solution', content: project.solution, always: false },
+            { value: 'impact', label: 'Impact', content: project.impact, always: false },
+          ].filter((t) => t.always || t.content);
+
+          return (
+            <div className="mb-12">
+              <Tabs defaultValue={tabs[0]?.value}>
+                <TabsList>
+                  {tabs.map((tab) => (
+                    <TabsTrigger key={tab.value} value={tab.value}>
+                      {tab.label}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+                {tabs.map((tab) => (
+                  <TabsContent key={tab.value} value={tab.value}>
+                    <p className="text-portfolio-light-text dark:text-portfolio-text leading-relaxed text-base md:text-lg whitespace-pre-wrap">
+                      {tab.content}
+                    </p>
+                  </TabsContent>
+                ))}
+              </Tabs>
+            </div>
+          );
+        })()}
+
         {/* Metadata Card */}
         <div className="mb-12">
           <ProjectMetadata
@@ -169,45 +192,6 @@ export default function ProjectDetailPage() {
             </h2>
             <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
             <VideoEmbed videoUrl={project.videoUrl} title={project.title} />
-          </section>
-        )}
-
-        {/* The Challenge */}
-        {project.problem && (
-          <section className="mb-12">
-            <h2 className="text-xl md:text-2xl font-medium text-portfolio-light-text dark:text-portfolio-text mb-4">
-              The Challenge
-            </h2>
-            <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
-            <p className="text-portfolio-light-text dark:text-portfolio-text leading-relaxed text-base md:text-lg">
-              {project.problem}
-            </p>
-          </section>
-        )}
-
-        {/* The Solution */}
-        {project.solution && (
-          <section className="mb-12">
-            <h2 className="text-xl md:text-2xl font-medium text-portfolio-light-text dark:text-portfolio-text mb-4">
-              The Solution
-            </h2>
-            <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
-            <p className="text-portfolio-light-text dark:text-portfolio-text leading-relaxed text-base md:text-lg">
-              {project.solution}
-            </p>
-          </section>
-        )}
-
-        {/* Impact */}
-        {project.impact && (
-          <section className="mb-12">
-            <h2 className="text-xl md:text-2xl font-medium text-portfolio-light-text dark:text-portfolio-text mb-4">
-              Impact
-            </h2>
-            <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
-            <p className="text-portfolio-light-text dark:text-portfolio-text leading-relaxed text-base md:text-lg">
-              {project.impact}
-            </p>
           </section>
         )}
 
