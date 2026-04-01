@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { MapPin } from 'lucide-react';
 import { PERSONAL_INFO, ANIMATION_CONFIG, SOCIAL_LINKS } from '@/lib/constants';
 import { Github, Linkedin, Twitter } from 'lucide-react';
+import TypingEffect from '@/components/animations/TypingEffect';
+import StatusBadge from '@/components/ui/StatusBadge';
 
 const iconMap = {
   Github: Github,
@@ -92,11 +94,12 @@ export default function ProfileHeader() {
             {/* Role and Location */}
             <div className="space-y-2">
               <p className="text-lg md:text-xl text-portfolio-muted">
-                {PERSONAL_INFO.currentRole}
+                <TypingEffect roles={PERSONAL_INFO.roles} />
               </p>
               <div className="flex items-center justify-center gap-2 text-sm text-portfolio-muted">
                 <MapPin size={16} />
                 <span>{PERSONAL_INFO.location}</span>
+                <StatusBadge />
               </div>
             </div>
 
