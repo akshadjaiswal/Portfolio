@@ -2,11 +2,12 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { MapPin } from 'lucide-react';
+import { MapPin, ChevronDown } from 'lucide-react';
 import { PERSONAL_INFO, ANIMATION_CONFIG, SOCIAL_LINKS } from '@/lib/constants';
 import { Github, Linkedin, Twitter } from 'lucide-react';
 import TypingEffect from '@/components/animations/TypingEffect';
 import StatusBadge from '@/components/ui/StatusBadge';
+import { useState, useEffect } from 'react';
 
 const iconMap = {
   Github: Github,
@@ -15,6 +16,14 @@ const iconMap = {
 };
 
 export default function ProfileHeader() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 100);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className="relative bg-portfolio-light-bg dark:bg-portfolio-bg">
       <div className="max-w-portfolio mx-auto px-4 sm:px-6">
@@ -130,6 +139,20 @@ export default function ProfileHeader() {
             </div>
           </motion.div>
         </div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          className="flex justify-center mt-4 mb-2"
+          animate={{ opacity: scrolled ? 0 : 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <motion.div
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <ChevronDown size={20} className="text-portfolio-muted" />
+          </motion.div>
+        </motion.div>
       </div>
     </div>
   );
