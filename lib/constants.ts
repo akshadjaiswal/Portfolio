@@ -5,6 +5,7 @@ export const PERSONAL_INFO = {
   name: 'Akshad Jaiswal',
   tagline: 'Building things that work, and work well',
   currentRole: 'Software Developer',
+  roles: ['Software Developer', 'Full-Stack Engineer', 'Founding SDE', 'Product-Minded Builder'],
   location: 'India',
   email: 'your.email@example.com', // Update with your email
   githubUsername: 'akshadjaiswal',
