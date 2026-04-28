@@ -7,6 +7,7 @@ import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import { ClientLayout } from '@/components/providers/ClientLayout'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { MotionConfig } from 'framer-motion'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -111,11 +112,13 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.variable} ${spaceGrotesk.variable} ${inter.className}`}>
-        <ThemeProvider>
-          <QueryProvider>
-            <ClientLayout>{children}</ClientLayout>
-          </QueryProvider>
-        </ThemeProvider>
+        <MotionConfig reducedMotion="user">
+          <ThemeProvider>
+            <QueryProvider>
+              <ClientLayout>{children}</ClientLayout>
+            </QueryProvider>
+          </ThemeProvider>
+        </MotionConfig>
         {/* Vercel Analytics - Track page views and visitor data */}
         <Analytics />
         {/* Vercel Speed Insights - Monitor Core Web Vitals */}

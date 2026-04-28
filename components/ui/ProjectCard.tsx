@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 import { Sparkles, Star, GitFork } from 'lucide-react';
 import { Project } from '@/lib/types';
 import { ANIMATION_CONFIG } from '@/lib/constants';
@@ -16,6 +17,7 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project, variant = 'default' }: ProjectCardProps) {
   const isFeatured = variant === 'featured';
+  const [imgError, setImgError] = useState(false);
   return (
     <motion.div
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -35,12 +37,19 @@ export default function ProjectCard({ project, variant = 'default' }: ProjectCar
       {/* Thumbnail with Overlay */}
       <Link href={`/projects/${project.slug}`}>
         <div className="relative aspect-video overflow-hidden bg-portfolio-light-surface dark:bg-portfolio-surface">
-          <Image
-            src={project.thumbnail}
-            alt={project.title}
-            fill
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
-          />
+          {imgError ? (
+            <div className="absolute inset-0 bg-gradient-to-br from-portfolio-light-surface to-portfolio-light-border dark:from-portfolio-surface dark:to-portfolio-border flex items-center justify-center">
+              <span className="text-portfolio-muted text-xs font-mono px-4 text-center">{project.title}</span>
+            </div>
+          ) : (
+            <Image
+              src={project.thumbnail}
+              alt={project.title}
+              fill
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              onError={() => setImgError(true)}
+            />
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
             <span className="text-white font-medium text-sm">View Project</span>
           </div>

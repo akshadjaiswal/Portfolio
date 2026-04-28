@@ -2,7 +2,7 @@
 
 import { Suspense } from 'react';
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Search } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import Container from '@/components/ui/Container';
@@ -32,6 +32,7 @@ export default function ProjectsPage() {
   });
 
   const filterProjects = useFilterStore((state) => state.filterProjects);
+  const clearFilters = useFilterStore((state) => state.clearFilters);
 
   // Extract unique technologies and categories
   const allTechnologies = Array.from(new Set(projects.flatMap((p) => p.technologies))).sort();
@@ -142,13 +143,17 @@ export default function ProjectsPage() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-center py-12"
+            className="flex flex-col items-center justify-center py-20 gap-4"
           >
-            <p className="text-portfolio-muted text-lg mb-2">
-              No projects match your filters
-            </p>
-            <p className="text-sm text-portfolio-muted">
-              Try adjusting your search or clearing filters
+            <Search size={36} className="text-portfolio-muted opacity-40" />
+            <p className="text-portfolio-muted text-base text-center">
+              No projects match your filters.{' '}
+              <button
+                onClick={clearFilters}
+                className="text-portfolio-light-accent dark:text-portfolio-silver underline underline-offset-2 hover:opacity-80 transition-opacity"
+              >
+                Clear filters
+              </button>
             </p>
           </motion.div>
         ) : (
