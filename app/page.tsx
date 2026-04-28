@@ -8,10 +8,41 @@ import Footer from '@/components/ui/Footer';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { ErrorFallback } from '@/components/ui/ErrorFallback';
+import { PERSONAL_INFO, SOCIAL_LINKS } from '@/lib/constants';
+
+const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://akshad-work.vercel.app';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': `${baseUrl}/#person`,
+      name: PERSONAL_INFO.name,
+      url: baseUrl,
+      jobTitle: PERSONAL_INFO.currentRole,
+      description: PERSONAL_INFO.bio,
+      sameAs: SOCIAL_LINKS.map((s) => s.url),
+      knowsAbout: ['Full-Stack Development', 'React', 'Next.js', 'Node.js', 'Go', 'TypeScript'],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${baseUrl}/#website`,
+      url: baseUrl,
+      name: `${PERSONAL_INFO.name} — Portfolio`,
+      description: PERSONAL_INFO.tagline,
+      author: { '@id': `${baseUrl}/#person` },
+    },
+  ],
+};
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-portfolio-light-bg dark:bg-portfolio-bg">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Theme Toggle - Fixed Position */}
       <div className="fixed top-6 right-6 z-50">
         <ThemeToggle />
