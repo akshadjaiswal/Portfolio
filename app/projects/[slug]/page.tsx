@@ -190,7 +190,7 @@ export default function ProjectDetailPage() {
             <h2 className="text-xl md:text-2xl font-medium text-portfolio-light-text dark:text-portfolio-text mb-4">
               Video Demo
             </h2>
-            <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
+            <div className="w-12 h-0.5 bg-portfolio-light-accent dark:bg-portfolio-silver mb-6" />
             <VideoEmbed videoUrl={project.videoUrl} title={project.title} />
           </section>
         )}
@@ -201,7 +201,7 @@ export default function ProjectDetailPage() {
             <h2 className="text-xl md:text-2xl font-medium text-portfolio-light-text dark:text-portfolio-text mb-4">
               Gallery
             </h2>
-            <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
+            <div className="w-12 h-0.5 bg-portfolio-light-accent dark:bg-portfolio-silver mb-6" />
             <ImageGallery
               images={project.images}
               projectTitle={project.title}
@@ -215,7 +215,7 @@ export default function ProjectDetailPage() {
             <h2 className="text-xl md:text-2xl font-medium text-portfolio-light-text dark:text-portfolio-text mb-4">
               Testimonial
             </h2>
-            <div className="w-12 h-0.5 bg-portfolio-silver mb-6" />
+            <div className="w-12 h-0.5 bg-portfolio-light-accent dark:bg-portfolio-silver mb-6" />
             <div className="border border-portfolio-light-border dark:border-portfolio-border rounded-lg p-8 bg-portfolio-light-surface dark:bg-portfolio-surface">
               <p className="text-base md:text-lg text-portfolio-light-text dark:text-portfolio-text italic mb-4">
                 &ldquo;{project.testimonial.text}&rdquo;

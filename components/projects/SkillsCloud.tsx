@@ -13,7 +13,6 @@ export function SkillsCloud({ technologies }: SkillsCloudProps) {
 
   // Memoize click handler to prevent recreation
   const handleClick = useCallback((techName: string) => {
-    console.log('[SkillsCloud] Clicked:', techName);
     toggleTechnology(techName);
   }, [toggleTechnology]);
 
