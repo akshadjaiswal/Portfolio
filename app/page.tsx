@@ -1,5 +1,6 @@
 import ProfileHeader from '@/components/hero/ProfileHeader';
 import Experience from '@/components/sections/Experience';
+import TechStack from '@/components/sections/TechStack';
 import Projects from '@/components/sections/Projects';
 import GitHubContributions from '@/components/sections/GitHubContributions';
 import MyLearning from '@/components/sections/MyLearning';
@@ -72,6 +73,20 @@ export default function Home() {
         }
       >
         <Experience />
+      </ErrorBoundary>
+
+      {/* Tech Stack Section with Error Boundary */}
+      <ErrorBoundary
+        fallback={
+          <div className="py-10">
+            <ErrorFallback
+              title="Tech stack unavailable"
+              message="We couldn't load the tech stack section."
+            />
+          </div>
+        }
+      >
+        <TechStack />
       </ErrorBoundary>
 
       {/* Projects Section with Error Boundary */}
