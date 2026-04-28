@@ -22,4 +22,12 @@ export const LEARNING_REPOS = [
     description: 'React.js from basics to advanced patterns',
     label: 'React',
   },
+  {
+    owner: 'akshadjaiswal',
+    name: 'go-backend-production',
+    url: 'https://github.com/akshadjaiswal/go-backend-production',
+    description: 'Production-grade Go backend with REST API, auth, and deployment patterns',
+    label: 'Go',
+    appUrl: 'https://go-backend-production.vercel.app/',
+  },
 ];
