@@ -3,6 +3,7 @@ import Experience from '@/components/sections/Experience';
 import Projects from '@/components/sections/Projects';
 import GitHubContributions from '@/components/sections/GitHubContributions';
 import MyLearning from '@/components/sections/MyLearning';
+import Testimonials from '@/components/sections/Testimonials';
 import Footer from '@/components/ui/Footer';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
@@ -82,6 +83,20 @@ export default function Home() {
         }
       >
         <MyLearning />
+      </ErrorBoundary>
+
+      {/* Testimonials Section with Error Boundary */}
+      <ErrorBoundary
+        fallback={
+          <div className="py-10">
+            <ErrorFallback
+              title="Testimonials unavailable"
+              message="We couldn't load the recommendations. Please refresh the page."
+            />
+          </div>
+        }
+      >
+        <Testimonials />
       </ErrorBoundary>
 
       {/* Footer (no error boundary - static content) */}

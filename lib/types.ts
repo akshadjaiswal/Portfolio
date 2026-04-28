@@ -118,3 +118,14 @@ export interface LearningRepo {
   stars?: number; // Fetched from API
   appUrl?: string; // Live documentation app URL
 }
+
+export interface Testimonial {
+  id: string;
+  name: string;
+  role: string;
+  company: string;
+  relationship: string;
+  text: string;
+  linkedinUrl?: string;
+  avatarInitials: string;
+}
