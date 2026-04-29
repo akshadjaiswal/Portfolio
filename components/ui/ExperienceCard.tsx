@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, ChevronDown } from 'lucide-react';
 import Image from 'next/image';
@@ -21,146 +20,139 @@ export default function ExperienceCard({ experience, isExpanded, onToggle }: Exp
     }
   };
 
+  const startYear = experience.startDate ? new Date(experience.startDate).getFullYear() : '';
+  const startMonth = experience.startDate
+    ? new Date(experience.startDate).toLocaleString('default', { month: 'short' })
+    : '';
+  const endYear = experience.endDate ? new Date(experience.endDate).getFullYear() : 'Present';
+  const endMonth = experience.endDate
+    ? new Date(experience.endDate).toLocaleString('default', { month: 'short' })
+    : '';
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{
-        duration: ANIMATION_CONFIG.fadeInDuration,
-        ease: ANIMATION_CONFIG.easing,
-      }}
-      onClick={onToggle}
-      onKeyDown={handleKeyDown}
-      role="button"
-      tabIndex={0}
-      aria-expanded={isExpanded}
-      aria-label={`${experience.company} - ${experience.role}. ${isExpanded ? 'Collapse' : 'Expand'} details`}
-      className="rounded-lg cursor-pointer bg-transparent hover:bg-portfolio-light-surface/50 dark:hover:bg-portfolio-surface/20 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-portfolio-light-accent dark:focus:ring-portfolio-silver focus:ring-offset-2 focus:ring-offset-portfolio-light-bg dark:focus:ring-offset-portfolio-bg"
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: ANIMATION_CONFIG.fadeInDuration, ease: ANIMATION_CONFIG.easing }}
+      className="border-b border-portfolio-light-border/50 dark:border-portfolio-border/30 last:border-b-0"
     >
-      {/* Collapsed State Content */}
-      <div className="p-3 sm:p-4">
-        <div className="flex items-start gap-3 sm:gap-4">
-          {/* Company Logo */}
-          <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-md overflow-hidden bg-portfolio-light-surface dark:bg-portfolio-surface border border-portfolio-light-border dark:border-portfolio-border">
-            <Image
-              src={experience.logo}
-              alt={experience.logoAlt || `${experience.company} logo`}
-              width={48}
-              height={48}
-              className="object-contain p-2"
-            />
-          </div>
+      <div
+        onClick={onToggle}
+        onKeyDown={handleKeyDown}
+        role="button"
+        tabIndex={0}
+        aria-expanded={isExpanded}
+        aria-label={`${experience.company} - ${experience.role}. ${isExpanded ? 'Collapse' : 'Expand'} details`}
+        className="grid grid-cols-[100px_1fr] md:grid-cols-[130px_1fr] gap-x-6 md:gap-x-10 py-6 cursor-pointer group focus:outline-none"
+      >
+        {/* Left: date column */}
+        <div className="pt-0.5 flex flex-col gap-0.5">
+          <span className="font-mono text-xs text-portfolio-muted leading-tight">
+            {startMonth} {startYear}
+          </span>
+          <span className="font-mono text-xs text-portfolio-muted leading-tight">
+            {endMonth ? `${endMonth} ${endYear}` : endYear}
+          </span>
+          <span className="font-mono text-xs text-portfolio-muted/60 leading-tight mt-1">
+            {experience.type}
+          </span>
+        </div>
 
-          {/* Content */}
-          <div className="flex-1 min-w-0">
-            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4">
-              {/* Left: Company & Role */}
-              <div className="flex-1 min-w-0">
-                <h3 className="text-base sm:text-lg font-medium text-portfolio-light-text dark:text-portfolio-text truncate">
+        {/* Right: content column */}
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex items-start gap-3 flex-1 min-w-0">
+            {/* Logo */}
+            <div className="flex-shrink-0 w-9 h-9 rounded-md overflow-hidden bg-portfolio-light-surface dark:bg-portfolio-surface border border-portfolio-light-border dark:border-portfolio-border mt-0.5">
+              <Image
+                src={experience.logo}
+                alt={experience.logoAlt || `${experience.company} logo`}
+                width={36}
+                height={36}
+                className="object-contain p-1.5"
+              />
+            </div>
+
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-1.5 flex-wrap">
+                <h3 className="text-sm font-medium text-portfolio-light-text dark:text-portfolio-text group-hover:text-portfolio-light-accent dark:group-hover:text-portfolio-silver transition-colors">
                   {experience.companyUrl ? (
                     <a
                       href={experience.companyUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}
-                      className="hover:text-portfolio-light-accent dark:text-portfolio-silver transition-colors inline-flex items-center gap-1"
+                      className="inline-flex items-center gap-1 hover:text-portfolio-light-accent dark:hover:text-portfolio-silver transition-colors"
                     >
                       {experience.company}
-                      <ExternalLink size={14} />
+                      <ExternalLink size={12} className="opacity-60" />
                     </a>
                   ) : (
                     experience.company
                   )}
                 </h3>
-                <p className="text-sm sm:text-base text-portfolio-light-accent dark:text-portfolio-silver mt-0.5">
-                  {experience.role}
-                </p>
+                <span className="text-portfolio-muted/40 text-xs">·</span>
+                <span className="text-xs text-portfolio-muted">{experience.location}</span>
               </div>
-
-              {/* Right: Date & Meta */}
-              <div className="text-left sm:text-right flex-shrink-0">
-                <p className="text-xs sm:text-sm text-portfolio-light-text dark:text-portfolio-text font-medium">
-                  {experience.duration}
-                </p>
-                <div className="flex items-center gap-1.5 text-xs text-portfolio-muted mt-0.5 sm:justify-end">
-                  <span>{experience.location}</span>
-                  <span>•</span>
-                  <span>{experience.type}</span>
-                </div>
-              </div>
+              <p className="text-sm text-portfolio-light-accent dark:text-portfolio-silver mt-0.5">
+                {experience.role}
+              </p>
             </div>
           </div>
 
-          {/* Chevron Icon */}
           <motion.div
             animate={{ rotate: isExpanded ? 180 : 0 }}
             transition={{ duration: 0.2, ease: 'easeInOut' }}
-            className="flex-shrink-0 text-portfolio-muted"
+            className="flex-shrink-0 text-portfolio-muted mt-1"
           >
-            <ChevronDown size={20} />
+            <ChevronDown size={16} />
           </motion.div>
         </div>
       </div>
 
-      {/* Expanded State Content */}
+      {/* Expanded content */}
       <AnimatePresence>
         {isExpanded && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{
-              duration: 0.3,
-              ease: ANIMATION_CONFIG.easing,
-              opacity: { duration: 0.2 },
-            }}
+            transition={{ duration: 0.3, ease: ANIMATION_CONFIG.easing, opacity: { duration: 0.2 } }}
             className="overflow-hidden"
           >
-            <div className="px-4 sm:px-6 pb-4 sm:pb-6 pt-4">
-              {/* Description */}
-              <p className="text-portfolio-light-text dark:text-portfolio-text leading-relaxed mb-6">
-                {experience.description}
-              </p>
+            <div className="grid grid-cols-[100px_1fr] md:grid-cols-[130px_1fr] gap-x-6 md:gap-x-10 pb-6">
+              <div />
+              <div className="space-y-5">
+                {experience.description && (
+                  <p className="text-sm text-portfolio-muted leading-relaxed">
+                    {experience.description}
+                  </p>
+                )}
 
-              {/* Achievements */}
-              {!!experience.achievements?.length && (
-                <div className="mb-6">
-                  <h4 className="text-sm font-medium text-portfolio-light-accent dark:text-portfolio-silver mb-3">
-                    Key Achievements
-                  </h4>
+                {!!experience.achievements?.length && (
                   <ul className="space-y-2">
-                    {experience.achievements?.map((achievement, index) => (
-                      <li
-                        key={index}
-                        className="text-sm text-portfolio-muted flex items-start gap-2"
-                      >
-                        <span className="text-portfolio-light-accent dark:text-portfolio-silver mt-0.5">→</span>
+                    {experience.achievements.map((achievement, i) => (
+                      <li key={i} className="text-sm text-portfolio-muted flex items-start gap-2">
+                        <span className="text-portfolio-light-accent dark:text-portfolio-silver mt-0.5 flex-shrink-0">→</span>
                         <span className="flex-1">{achievement}</span>
                       </li>
                     ))}
                   </ul>
-                </div>
-              )}
+                )}
 
-              {/* Technologies */}
-              {!!experience.technologies?.length && (
-                <div>
-                  <h4 className="text-sm font-medium text-portfolio-light-accent dark:text-portfolio-silver mb-3">
-                    Technologies
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {experience.technologies?.map((tech) => (
+                {!!experience.technologies?.length && (
+                  <div className="flex flex-wrap gap-1.5">
+                    {experience.technologies.map((tech) => (
                       <span
                         key={tech}
-                        className="px-3 py-1.5 bg-portfolio-light-surface dark:bg-portfolio-surface border border-portfolio-light-border dark:border-portfolio-border rounded-full text-xs text-portfolio-light-text dark:text-portfolio-text font-mono"
+                        className="px-2.5 py-1 bg-portfolio-light-surface dark:bg-portfolio-surface border border-portfolio-light-border dark:border-portfolio-border rounded-full text-xs text-portfolio-light-text dark:text-portfolio-text font-mono"
                       >
                         {tech}
                       </span>
                     ))}
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </motion.div>
         )}

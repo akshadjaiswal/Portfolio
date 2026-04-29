@@ -29,38 +29,24 @@ export default function Experience() {
           subtitle="My professional journey"
         />
 
-        <div className="relative">
-          <div
-            className="absolute left-3 sm:left-6 top-0 bottom-0 w-0.5 bg-portfolio-border opacity-30"
-            aria-hidden="true"
-          />
-
-          <div className="space-y-6">
-            {sortedExperiences.map((exp) => (
-              <div key={exp.id} className="relative">
-                <div
-                  className="absolute left-3 sm:left-6 top-6 w-3 h-3 rounded-full bg-portfolio-silver border-2 border-portfolio-bg transform -translate-x-1/2 z-10"
-                  aria-hidden="true"
-                />
-
-                <div className="pl-8 sm:pl-16">
-                  {exp.positions ? (
-                    <CompanyExperienceGroup
-                      experience={exp}
-                      isExpanded={expandedId === exp.id}
-                      onToggle={() => handleToggle(exp.id)}
-                    />
-                  ) : (
-                    <ExperienceCard
-                      experience={exp}
-                      isExpanded={expandedId === exp.id}
-                      onToggle={() => handleToggle(exp.id)}
-                    />
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+        <div>
+          {sortedExperiences.map((exp) => (
+            exp.positions ? (
+              <CompanyExperienceGroup
+                key={exp.id}
+                experience={exp}
+                isExpanded={expandedId === exp.id}
+                onToggle={() => handleToggle(exp.id)}
+              />
+            ) : (
+              <ExperienceCard
+                key={exp.id}
+                experience={exp}
+                isExpanded={expandedId === exp.id}
+                onToggle={() => handleToggle(exp.id)}
+              />
+            )
+          ))}
         </div>
       </Container>
     </Section>
