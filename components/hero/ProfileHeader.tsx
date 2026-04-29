@@ -4,7 +4,8 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { MapPin, ChevronDown } from 'lucide-react';
 import { PERSONAL_INFO, ANIMATION_CONFIG, SOCIAL_LINKS } from '@/lib/constants';
-import { Github, Linkedin, Twitter } from 'lucide-react';
+import { Github, Linkedin } from 'lucide-react';
+import { SiX } from 'react-icons/si';
 import TypingEffect from '@/components/animations/TypingEffect';
 import StatusBadge from '@/components/ui/StatusBadge';
 import { useState, useEffect } from 'react';
@@ -12,7 +13,7 @@ import { useState, useEffect } from 'react';
 const iconMap = {
   Github: Github,
   Linkedin: Linkedin,
-  Twitter: Twitter,
+  Twitter: SiX,
 };
 
 export default function ProfileHeader() {

@@ -6,6 +6,7 @@ import * as Si from 'react-icons/si';
 import { Tooltip, TooltipTrigger, TooltipContent } from './tooltip';
 import { TechItem } from '@/lib/data/techstack';
 import { ANIMATION_CONFIG } from '@/lib/constants';
+import { useThemeStore } from '@/lib/stores/theme-store';
 
 interface TechIconProps {
   tech: TechItem;
@@ -14,9 +15,15 @@ interface TechIconProps {
 
 export default function TechIcon({ tech, index }: TechIconProps) {
   const [hovered, setHovered] = useState(false);
+  const resolvedTheme = useThemeStore((s) => s.resolvedTheme);
 
-  // Dynamically resolve icon from react-icons/si
   const IconComponent = (Si as Record<string, React.ComponentType<{ size?: number; color?: string }>>)[tech.icon];
+
+  const hoverColor = hovered
+    ? resolvedTheme === 'dark' && tech.darkColor
+      ? tech.darkColor
+      : tech.color
+    : undefined;
 
   return (
     <Tooltip>
@@ -36,10 +43,7 @@ export default function TechIcon({ tech, index }: TechIconProps) {
           className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-xl border border-portfolio-light-border dark:border-portfolio-border bg-portfolio-light-surface dark:bg-portfolio-surface/60 hover:border-portfolio-light-accent/40 dark:hover:border-portfolio-silver/30 hover:shadow-card dark:hover:shadow-dark-card transition-colors duration-200 cursor-default"
         >
           {IconComponent ? (
-            <IconComponent
-              size={24}
-              color={hovered ? tech.color : undefined}
-            />
+            <IconComponent size={24} color={hoverColor} />
           ) : (
             <span className="text-xs font-mono text-portfolio-muted">
               {tech.name.slice(0, 2)}

@@ -1,12 +1,13 @@
 'use client';
 
-import { Github, Linkedin, Twitter } from 'lucide-react';
+import { Github, Linkedin } from 'lucide-react';
+import { SiX } from 'react-icons/si';
 import { SOCIAL_LINKS } from '@/lib/constants';
 
 const iconMap = {
   Github: Github,
   Linkedin: Linkedin,
-  Twitter: Twitter,
+  Twitter: SiX,
 };
 
 export default function SocialLinks() {
