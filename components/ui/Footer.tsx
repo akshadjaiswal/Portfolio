@@ -88,8 +88,12 @@ export default function Footer() {
       {/* Band 3 — Copyright */}
       <div className="py-5">
         <Container>
-          <p className="text-center text-xs text-portfolio-muted">
-            © {currentYear} {PERSONAL_INFO.name} · Made with ♥
+          <p className="text-center text-xs text-portfolio-muted flex items-center justify-center gap-2">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-portfolio-accent-success opacity-75" />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-portfolio-accent-success" />
+            </span>
+            Available for opportunities · © {currentYear} {PERSONAL_INFO.name}
           </p>
         </Container>
       </div>
