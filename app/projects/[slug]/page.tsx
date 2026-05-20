@@ -129,7 +129,7 @@ export default function ProjectDetailPage() {
                 <span>Live Demo</span>
               </a>
             )}
-            {project.githubUrl && (
+            {project.githubUrl && project.slug !== 'letter-of-love' && (
               <a
                 href={project.githubUrl}
                 target="_blank"
