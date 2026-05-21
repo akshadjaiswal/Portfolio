@@ -31,20 +31,14 @@ export default function Footer() {
               href={PERSONAL_INFO.calComLink}
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="group inline-flex items-center gap-2 mt-2 px-6 py-3 bg-portfolio-light-surface dark:bg-portfolio-surface border border-portfolio-light-border dark:border-portfolio-border rounded-lg text-portfolio-light-text dark:text-portfolio-text hover:border-portfolio-light-accent dark:hover:border-portfolio-silver hover:bg-portfolio-light-surface/50 dark:hover:bg-portfolio-surface/50 transition-all duration-200"
+              whileTap={{ scale: 0.98 }}
+              className="group inline-flex items-center gap-2 mt-2 px-6 py-3 rounded-lg font-medium transition-all duration-150 ease-out bg-portfolio-light-surface dark:bg-portfolio-surface border border-portfolio-light-border dark:border-black/50 text-portfolio-light-text dark:text-portfolio-text shadow-[0_4px_10px_-4px_rgba(15,23,42,0.15)] dark:shadow-[0_4px_10px_-4px_rgba(0,0,0,0.4)] hover:shadow-[0_2px_6px_-2px_rgba(15,23,42,0.1)] dark:hover:shadow-[0_2px_6px_-2px_rgba(0,0,0,0.5)] hover:translate-y-px active:translate-y-0.5"
             >
               <Calendar
                 size={18}
-                className="text-portfolio-light-accent dark:text-portfolio-silver group-hover:text-portfolio-light-text dark:group-hover:text-portfolio-text transition-colors"
+                className="text-portfolio-light-accent dark:text-portfolio-silver"
               />
-              <span className="font-medium">Schedule a Call</span>
-              <motion.div
-                className="w-0 group-hover:w-2 h-2 bg-portfolio-light-accent dark:bg-portfolio-silver rounded-full transition-all duration-200"
-                initial={{ width: 0 }}
-                whileHover={{ width: 8 }}
-              />
+              <span>Schedule a Call</span>
             </motion.a>
           </div>
         </Container>
@@ -73,7 +67,7 @@ export default function Footer() {
                   <a
                     key={href}
                     href={href}
-                    className="text-sm text-portfolio-muted hover:text-portfolio-light-text dark:hover:text-portfolio-text transition-colors"
+                    className="relative text-sm text-portfolio-muted hover:text-portfolio-light-text dark:hover:text-portfolio-text transition-colors after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 hover:after:w-full after:bg-portfolio-light-accent dark:after:bg-portfolio-silver after:transition-all after:duration-200"
                   >
                     {label}
                   </a>

@@ -39,11 +39,27 @@ const jsonLd = {
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-portfolio-light-bg dark:bg-portfolio-bg">
+    <main className="relative min-h-screen bg-portfolio-light-bg dark:bg-portfolio-bg">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+
+      {/* Left diagonal stripe — exact Kartik pattern */}
+      <div aria-hidden="true" className="absolute left-0 w-[60px] h-full overflow-hidden sm:block hidden pointer-events-none">
+        <div
+          className="absolute dark:opacity-[0.04] opacity-[0.06] inset-0 w-[60px] h-full border dark:border-[#eee] border-[#000]/70"
+          style={{ backgroundImage: 'repeating-linear-gradient(-45deg, transparent, transparent 2px, currentcolor 2px, currentcolor 3px, transparent 3px, transparent 6px)' }}
+        />
+      </div>
+      {/* Right diagonal stripe — exact Kartik pattern */}
+      <div aria-hidden="true" className="absolute right-0 w-[60px] h-full overflow-hidden sm:block hidden pointer-events-none">
+        <div
+          className="absolute dark:opacity-[0.04] opacity-[0.06] inset-0 w-[60px] h-full border dark:border-[#eee] border-[#000]/70"
+          style={{ backgroundImage: 'repeating-linear-gradient(-45deg, transparent, transparent 2px, currentcolor 2px, currentcolor 3px, transparent 3px, transparent 6px)' }}
+        />
+      </div>
+
       {/* Theme Toggle - Fixed Position */}
       <div className="fixed top-6 right-6 z-50">
         <ThemeToggle />
@@ -61,6 +77,8 @@ export default function Home() {
         <ProfileHeader />
       </ErrorBoundary>
 
+      <div className="border-b border-dashed border-black/[0.06] dark:border-white/[0.06]" />
+
       {/* Experience Section with Error Boundary */}
       <ErrorBoundary
         fallback={
@@ -74,6 +92,8 @@ export default function Home() {
       >
         <Experience />
       </ErrorBoundary>
+
+      <div className="border-b border-dashed border-black/[0.06] dark:border-white/[0.06]" />
 
       {/* Tech Stack Section with Error Boundary */}
       <ErrorBoundary
@@ -89,6 +109,8 @@ export default function Home() {
         <TechStack />
       </ErrorBoundary>
 
+      <div className="border-b border-dashed border-black/[0.06] dark:border-white/[0.06]" />
+
       {/* Projects Section with Error Boundary */}
       <ErrorBoundary
         fallback={
@@ -102,6 +124,8 @@ export default function Home() {
       >
         <Projects />
       </ErrorBoundary>
+
+      <div className="border-b border-dashed border-black/[0.06] dark:border-white/[0.06]" />
 
       {/* GitHub Contributions with Error Boundary */}
       <ErrorBoundary
@@ -117,6 +141,8 @@ export default function Home() {
         <GitHubContributions />
       </ErrorBoundary>
 
+      <div className="border-b border-dashed border-black/[0.06] dark:border-white/[0.06]" />
+
       {/* Learning Section with Error Boundary */}
       <ErrorBoundary
         fallback={
@@ -130,6 +156,8 @@ export default function Home() {
       >
         <MyLearning />
       </ErrorBoundary>
+
+      <div className="border-b border-dashed border-black/[0.06] dark:border-white/[0.06]" />
 
       {/* Testimonials Section with Error Boundary */}
       <ErrorBoundary
