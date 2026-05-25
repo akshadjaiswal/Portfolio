@@ -16,7 +16,7 @@ export default function Testimonials() {
           title="What People Say"
           subtitle="Recommendations from colleagues and managers"
         />
-        <div className={`grid gap-6 grid-cols-1 ${TESTIMONIALS.length > 1 ? 'md:grid-cols-2' : 'max-w-xl mx-auto'}`}>
+        <div className={`grid gap-6 grid-cols-1 ${TESTIMONIALS.length > 1 ? 'md:grid-cols-2' : ''}`}>
           {TESTIMONIALS.map((testimonial, index) => (
             <TestimonialCard
               key={testimonial.id}

@@ -178,7 +178,7 @@ export default function GitHubContributions() {
           </motion.div>
         )}
 
-        <div ref={containerRef} className="flex justify-center mb-6 overflow-hidden">
+        <div ref={containerRef} className="w-full mb-6 overflow-hidden">
           <GitHubCalendar
             username={PERSONAL_INFO.githubUsername}
             theme={{
@@ -191,7 +191,7 @@ export default function GitHubContributions() {
           />
         </div>
 
-        <div className="text-center">
+        <div>
           <a
             href={`https://github.com/${PERSONAL_INFO.githubUsername}`}
             target="_blank"

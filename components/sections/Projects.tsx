@@ -65,7 +65,7 @@ export default function Projects() {
             </div>
 
             {projects.length > 0 && (
-              <div className="text-center">
+              <div>
                 <Link
                   href="/projects"
                   className="inline-flex items-center gap-2 text-portfolio-light-accent dark:text-portfolio-silver hover:text-portfolio-light-text dark:text-portfolio-text transition-colors"
