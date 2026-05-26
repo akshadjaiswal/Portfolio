@@ -13,21 +13,6 @@ interface ErrorBoundaryState {
   error: Error | null
 }
 
-/**
- * ErrorBoundary component that catches JavaScript errors anywhere in the child component tree
- * and displays a fallback UI instead of crashing the entire application.
- *
- * Features:
- * - Isolates errors to prevent cascade failures
- * - Provides retry mechanism to recover from errors
- * - Logs errors for debugging (expandable to Sentry/error tracking)
- * - Graceful fallback UI matching application theme
- *
- * Usage:
- * <ErrorBoundary fallback={<CustomFallback />}>
- *   <YourComponent />
- * </ErrorBoundary>
- */
 export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props)
@@ -38,7 +23,6 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   }
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
-    // Update state so the next render will show the fallback UI
     return {
       hasError: true,
       error
@@ -46,20 +30,13 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    // Log error details for debugging
     console.error('ErrorBoundary caught an error:', error, errorInfo)
-
-    // Call optional error handler (e.g., for Sentry integration)
     if (this.props.onError) {
       this.props.onError(error, errorInfo)
     }
-
-    // In production, you can send this to an error tracking service:
-    // logErrorToService(error, errorInfo)
   }
 
   handleReset = () => {
-    // Reset error state to retry rendering
     this.setState({
       hasError: false,
       error: null
@@ -68,7 +45,6 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
   render() {
     if (this.state.hasError) {
-      // Render custom fallback UI if provided
       if (this.props.fallback) {
         return this.props.fallback
       }
