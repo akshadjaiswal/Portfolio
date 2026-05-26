@@ -70,6 +70,7 @@ export default function ProfileHeader() {
               src="/images/profile-pic.jpg"
               alt={PERSONAL_INFO.name}
               fill
+              sizes="(max-width: 640px) 96px, 112px"
               className="rounded-full object-cover border-[3px] border-portfolio-light-bg dark:border-portfolio-bg shadow-xl"
               priority
             />
