@@ -44,7 +44,7 @@ export default function ExperienceCard({ experience, isExpanded, onToggle }: Exp
         tabIndex={0}
         aria-expanded={isExpanded}
         aria-label={`${experience.company} - ${experience.role}. ${isExpanded ? 'Collapse' : 'Expand'} details`}
-        className="grid grid-cols-[100px_1fr] md:grid-cols-[130px_1fr] gap-x-6 md:gap-x-10 py-6 cursor-pointer group focus:outline-none"
+        className="grid grid-cols-[72px_1fr] sm:grid-cols-[100px_1fr] md:grid-cols-[130px_1fr] gap-x-3 sm:gap-x-6 md:gap-x-10 py-6 cursor-pointer group focus:outline-none"
       >
         {/* Left: date column */}
         <div className="pt-0.5 flex flex-col gap-0.5">
@@ -120,7 +120,7 @@ export default function ExperienceCard({ experience, isExpanded, onToggle }: Exp
             transition={{ duration: 0.3, ease: ANIMATION_CONFIG.easing, opacity: { duration: 0.2 } }}
             className="overflow-hidden"
           >
-            <div className="grid grid-cols-[100px_1fr] md:grid-cols-[130px_1fr] gap-x-6 md:gap-x-10 pb-6">
+            <div className="grid grid-cols-[72px_1fr] sm:grid-cols-[100px_1fr] md:grid-cols-[130px_1fr] gap-x-3 sm:gap-x-6 md:gap-x-10 pb-6">
               <div />
               <div className="space-y-5">
                 {experience.description && (
