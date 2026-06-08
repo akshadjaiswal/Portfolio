@@ -9,6 +9,7 @@ import Container from '../ui/Container';
 import Section from '../ui/Section';
 import SectionHeader from '../ui/SectionHeader';
 import { AnimatedCounter } from '../ui/AnimatedCounter';
+import GitHubProfileCard from '../ui/GitHubProfileCard';
 import { PERSONAL_INFO } from '@/lib/constants';
 import { useThemeStore } from '@/lib/stores/theme-store';
 import type { GitHubUserStats } from '@/app/api/github/stats/route';
@@ -126,6 +127,22 @@ export default function GitHubContributions() {
           title="GitHub Activity"
           subtitle="My open source contributions"
         />
+
+        {/* Profile card skeleton */}
+        {isLoading && (
+          <div className="bg-portfolio-light-surface dark:bg-portfolio-surface border border-portfolio-light-border dark:border-portfolio-border rounded-xl p-5 sm:p-6 flex gap-5 mb-8 animate-pulse">
+            <div className="w-20 h-20 rounded-full bg-portfolio-light-border dark:bg-portfolio-border flex-shrink-0" />
+            <div className="flex-1 space-y-2.5 pt-1">
+              <div className="h-4 w-32 bg-portfolio-light-border dark:bg-portfolio-border rounded" />
+              <div className="h-3 w-24 bg-portfolio-light-border dark:bg-portfolio-border rounded" />
+              <div className="h-3 w-full bg-portfolio-light-border dark:bg-portfolio-border rounded" />
+              <div className="h-3 w-4/5 bg-portfolio-light-border dark:bg-portfolio-border rounded" />
+            </div>
+          </div>
+        )}
+
+        {/* Profile card */}
+        {!isLoading && stats && <GitHubProfileCard stats={stats} />}
 
         {isLoading && <StatsSkeleton />}
 

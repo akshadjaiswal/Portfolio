@@ -12,6 +12,10 @@ export interface GitHubUserStats {
   totalStars: number;
   yearsOnGitHub: number;
   topLanguages: { name: string; percentage: number }[];
+  followers: number;
+  following: number;
+  publicRepos: number;
+  bio: string | null;
 }
 
 function authHeaders(): HeadersInit {
@@ -78,9 +82,13 @@ async function fetchReposData(): Promise<{
   totalStars: number;
   yearsOnGitHub: number;
   topLanguages: { name: string; percentage: number }[];
+  followers: number;
+  following: number;
+  publicRepos: number;
+  bio: string | null;
 }> {
   try {
-    // User profile for account age
+    // User profile for account age + profile fields
     const userRes = await fetch(`${GITHUB_API_BASE}/users/${USERNAME}`, {
       headers: authHeaders(),
     });
@@ -88,13 +96,17 @@ async function fetchReposData(): Promise<{
     const yearsOnGitHub = userData?.created_at
       ? Math.floor((Date.now() - new Date(userData.created_at).getTime()) / (1000 * 60 * 60 * 24 * 365))
       : 0;
+    const followers   = userData?.followers    ?? 0;
+    const following   = userData?.following    ?? 0;
+    const publicRepos = userData?.public_repos ?? 0;
+    const bio         = userData?.bio          ?? null;
 
     // All owned repos
     const reposRes = await fetch(
       `${GITHUB_API_BASE}/users/${USERNAME}/repos?per_page=100&type=owner&sort=updated`,
       { headers: authHeaders() }
     );
-    if (!reposRes.ok) return { totalStars: 0, yearsOnGitHub, topLanguages: [] };
+    if (!reposRes.ok) return { totalStars: 0, yearsOnGitHub, topLanguages: [], followers, following, publicRepos, bio };
 
     const repos: Repo[] = await reposRes.json();
     const ownRepos = repos.filter((r) => !r.fork);
@@ -119,9 +131,9 @@ async function fetchReposData(): Promise<{
         percentage: Math.round((count / totalLangRepos) * 100),
       }));
 
-    return { totalStars, yearsOnGitHub, topLanguages };
+    return { totalStars, yearsOnGitHub, topLanguages, followers, following, publicRepos, bio };
   } catch {
-    return { totalStars: 0, yearsOnGitHub: 0, topLanguages: [] };
+    return { totalStars: 0, yearsOnGitHub: 0, topLanguages: [], followers: 0, following: 0, publicRepos: 0, bio: null };
   }
 }
 
@@ -135,9 +147,13 @@ export async function GET(): Promise<NextResponse> {
   const stats: GitHubUserStats = {
     totalCommits,
     totalPRsMerged,
-    totalStars: reposData.totalStars,
+    totalStars:    reposData.totalStars,
     yearsOnGitHub: reposData.yearsOnGitHub,
-    topLanguages: reposData.topLanguages,
+    topLanguages:  reposData.topLanguages,
+    followers:     reposData.followers,
+    following:     reposData.following,
+    publicRepos:   reposData.publicRepos,
+    bio:           reposData.bio,
   };
 
   return NextResponse.json(stats);
