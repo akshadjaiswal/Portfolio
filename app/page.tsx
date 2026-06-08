@@ -6,6 +6,8 @@ import GitHubContributions from '@/components/sections/GitHubContributions';
 import MyLearning from '@/components/sections/MyLearning';
 import Testimonials from '@/components/sections/Testimonials';
 import Footer from '@/components/ui/Footer';
+import SpotifyNowPlaying from '@/components/ui/SpotifyNowPlaying';
+import Container from '@/components/ui/Container';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { ErrorFallback } from '@/components/ui/ErrorFallback';
@@ -151,6 +153,11 @@ export default function Home() {
       >
         <Testimonials />
       </ErrorBoundary>
+
+      {/* Spotify Now Playing — ambient widget above footer */}
+      <Container>
+        <SpotifyNowPlaying />
+      </Container>
 
       {/* Footer (no error boundary - static content) */}
       <Footer />
