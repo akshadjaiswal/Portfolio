@@ -14,7 +14,7 @@ const readline = require('readline');
 
 const CLIENT_ID     = process.env.SPOTIFY_CLIENT_ID;
 const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
-const REDIRECT_URI  = 'http://localhost:3000/api/spotify/callback';
+const REDIRECT_URI  = 'https://akshad-work.vercel.app/api/spotify/callback';
 
 if (!CLIENT_ID || !CLIENT_SECRET) {
   console.error('\nMissing env vars. Run as:');
