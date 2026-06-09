@@ -132,10 +132,16 @@ export default function ExperienceCard({ experience, isExpanded, onToggle }: Exp
                 {!!experience.achievements?.length && (
                   <ul className="space-y-2">
                     {experience.achievements.map((achievement, i) => (
-                      <li key={i} className="text-sm text-portfolio-muted flex items-start gap-2">
+                      <motion.li
+                        key={i}
+                        initial={{ opacity: 0, x: -8 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1], delay: i * 0.05 }}
+                        className="text-sm text-portfolio-muted flex items-start gap-2"
+                      >
                         <span className="text-portfolio-light-accent dark:text-portfolio-silver mt-0.5 flex-shrink-0">→</span>
                         <span className="flex-1">{achievement}</span>
-                      </li>
+                      </motion.li>
                     ))}
                   </ul>
                 )}
