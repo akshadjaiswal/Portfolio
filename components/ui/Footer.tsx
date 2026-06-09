@@ -84,7 +84,11 @@ export default function Footer() {
         <Container>
           <p className="text-center text-xs text-portfolio-muted flex items-center justify-center gap-2">
             <span className="relative flex h-1.5 w-1.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-portfolio-accent-success opacity-75" />
+              <motion.span
+                className="absolute inline-flex h-full w-full rounded-full bg-portfolio-accent-success"
+                animate={{ scale: [1, 2.2, 1], opacity: [0.7, 0, 0.7] }}
+                transition={{ repeat: Infinity, duration: 2.2, ease: 'easeInOut' }}
+              />
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-portfolio-accent-success" />
             </span>
             Available for opportunities · © {currentYear} {PERSONAL_INFO.name}
