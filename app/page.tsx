@@ -8,6 +8,7 @@ import Testimonials from '@/components/sections/Testimonials';
 import Footer from '@/components/ui/Footer';
 import SpotifyNowPlaying from '@/components/ui/SpotifyNowPlaying';
 import Container from '@/components/ui/Container';
+import CursorSpotlight from '@/components/ui/CursorSpotlight';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { ErrorFallback } from '@/components/ui/ErrorFallback';
@@ -42,6 +43,7 @@ const jsonLd = {
 export default function Home() {
   return (
     <main className="relative min-h-screen bg-portfolio-light-bg dark:bg-portfolio-bg">
+      <CursorSpotlight />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

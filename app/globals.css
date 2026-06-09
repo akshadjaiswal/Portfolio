@@ -96,6 +96,25 @@
   border-radius: 4px;
 }
 
+/* Cursor spotlight — follows mouse via CSS vars set by CursorSpotlight.tsx */
+.cursor-spotlight {
+  background: radial-gradient(
+    600px at var(--cursor-x, -600px) var(--cursor-y, -600px),
+    rgba(99, 102, 241, 0.06),
+    transparent 70%
+  );
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  transition: background 0.05s;
+}
+
+/* Hide spotlight on touch devices (no cursor) */
+@media (hover: none) {
+  .cursor-spotlight { display: none; }
+}
+
 /* Spotify equalizer bar animation */
 @keyframes eq-bounce {
   0%, 100% { transform: scaleY(0.3); }
