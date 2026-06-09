@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Sparkles, Star, GitFork } from 'lucide-react';
 import { Project } from '@/lib/types';
 import { ANIMATION_CONFIG } from '@/lib/constants';
@@ -15,11 +15,30 @@ interface ProjectCardProps {
   variant?: 'default' | 'featured';
 }
 
+const MAX_TILT = 7;
+
 export default function ProjectCard({ project, variant = 'default' }: ProjectCardProps) {
   const isFeatured = variant === 'featured';
   const [imgError, setImgError] = useState(false);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    setTilt({
+      x: ((e.clientY - cy) / (rect.height / 2)) * -MAX_TILT,
+      y: ((e.clientX - cx) / (rect.width / 2)) * MAX_TILT,
+    });
+  };
+
+  const handleMouseLeave = () => setTilt({ x: 0, y: 0 });
+
   return (
     <motion.div
+      ref={cardRef}
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, amount: 0.2 }}
@@ -27,8 +46,14 @@ export default function ProjectCard({ project, variant = 'default' }: ProjectCar
         duration: ANIMATION_CONFIG.fadeInDuration,
         ease: ANIMATION_CONFIG.easing,
       }}
-      whileHover={{ scale: 1.02, y: -4 }}
-      className={`rounded-lg overflow-hidden transition-all duration-300 group bg-portfolio-light-surface dark:bg-transparent shadow-card dark:shadow-dark-card hover:shadow-card-hover dark:hover:shadow-dark-card-hover active:scale-[0.98] ${
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        perspective: 1000,
+        transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(${tilt.x === 0 && tilt.y === 0 ? 1 : 1.02})`,
+        transition: 'transform 0.15s ease-out',
+      }}
+      className={`rounded-lg overflow-hidden group bg-portfolio-light-surface dark:bg-transparent shadow-card dark:shadow-dark-card hover:shadow-card-hover dark:hover:shadow-dark-card-hover active:scale-[0.98] ${
         isFeatured
           ? 'border-2 border-transparent bg-gradient-to-r from-portfolio-accent-primary/20 to-portfolio-accent-secondary/20 p-[2px] hover:from-portfolio-accent-primary/40 hover:to-portfolio-accent-secondary/40'
           : 'border border-portfolio-light-border dark:border-portfolio-border hover:border-portfolio-light-accent dark:hover:border-portfolio-silver'
