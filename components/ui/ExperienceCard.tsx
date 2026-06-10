@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, ChevronDown } from 'lucide-react';
 import Image from 'next/image';
@@ -8,161 +9,129 @@ import { ANIMATION_CONFIG } from '@/lib/constants';
 
 interface ExperienceCardProps {
   experience: Experience;
-  isExpanded: boolean;
-  onToggle: () => void;
 }
 
-export default function ExperienceCard({ experience, isExpanded, onToggle }: ExperienceCardProps) {
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      onToggle();
-    }
-  };
+function formatDate(iso: string) {
+  const d = new Date(iso);
+  return d.toLocaleString('default', { month: 'short' }) + ' ' + d.getFullYear();
+}
 
-  const startYear = experience.startDate ? new Date(experience.startDate).getFullYear() : '';
-  const startMonth = experience.startDate
-    ? new Date(experience.startDate).toLocaleString('default', { month: 'short' })
-    : '';
-  const endYear = experience.endDate ? new Date(experience.endDate).getFullYear() : 'Present';
-  const endMonth = experience.endDate
-    ? new Date(experience.endDate).toLocaleString('default', { month: 'short' })
-    : '';
+export default function ExperienceCard({ experience }: ExperienceCardProps) {
+  const [open, setOpen] = useState(false);
+
+  const start = experience.startDate ? formatDate(experience.startDate) : '';
+  const end   = experience.endDate   ? formatDate(experience.endDate)   : 'Present';
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: ANIMATION_CONFIG.fadeInDuration, ease: ANIMATION_CONFIG.easing }}
-      className="border-b border-portfolio-light-border/50 dark:border-portfolio-border/30 last:border-b-0"
+      className="grid grid-cols-[72px_1fr] sm:grid-cols-[100px_1fr] md:grid-cols-[130px_1fr] gap-x-3 sm:gap-x-6 md:gap-x-10 py-7"
     >
-      <div
-        onClick={onToggle}
-        onKeyDown={handleKeyDown}
-        role="button"
-        tabIndex={0}
-        aria-expanded={isExpanded}
-        aria-label={`${experience.company} - ${experience.role}. ${isExpanded ? 'Collapse' : 'Expand'} details`}
-        className="grid grid-cols-[72px_1fr] sm:grid-cols-[100px_1fr] md:grid-cols-[130px_1fr] gap-x-3 sm:gap-x-6 md:gap-x-10 py-6 cursor-pointer group focus:outline-none"
-      >
-        {/* Left: date column */}
-        <div className="pt-0.5 flex flex-col gap-0.5">
-          <span className="font-mono text-xs text-portfolio-muted leading-tight">
-            {startMonth} {startYear}
-          </span>
-          <span className="font-mono text-xs text-portfolio-muted leading-tight">
-            {endMonth ? `${endMonth} ${endYear}` : endYear}
-          </span>
-          <span className="font-mono text-xs text-portfolio-muted/60 leading-tight mt-1">
-            {experience.type}
-          </span>
-        </div>
+      {/* Left: dates */}
+      <div className="pt-1 flex flex-col gap-0.5">
+        <span className="font-mono text-xs text-portfolio-muted leading-tight">{start}</span>
+        <span className="font-mono text-xs text-portfolio-muted leading-tight">{end}</span>
+        <span className="font-mono text-[10px] text-portfolio-muted/50 mt-1 leading-tight">{experience.type}</span>
+      </div>
 
-        {/* Right: content column */}
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex items-start gap-3 flex-1 min-w-0">
-            {/* Logo */}
-            <div className="flex-shrink-0 w-9 h-9 rounded-md overflow-hidden bg-portfolio-light-surface dark:bg-portfolio-surface border border-portfolio-light-border dark:border-portfolio-border mt-0.5">
-              <Image
-                src={experience.logo}
-                alt={experience.logoAlt || `${experience.company} logo`}
-                width={36}
-                height={36}
-                className="object-contain p-1.5"
-              />
-            </div>
+      {/* Right: content */}
+      <div className="space-y-2.5">
+        {/* Logo + Company + Role row */}
+        <div className="flex items-start gap-2.5">
+          {/* Logo */}
+          <div className="flex-shrink-0 w-7 h-7 rounded-md overflow-hidden border border-portfolio-light-border dark:border-portfolio-border bg-portfolio-light-surface dark:bg-portfolio-surface mt-0.5">
+            <Image
+              src={experience.logo}
+              alt={experience.logoAlt || experience.company}
+              width={28}
+              height={28}
+              className="object-contain p-0.5"
+            />
+          </div>
 
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-1.5 flex-wrap">
-                <h3 className="text-sm font-medium text-portfolio-light-text dark:text-portfolio-text group-hover:text-portfolio-light-accent dark:group-hover:text-portfolio-silver transition-colors">
+          <div className="flex-1 min-w-0">
+            <div className="flex items-start justify-between gap-2">
+              <div>
+                <p className="text-sm font-semibold text-portfolio-light-text dark:text-portfolio-text leading-snug">
                   {experience.companyUrl ? (
                     <a
                       href={experience.companyUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      onClick={(e) => e.stopPropagation()}
                       className="inline-flex items-center gap-1 hover:text-portfolio-light-accent dark:hover:text-portfolio-silver transition-colors"
                     >
                       {experience.company}
-                      <ExternalLink size={12} className="opacity-60" />
+                      <ExternalLink size={11} className="opacity-40" />
                     </a>
-                  ) : (
-                    experience.company
-                  )}
-                </h3>
-                <span className="text-portfolio-muted/40 text-xs">·</span>
-                <span className="text-xs text-portfolio-muted">{experience.location}</span>
+                  ) : experience.company}
+                </p>
+                <p className="text-sm text-portfolio-light-text/80 dark:text-portfolio-text/80 leading-snug">
+                  {experience.role}
+                </p>
+                <p className="text-xs text-portfolio-muted mt-0.5">{experience.location}</p>
               </div>
-              <p className="text-sm text-portfolio-light-accent dark:text-portfolio-silver mt-0.5">
-                {experience.role}
-              </p>
+
+              {/* Expand toggle */}
+              {(experience.achievements?.length || experience.description) && (
+                <button
+                  onClick={() => setOpen(!open)}
+                  aria-expanded={open}
+                  className="flex-shrink-0 flex items-center gap-1 text-xs text-portfolio-muted hover:text-portfolio-light-text dark:hover:text-portfolio-text transition-colors mt-0.5"
+                >
+                  <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                    <ChevronDown size={14} />
+                  </motion.span>
+                </button>
+              )}
             </div>
+
+            {/* Tech tags — always visible */}
+            {!!experience.technologies?.length && (
+              <p className="text-[11px] font-mono text-portfolio-muted/60 mt-1.5 leading-relaxed">
+                {experience.technologies.join(' · ')}
+              </p>
+            )}
           </div>
-
-          <motion.div
-            animate={{ rotate: isExpanded ? 180 : 0 }}
-            transition={{ duration: 0.2, ease: 'easeInOut' }}
-            className="flex-shrink-0 text-portfolio-muted mt-1"
-          >
-            <ChevronDown size={16} />
-          </motion.div>
         </div>
-      </div>
 
-      {/* Expanded content */}
-      <AnimatePresence>
-        {isExpanded && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: ANIMATION_CONFIG.easing, opacity: { duration: 0.2 } }}
-            className="overflow-hidden"
-          >
-            <div className="grid grid-cols-[72px_1fr] sm:grid-cols-[100px_1fr] md:grid-cols-[130px_1fr] gap-x-3 sm:gap-x-6 md:gap-x-10 pb-6">
-              <div />
-              <div className="space-y-5">
+        {/* Expandable: description + achievements */}
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.28, ease: ANIMATION_CONFIG.easing }}
+              className="overflow-hidden pl-[1.875rem]"
+            >
+              <div className="space-y-2.5 pt-1">
                 {experience.description && (
-                  <p className="text-sm text-portfolio-muted leading-relaxed">
-                    {experience.description}
-                  </p>
+                  <p className="text-sm text-portfolio-muted leading-relaxed">{experience.description}</p>
                 )}
-
                 {!!experience.achievements?.length && (
-                  <ul className="space-y-2">
-                    {experience.achievements.map((achievement, i) => (
+                  <ul className="space-y-1.5">
+                    {experience.achievements.map((a, i) => (
                       <motion.li
                         key={i}
-                        initial={{ opacity: 0, x: -8 }}
+                        initial={{ opacity: 0, x: -6 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1], delay: i * 0.05 }}
-                        className="text-sm text-portfolio-muted flex items-start gap-2"
+                        transition={{ duration: 0.2, delay: i * 0.04 }}
+                        className="flex items-start gap-2 text-sm text-portfolio-muted"
                       >
-                        <span className="text-portfolio-light-accent dark:text-portfolio-silver mt-0.5 flex-shrink-0">→</span>
-                        <span className="flex-1">{achievement}</span>
+                        <span className="text-portfolio-light-accent dark:text-portfolio-silver flex-shrink-0 mt-0.5 text-xs">→</span>
+                        <span className="flex-1">{a}</span>
                       </motion.li>
                     ))}
                   </ul>
                 )}
-
-                {!!experience.technologies?.length && (
-                  <div className="flex flex-wrap gap-1.5">
-                    {experience.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2.5 py-1 bg-portfolio-light-surface dark:bg-portfolio-surface border border-portfolio-light-border dark:border-portfolio-border rounded-full text-xs text-portfolio-light-text dark:text-portfolio-text font-mono"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                )}
               </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </motion.div>
   );
 }
