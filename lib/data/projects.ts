@@ -12,6 +12,7 @@ export const GITHUB_PROJECT_REPOS = [
   'https://github.com/akshadjaiswal/side-quest-hq',
   'https://github.com/akshadjaiswal/hot-takes-arena',
   'https://github.com/akshadjaiswal/json-craft',
+  'https://github.com/akshadjaiswal/freebase',
 ];
 
 // Fallback projects in case GitHub API fails
@@ -227,6 +228,26 @@ export const FALLBACK_PROJECTS: Project[] = [
     autoFetched: false,
     githubStars: 0,
     githubForks: 0,
+  },
+  {
+    id: '12',
+    slug: 'freebase',
+    title: 'Freebase',
+    tagline: 'Open-source alternative to Featurebase',
+    description: 'Freebase is an open-source alternative to Featurebase — feedback boards, changelog, and roadmap with an embeddable widget. Drop in one script tag to add voting-based feedback, a changelog with RSS, and a public roadmap to any product.',
+    fullDescription: 'Freebase is a self-hostable, open-source alternative to Featurebase. It bundles a public feedback board (submit, upvote, comment, admin status/category management), a changelog with a Tiptap rich-text editor and RSS feed, and a three-column roadmap kanban — all embeddable into any site via a single lightweight (<20KB gzip) script tag. It also ships a full REST API with API-key auth, HMAC-signed webhooks, multi-org accounts (up to 5 orgs per login), a command palette (⌘K), and an origin allowlist for widget security.',
+    thumbnail: '/images/projects/freebase.png',
+    technologies: ['Next.js', 'TypeScript', 'Prisma', 'Supabase', 'TailwindCSS', 'PostgreSQL'],
+    category: 'Web Development',
+    featured: true,
+    liveUrl: 'https://freebase.vercel.app',
+    githubUrl: 'https://github.com/akshadjaiswal/freebase',
+    createdAt: '2026-06-06T00:00:00Z',
+    images: ['/images/projects/freebase.png'],
+    autoFetched: false,
+    githubStars: 0,
+    githubForks: 0,
+    freshBuild: true,
   },
 ];
 

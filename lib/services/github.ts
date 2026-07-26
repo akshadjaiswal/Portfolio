@@ -234,7 +234,10 @@ function extractDescriptionFromReadme(readme: string, repoDescription: string | 
       continue;
     }
 
-    description += trimmed + ' ';
+    // Strip leading blockquote markers (e.g. "> summary line")
+    const withoutQuote = trimmed.replace(/^>\s*/, '');
+
+    description += withoutQuote + ' ';
     foundContent = true;
 
     // Stop if we have enough content (around 120-150 chars)
@@ -283,6 +286,20 @@ function extractTechnologies(readme: string, topics: string[], language: string 
       if (tech.length > 1 && tech.length < 30) {
         technologies.add(tech);
       }
+    }
+  });
+
+  // Recognize known technology names mentioned anywhere in the README
+  // (covers plain markdown "Stack" tables with no shields.io badges)
+  const KNOWN_TECHNOLOGIES = [
+    'Next.js', 'React', 'TypeScript', 'Prisma', 'Supabase', 'PostgreSQL',
+    'Tailwind CSS', 'TailwindCSS', 'Node.js', 'Vite', 'Zod', 'Redis',
+    'Turborepo', 'Docker', 'GraphQL', 'MongoDB', 'Express',
+  ];
+  KNOWN_TECHNOLOGIES.forEach(tech => {
+    const escaped = tech.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    if (new RegExp(`\\b${escaped}\\b`, 'i').test(readme)) {
+      technologies.add(tech);
     }
   });
 
@@ -352,7 +369,7 @@ export async function transformGitHubRepoToProject(
     category: 'Web Development',
     liveUrl: deploymentUrl || undefined,
     githubUrl: repo.html_url,
-    featured: repo.name === 'git-history-visualizer' || repo.stargazers_count > 0,
+    featured: repo.name === 'git-history-visualizer' || repo.name === 'freebase' || repo.stargazers_count > 0,
     createdAt: repo.created_at,
     images: [thumbnail],
 
@@ -363,7 +380,7 @@ export async function transformGitHubRepoToProject(
     lastUpdated: repo.updated_at,
     autoFetched: true,
     repositoryUrl: repo.html_url,
-    freshBuild: repo.name === 'git-history-visualizer',
+    freshBuild: repo.name === 'git-history-visualizer' || repo.name === 'freebase',
   };
 }
 
