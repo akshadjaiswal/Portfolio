@@ -8,15 +8,31 @@ export const EXPERIENCES: Experience[] = [
     logo: '/images/companies/erlin_ai_logo.jpeg',
     logoAlt: 'Erlin AI Logo',
     location: 'Pune, Maharashtra, India',
-    totalDuration: '1 yr 1 mo',
+    totalDuration: '1 yr 11 mo',
     positions: [
+      {
+        id: 'pos-erlin-0',
+        role: 'Engineering Lead',
+        type: 'Full-time',
+        duration: 'Oct 2026 - Present',
+        startDate: '2026-10-01',
+        endDate: null,
+        description: 'Leading the engineering team and driving product delivery across the full stack.',
+        achievements: [
+          'Leading a team of engineers, managing sprint planning and product delivery in coordination with the CEO, CTO and cross-functional teams.',
+          'Actively contributing to full-stack development, including backend APIs, frontend features, LLM integrations, agentic workflows and third-party integrations.',
+          'Managing engineering workflows across GitHub repositories, code reviews, CI/CD pipelines, AWS deployments and production environments.',
+          'Driving engineering execution through technical decisions, bug resolution, knowledge sharing and continuous collaboration with product and client teams.'
+        ],
+        technologies: ['Next.js', 'TypeScript', 'FastAPI', 'Python', 'LLMs', 'AI Agents', 'AWS', 'CI/CD', 'GitHub']
+      },
       {
         id: 'pos-erlin-1',
         role: 'Founding Software Developer',
         type: 'Full-time',
-        duration: 'May 2025 - Present',
+        duration: 'May 2025 - Oct 2026',
         startDate: '2025-05-01',
-        endDate: null,
+        endDate: '2026-10-01',
         description: 'Leading end-to-end frontend development for the core Next.js application.',
         achievements: [
           'Lead end-to-end frontend development for the core Next.js application, covering the full lifecycle from requirements analysis and UI/UX refinement to scalable implementation and production deployment.',
