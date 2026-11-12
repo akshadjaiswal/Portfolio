@@ -51,10 +51,16 @@ function ShippingLine() {
 
   if (!data || data.week === 0) return null;
 
+  // "contributions" hides on phones so the line fits on one row
+  const word = (n: number) => (
+    <span className="hidden sm:inline"> contribution{n === 1 ? '' : 's'}</span>
+  );
   const text =
-    data.today > 0
-      ? `${data.today} contribution${data.today === 1 ? '' : 's'} today · ${data.week} this week`
-      : `${data.week} contributions this week · last shipped ${daysAgoLabel(data.lastActiveDate!)}`;
+    data.today > 0 ? (
+      <>{data.today}{word(data.today)} today · {data.week} this week</>
+    ) : (
+      <>{data.week}{word(data.week)} this week · last shipped {daysAgoLabel(data.lastActiveDate!)}</>
+    );
 
   return (
     <motion.a
@@ -69,7 +75,7 @@ function ShippingLine() {
         <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-portfolio-accent-success" />
       </span>
       <span className="uppercase tracking-wider text-[10px] opacity-70">shipping</span>
-      <span>{text}</span>
+      <span className="whitespace-nowrap">{text}</span>
     </motion.a>
   );
 }
@@ -131,7 +137,7 @@ export default function HeroBio() {
         </a>
         <Link
           href="/projects"
-          className="group inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-portfolio-light-text dark:text-portfolio-text hover:opacity-80 transition-opacity"
+          className="group inline-flex items-center gap-1.5 px-1 sm:px-3 py-2 text-sm font-medium text-portfolio-light-text dark:text-portfolio-text hover:opacity-80 transition-opacity"
         >
           See what I&apos;ve shipped
           <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />

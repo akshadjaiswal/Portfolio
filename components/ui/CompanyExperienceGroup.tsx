@@ -94,7 +94,7 @@ export default function CompanyExperienceGroup({ experience }: CompanyExperience
                     </p>
                     <p className="font-mono text-xs text-portfolio-muted mt-0.5">
                       {posStart} – {posEnd}
-                      <span className="ml-2 text-portfolio-muted/50">{pos.type}</span>
+                      <span className="ml-2 whitespace-nowrap text-portfolio-muted/50">{pos.type}</span>
                     </p>
                     {!!pos.technologies?.length && (
                       <p className="text-[11px] font-mono text-portfolio-muted/60 mt-1 leading-relaxed">
