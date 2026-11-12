@@ -86,44 +86,58 @@ export default function CompanyExperienceGroup({ experience }: CompanyExperience
 
             return (
               <div key={pos.id} className="space-y-0">
-                {/* Position row */}
-                <div className="flex items-start justify-between gap-2 py-1.5">
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-portfolio-light-text dark:text-portfolio-text leading-snug">
-                      {pos.role}
-                    </p>
-                    <p className="font-mono text-xs text-portfolio-muted mt-0.5">
-                      {posStart} – {posEnd}
-                      <span className="ml-2 whitespace-nowrap text-portfolio-muted/50">{pos.type}</span>
-                    </p>
-                    {!!pos.technologies?.length && (
-                      <p className="text-[11px] font-mono text-portfolio-muted/60 mt-1 leading-relaxed">
-                        {pos.technologies.join(' · ')}
-                      </p>
-                    )}
-                  </div>
-
-                  {(pos.achievements?.length || pos.description) && (
+                {/* Position row — whole row toggles details */}
+                {(() => {
+                  const expandable = !!(pos.achievements?.length || pos.description);
+                  const panelId = `${pos.id}-details`;
+                  const content = (
+                    <>
+                      <span className="flex-1 min-w-0 block">
+                        <span className="block text-sm font-medium text-portfolio-light-text dark:text-portfolio-text leading-snug">
+                          {pos.role}
+                        </span>
+                        <span className="block font-mono text-xs text-portfolio-muted mt-0.5">
+                          {posStart} – {posEnd}
+                          <span className="ml-2 whitespace-nowrap text-portfolio-muted/50">{pos.type}</span>
+                        </span>
+                        {!!pos.technologies?.length && (
+                          <span className="block text-[11px] font-mono text-portfolio-muted/60 mt-1 leading-relaxed">
+                            {pos.technologies.join(' · ')}
+                          </span>
+                        )}
+                      </span>
+                      {expandable && (
+                        <motion.span
+                          animate={{ rotate: isOpen ? 180 : 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="flex-shrink-0 mt-0.5 p-1 -m-1 rounded text-portfolio-muted group-hover:text-portfolio-light-text dark:group-hover:text-portfolio-text transition-colors"
+                          aria-hidden
+                        >
+                          <ChevronDown size={16} />
+                        </motion.span>
+                      )}
+                    </>
+                  );
+                  return expandable ? (
                     <button
+                      type="button"
                       onClick={() => setOpenPos(isOpen ? null : pos.id)}
                       aria-expanded={isOpen}
-                      className="flex-shrink-0 text-portfolio-muted hover:text-portfolio-light-text dark:hover:text-portfolio-text transition-colors mt-1"
+                      aria-controls={panelId}
+                      className="group w-full flex items-start justify-between gap-2 py-2 -mx-2 px-2 rounded-md text-left cursor-pointer hover:bg-portfolio-light-surface/60 dark:hover:bg-portfolio-surface/40 transition-colors"
                     >
-                      <motion.span
-                        animate={{ rotate: isOpen ? 180 : 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="block"
-                      >
-                        <ChevronDown size={14} />
-                      </motion.span>
+                      {content}
                     </button>
-                  )}
-                </div>
+                  ) : (
+                    <div className="flex items-start justify-between gap-2 py-2">{content}</div>
+                  );
+                })()}
 
                 {/* Expandable details */}
                 <AnimatePresence>
                   {isOpen && (
                     <motion.div
+                      id={`${pos.id}-details`}
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}

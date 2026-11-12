@@ -21,6 +21,8 @@ export default function ExperienceCard({ experience }: ExperienceCardProps) {
 
   const start = experience.startDate ? formatDate(experience.startDate) : '';
   const end   = experience.endDate   ? formatDate(experience.endDate)   : 'Present';
+  const expandable = !!(experience.achievements?.length || experience.description);
+  const panelId = `${experience.id}-details`;
 
   return (
     <motion.div
@@ -53,47 +55,61 @@ export default function ExperienceCard({ experience }: ExperienceCardProps) {
           </div>
 
           <div className="flex-1 min-w-0">
-            <div className="flex items-start justify-between gap-2">
-              <div>
-                <p className="text-sm font-semibold text-portfolio-light-text dark:text-portfolio-text leading-snug">
-                  {experience.companyUrl ? (
-                    <a
-                      href={experience.companyUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 hover:text-portfolio-light-accent dark:hover:text-portfolio-silver transition-colors"
-                    >
-                      {experience.company}
-                      <ExternalLink size={11} className="opacity-40" />
-                    </a>
-                  ) : experience.company}
-                </p>
-                <p className="text-sm text-portfolio-light-text/80 dark:text-portfolio-text/80 leading-snug">
-                  {experience.role}
-                </p>
-                <p className="text-xs text-portfolio-muted mt-0.5">{experience.location}</p>
-              </div>
+            <p className="text-sm font-semibold text-portfolio-light-text dark:text-portfolio-text leading-snug">
+              {experience.companyUrl ? (
+                <a
+                  href={experience.companyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 hover:text-portfolio-light-accent dark:hover:text-portfolio-silver transition-colors"
+                >
+                  {experience.company}
+                  <ExternalLink size={11} className="opacity-40" />
+                </a>
+              ) : experience.company}
+            </p>
 
-              {/* Expand toggle */}
-              {(experience.achievements?.length || experience.description) && (
+            {/* Role row — whole row toggles details (company link stays separate: no link-in-button) */}
+            {(() => {
+              const content = (
+                <>
+                  <span className="flex-1 min-w-0 block">
+                    <span className="block text-sm text-portfolio-light-text/80 dark:text-portfolio-text/80 leading-snug">
+                      {experience.role}
+                    </span>
+                    <span className="block text-xs text-portfolio-muted mt-0.5">{experience.location}</span>
+                    {!!experience.technologies?.length && (
+                      <span className="block text-[11px] font-mono text-portfolio-muted/60 mt-1.5 leading-relaxed">
+                        {experience.technologies.join(' · ')}
+                      </span>
+                    )}
+                  </span>
+                  {expandable && (
+                    <motion.span
+                      animate={{ rotate: open ? 180 : 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="flex-shrink-0 mt-0.5 p-1 -m-1 rounded text-portfolio-muted group-hover:text-portfolio-light-text dark:group-hover:text-portfolio-text transition-colors"
+                      aria-hidden
+                    >
+                      <ChevronDown size={16} />
+                    </motion.span>
+                  )}
+                </>
+              );
+              return expandable ? (
                 <button
+                  type="button"
                   onClick={() => setOpen(!open)}
                   aria-expanded={open}
-                  className="flex-shrink-0 flex items-center gap-1 text-xs text-portfolio-muted hover:text-portfolio-light-text dark:hover:text-portfolio-text transition-colors mt-0.5"
+                  aria-controls={panelId}
+                  className="group w-full flex items-start justify-between gap-2 py-1.5 -mx-2 px-2 rounded-md text-left cursor-pointer hover:bg-portfolio-light-surface/60 dark:hover:bg-portfolio-surface/40 transition-colors"
                 >
-                  <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.2 }}>
-                    <ChevronDown size={14} />
-                  </motion.span>
+                  {content}
                 </button>
-              )}
-            </div>
-
-            {/* Tech tags — always visible */}
-            {!!experience.technologies?.length && (
-              <p className="text-[11px] font-mono text-portfolio-muted/60 mt-1.5 leading-relaxed">
-                {experience.technologies.join(' · ')}
-              </p>
-            )}
+              ) : (
+                <div className="flex items-start justify-between gap-2 py-1.5">{content}</div>
+              );
+            })()}
           </div>
         </div>
 
@@ -101,6 +117,7 @@ export default function ExperienceCard({ experience }: ExperienceCardProps) {
         <AnimatePresence>
           {open && (
             <motion.div
+              id={panelId}
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
