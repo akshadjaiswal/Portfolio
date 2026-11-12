@@ -14,6 +14,8 @@ const readline = require('readline');
 
 const CLIENT_ID     = process.env.SPOTIFY_CLIENT_ID;
 const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
+// NOTE: the /api/spotify/callback helper page was removed (reflected-XSS risk). Spotify
+// still redirects here — the page 404s, but copy the full URL from the address bar.
 const REDIRECT_URI  = 'https://akshad-work.vercel.app/api/spotify/callback';
 
 if (!CLIENT_ID || !CLIENT_SECRET) {

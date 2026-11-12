@@ -1,5 +1,8 @@
 import { SocialLink } from './types';
 
+// Canonical site URL — single source of truth for metadata, sitemap, robots, JSON-LD, OG
+export const SITE_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://akshad-work.vercel.app').replace(/\/$/, '');
+
 // Personal information
 export const PERSONAL_INFO = {
   name: 'Akshad Jaiswal',

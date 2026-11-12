@@ -1,7 +1,8 @@
-import { ImageResponse } from '@vercel/og'
+import { ImageResponse } from 'next/og'
 import { NextRequest } from 'next/server'
+import { SITE_URL } from '@/lib/constants'
 
-export const runtime = 'edge'
+export const runtime = 'nodejs'
 
 /**
  * Dynamic Open Graph Image Generator
@@ -22,18 +23,25 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
 
-    // Extract query parameters
-    const title = searchParams.get('title') || 'Akshad Jaiswal'
-    const description = searchParams.get('description') || 'Full-Stack Developer & Technical Innovator'
-    const tech = searchParams.get('tech')?.split(',').filter(Boolean) || []
-    const category = searchParams.get('category') || ''
+    // Extract + clamp query parameters (public, unauthenticated route)
+    const clamp = (v: string | null, max: number) => (v ?? '').trim().slice(0, max)
+    const title = clamp(searchParams.get('title'), 100) || 'Akshad Jaiswal'
+    const description = clamp(searchParams.get('description'), 200) || 'Engineer turning headaches into shipped products'
+    const tech = clamp(searchParams.get('tech'), 200)
+      .split(',')
+      .map((t) => t.trim().slice(0, 24))
+      .filter(Boolean)
+      .slice(0, 6)
+    const category = clamp(searchParams.get('category'), 40)
 
     // Truncate for display
     const displayTitle = title.length > 60 ? title.substring(0, 57) + '...' : title
     const displayDesc = description.length > 120 ? description.substring(0, 117) + '...' : description
 
     // Fetch profile picture
-    const profileImageUrl = new URL('/images/profile-pic.jpg', request.url).href
+    // Trusted origin only — never derive fetch target from the request Host header in production
+    const origin = process.env.NODE_ENV === 'production' ? SITE_URL : new URL(request.url).origin
+    const profileImageUrl = `${origin}/images/profile-pic.jpg`
     const profileImageData = await fetch(profileImageUrl).then((res) => res.arrayBuffer())
     const profileImageBase64 = `data:image/jpeg;base64,${Buffer.from(profileImageData).toString('base64')}`
 
