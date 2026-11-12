@@ -12,9 +12,12 @@ import CursorSpotlight from '@/components/ui/CursorSpotlight';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { ErrorFallback } from '@/components/ui/ErrorFallback';
-import { PERSONAL_INFO, SOCIAL_LINKS } from '@/lib/constants';
+import type { Metadata } from 'next';
+import { PERSONAL_INFO, SOCIAL_LINKS, SITE_URL } from '@/lib/constants';
 
-const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://akshad-work.vercel.app';
+export const metadata: Metadata = { alternates: { canonical: '/' } };
+
+const baseUrl = SITE_URL;
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -27,7 +30,8 @@ const jsonLd = {
       jobTitle: PERSONAL_INFO.currentRole,
       description: PERSONAL_INFO.bio,
       sameAs: SOCIAL_LINKS.map((s) => s.url),
-      knowsAbout: ['Full-Stack Development', 'React', 'Next.js', 'Node.js', 'Go', 'TypeScript'],
+      worksFor: { '@type': 'Organization', name: 'Erlin AI', url: 'https://erlin.ai' },
+      knowsAbout: ['Full-Stack Development', 'AI Agents', 'LLM Integration', 'Next.js', 'React', 'TypeScript', 'Python', 'FastAPI', 'AWS'],
     },
     {
       '@type': 'WebSite',

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, Space_Grotesk } from 'next/font/google'
 import './globals.css'
-import { PERSONAL_INFO } from '@/lib/constants'
+import { PERSONAL_INFO, SITE_URL } from '@/lib/constants'
 import { QueryProvider } from '@/lib/query-provider'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import { ClientLayout } from '@/components/providers/ClientLayout'
@@ -23,34 +23,34 @@ const spaceGrotesk = Space_Grotesk({
   variable: '--font-space-grotesk',
 })
 
+const SITE_TITLE = `${PERSONAL_INFO.name} — Engineer`
+const SITE_DESCRIPTION =
+  "Engineer turning people's headaches into shipped products. Building AI products at Erlin AI — LLM agents, full-stack platforms, shipped daily."
+const OG_IMAGE = `/api/og?${new URLSearchParams({
+  title: PERSONAL_INFO.name,
+  description: "Engineer turning people's headaches into shipped products",
+})}`
+
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_APP_URL ||
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
-  ),
-  title: `${PERSONAL_INFO.name} - Software Developer`,
-  description: `Portfolio of ${PERSONAL_INFO.name}, software developer specializing in modern web applications`,
+  metadataBase: new URL(SITE_URL),
+  title: { default: SITE_TITLE, template: `%s · ${PERSONAL_INFO.name}` },
+  description: SITE_DESCRIPTION,
+  authors: [{ name: PERSONAL_INFO.name, url: SITE_URL }],
   openGraph: {
-    title: `${PERSONAL_INFO.name} - Software Developer`,
-    description: `Portfolio of ${PERSONAL_INFO.name}, software developer specializing in modern web applications`,
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    url: SITE_URL,
     type: 'website',
     locale: 'en_US',
-    siteName: `${PERSONAL_INFO.name}'s Portfolio`,
-    images: [
-      {
-        url: `/api/og?title=${encodeURIComponent(PERSONAL_INFO.name)}&description=${encodeURIComponent('Full-Stack Developer & Technical Innovator')}`,
-        width: 1200,
-        height: 630,
-        alt: `${PERSONAL_INFO.name} - Portfolio`,
-      },
-    ],
+    siteName: PERSONAL_INFO.name,
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: SITE_TITLE }],
   },
   twitter: {
     card: 'summary_large_image',
     creator: '@akshad_999',
-    title: `${PERSONAL_INFO.name} - Software Developer`,
-    description: `Portfolio of ${PERSONAL_INFO.name}, software developer specializing in modern web applications`,
-    images: [`/api/og?title=${encodeURIComponent(PERSONAL_INFO.name)}&description=${encodeURIComponent('Full-Stack Developer & Technical Innovator')}`],
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: [OG_IMAGE],
   },
   icons: {
     icon: [

@@ -1,234 +1,48 @@
-"use client";
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { FALLBACK_PROJECTS } from '@/lib/data/projects';
+import { PERSONAL_INFO, SITE_URL } from '@/lib/constants';
+import ProjectDetailClient from './ProjectDetailClient';
 
-import { notFound, useParams } from "next/navigation";
-import Link from "next/link";
-import Image from "next/image";
-import { ArrowLeft, ExternalLink, Github } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import Container from "@/components/ui/Container";
-import ProjectMetadata from "@/components/ui/ProjectMetadata";
-import VideoEmbed from "@/components/ui/VideoEmbed";
-import ImageGallery from "@/components/ui/ImageGallery";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Project } from "@/lib/types";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { ErrorFallback } from "@/components/ui/ErrorFallback";
+type Props = { params: Promise<{ slug: string }> };
 
-async function fetchProjectBySlug(slug: string): Promise<Project> {
-  const response = await fetch(`/api/github/projects?slug=${slug}`);
-  if (!response.ok) {
-    throw new Error("Project not found");
-  }
-  return response.json();
+// Metadata comes from local project data (no GitHub call), so it's fast and rate-limit proof
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const project = FALLBACK_PROJECTS.find((p) => p.slug === slug);
+  if (!project) return { title: 'Project not found' };
+
+  const description = project.tagline || project.description;
+  const ogImage = `/api/og?${new URLSearchParams({
+    title: project.title,
+    description,
+    tech: (project.technologies ?? []).slice(0, 6).join(','),
+    category: project.category ?? '',
+  })}`;
+
+  return {
+    title: project.title,
+    description,
+    alternates: { canonical: `/projects/${slug}` },
+    openGraph: {
+      title: `${project.title} · ${PERSONAL_INFO.name}`,
+      description,
+      url: `${SITE_URL}/projects/${slug}`,
+      type: 'article',
+      images: [{ url: ogImage, width: 1200, height: 630, alt: project.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${project.title} · ${PERSONAL_INFO.name}`,
+      description,
+      images: [ogImage],
+    },
+  };
 }
 
-export default function ProjectDetailPage() {
-  const params = useParams();
-  const slug = params.slug as string;
-
-  const {
-    data: project,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["project", slug],
-    queryFn: () => fetchProjectBySlug(slug),
-    staleTime: 1000 * 60 * 5, // 5 minutes
-  });
-
-  if (isLoading) {
-    return (
-      <main className="min-h-screen bg-portfolio-light-bg dark:bg-portfolio-bg py-16">
-        <Container>
-          <div className="animate-pulse">
-            <div className="h-8 w-32 bg-portfolio-surface rounded mb-12" />
-            <div className="aspect-video bg-portfolio-surface rounded-lg mb-8" />
-            <div className="h-8 w-3/4 bg-portfolio-surface rounded mb-4" />
-            <div className="h-6 w-1/2 bg-portfolio-surface rounded mb-6" />
-          </div>
-        </Container>
-      </main>
-    );
-  }
-
-  if (error || !project) {
-    notFound();
-  }
-
-  return (
-    <main className="min-h-screen bg-portfolio-light-bg dark:bg-portfolio-bg py-16">
-      <ErrorBoundary
-        fallback={
-          <Container>
-            <div className="py-16">
-              <ErrorFallback
-                title="Project details unavailable"
-                message="We couldn't load this project's details. Please try refreshing the page or go back to all projects."
-              />
-              <div className="mt-6 text-center">
-                <Link
-                  href="/projects"
-                  className="inline-flex items-center gap-2 text-portfolio-silver hover:text-portfolio-text transition-colors"
-                >
-                  <ArrowLeft size={20} />
-                  Back to All Projects
-                </Link>
-              </div>
-            </div>
-          </Container>
-        }
-      >
-        <Container>
-        <Link
-          href="/projects"
-          className="inline-flex items-center gap-2 text-portfolio-light-text/70 dark:text-portfolio-silver hover:text-portfolio-light-accent dark:hover:text-portfolio-text transition-colors mb-12"
-        >
-          <ArrowLeft size={20} />
-          <span>Back to Projects</span>
-        </Link>
-
-        {/* Hero Image */}
-        <div className="relative aspect-video rounded-lg overflow-hidden mb-8 bg-portfolio-surface">
-          <Image
-            src={project.thumbnail}
-            alt={project.title}
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
-
-        {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-2xl md:text-3xl font-medium text-portfolio-light-text dark:text-portfolio-text mb-3">
-            {project.title}
-          </h1>
-
-          {/* Technologies */}
-          <div className="flex flex-wrap gap-2 mb-6">
-            {project.technologies.map((tech) => (
-              <span
-                key={tech}
-                className="px-3 py-1 bg-portfolio-light-surface dark:bg-portfolio-surface border border-portfolio-light-border dark:border-portfolio-border rounded-full text-sm text-portfolio-light-text dark:text-portfolio-text font-mono"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4">
-            {project.liveUrl && (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-portfolio-light-accent dark:bg-portfolio-silver text-white dark:text-portfolio-bg rounded-lg hover:bg-opacity-90 transition-all font-medium"
-              >
-                <ExternalLink size={20} />
-                <span>Live Demo</span>
-              </a>
-            )}
-            {project.githubUrl && project.slug !== 'letter-of-love' && (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-portfolio-light-border dark:border-portfolio-border text-portfolio-light-text dark:text-portfolio-text rounded-lg hover:border-portfolio-light-accent dark:hover:border-portfolio-silver hover:bg-portfolio-light-surface dark:hover:bg-portfolio-surface transition-all font-medium"
-              >
-                <Github size={20} />
-                <span>GitHub</span>
-              </a>
-            )}
-          </div>
-        </div>
-
-        {/* Tabbed content sections */}
-        {(() => {
-          const tabs = [
-            { value: 'overview', label: 'Overview', content: project.tagline, always: true },
-            { value: 'challenge', label: 'Challenge', content: project.problem, always: false },
-            { value: 'solution', label: 'Solution', content: project.solution, always: false },
-            { value: 'impact', label: 'Impact', content: project.impact, always: false },
-          ].filter((t) => t.always || t.content);
-
-          return (
-            <div className="mb-12">
-              <Tabs defaultValue={tabs[0]?.value}>
-                <TabsList>
-                  {tabs.map((tab) => (
-                    <TabsTrigger key={tab.value} value={tab.value}>
-                      {tab.label}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
-                {tabs.map((tab) => (
-                  <TabsContent key={tab.value} value={tab.value}>
-                    <p className="text-portfolio-light-text dark:text-portfolio-text leading-relaxed text-base md:text-lg whitespace-pre-wrap">
-                      {tab.content}
-                    </p>
-                  </TabsContent>
-                ))}
-              </Tabs>
-            </div>
-          );
-        })()}
-
-        {/* Metadata Card */}
-        <div className="mb-12">
-          <ProjectMetadata
-            category={project.category}
-            createdAt={project.createdAt}
-            lastUpdated={project.lastUpdated}
-            autoFetched={project.autoFetched}
-          />
-        </div>
-
-        {/* Video Demo */}
-        {project.videoUrl && (
-          <section className="mb-12">
-            <h2 className="text-xl md:text-2xl font-medium text-portfolio-light-text dark:text-portfolio-text mb-4">
-              Video Demo
-            </h2>
-            <div className="w-12 h-0.5 bg-portfolio-light-accent dark:bg-portfolio-silver mb-6" />
-            <VideoEmbed videoUrl={project.videoUrl} title={project.title} />
-          </section>
-        )}
-
-        {/* Image Gallery */}
-        {project.images && project.images.length > 1 && (
-          <section className="mb-12">
-            <h2 className="text-xl md:text-2xl font-medium text-portfolio-light-text dark:text-portfolio-text mb-4">
-              Gallery
-            </h2>
-            <div className="w-12 h-0.5 bg-portfolio-light-accent dark:bg-portfolio-silver mb-6" />
-            <ImageGallery
-              images={project.images}
-              projectTitle={project.title}
-            />
-          </section>
-        )}
-
-        {/* Testimonial */}
-        {project.testimonial && (
-          <section className="mb-12">
-            <h2 className="text-xl md:text-2xl font-medium text-portfolio-light-text dark:text-portfolio-text mb-4">
-              Testimonial
-            </h2>
-            <div className="w-12 h-0.5 bg-portfolio-light-accent dark:bg-portfolio-silver mb-6" />
-            <div className="border border-portfolio-light-border dark:border-portfolio-border rounded-lg p-8 bg-portfolio-light-surface dark:bg-portfolio-surface">
-              <p className="text-base md:text-lg text-portfolio-light-text dark:text-portfolio-text italic mb-4">
-                &ldquo;{project.testimonial.text}&rdquo;
-              </p>
-              <div className="text-sm text-portfolio-light-text/70 dark:text-portfolio-muted">
-                <p className="font-medium">{project.testimonial.author}</p>
-                <p>{project.testimonial.role}</p>
-              </div>
-            </div>
-          </section>
-        )}
-        </Container>
-      </ErrorBoundary>
-    </main>
-  );
+export default async function ProjectDetailPage({ params }: Props) {
+  const { slug } = await params;
+  // Every tracked repo has a FALLBACK_PROJECTS entry, so unknown slugs are real 404s
+  if (!FALLBACK_PROJECTS.some((p) => p.slug === slug)) notFound();
+  return <ProjectDetailClient />;
 }
