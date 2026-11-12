@@ -93,6 +93,7 @@ export default function ProjectDetailClient() {
             src={project.thumbnail}
             alt={project.title}
             fill
+            sizes="(min-width: 840px) 800px, 100vw"
             className="object-cover"
             priority
           />

@@ -2,7 +2,13 @@
 
 import { useRef, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import * as Si from 'react-icons/si';
+import type { IconType } from 'react-icons';
+import {
+  SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiFramer, SiGo, SiNodedotjs,
+  SiPython, SiExpress, SiFastapi, SiPostgresql, SiMongodb, SiRedis, SiSupabase,
+  SiDocker, SiGit, SiFigma, SiVercel, SiGithub,
+} from 'react-icons/si';
+import { FaAws } from 'react-icons/fa';
 import { Tooltip, TooltipTrigger, TooltipContent } from './tooltip';
 import { TechItem } from '@/lib/data/techstack';
 import { ANIMATION_CONFIG } from '@/lib/constants';
@@ -15,6 +21,15 @@ interface TechIconProps {
 
 const DRIFT = 6;
 
+// Named imports only — `import * as Si` pulled the entire Simple Icons set into the bundle.
+// Add new icons here when adding to TECH_STACK.
+const ICONS: Record<string, IconType> = {
+  SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiFramer, SiGo, SiNodedotjs,
+  SiPython, SiExpress, SiFastapi, SiPostgresql, SiMongodb, SiRedis, SiSupabase,
+  SiDocker, SiGit, SiFigma, SiVercel, SiGithub,
+  SiAmazonwebservices: FaAws, // Simple Icons dropped the AWS logo
+};
+
 export default function TechIcon({ tech, index }: TechIconProps) {
   const [hovered, setHovered] = useState(false);
   const resolvedTheme = useThemeStore((s) => s.resolvedTheme);
@@ -25,7 +40,7 @@ export default function TechIcon({ tech, index }: TechIconProps) {
   const x = useSpring(rawX, { stiffness: 300, damping: 20 });
   const y = useSpring(rawY, { stiffness: 300, damping: 20 });
 
-  const IconComponent = (Si as Record<string, React.ComponentType<{ size?: number; color?: string }>>)[tech.icon];
+  const IconComponent = ICONS[tech.icon];
 
   const hoverColor = hovered
     ? resolvedTheme === 'dark' && tech.darkColor

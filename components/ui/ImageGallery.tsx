@@ -69,6 +69,7 @@ export default function ImageGallery({ images, projectTitle }: ImageGalleryProps
               src={image}
               alt={`${projectTitle} screenshot ${index + 2}`}
               fill
+              sizes="(min-width: 768px) 400px, 50vw"
               className="object-cover transition-transform duration-300 group-hover:scale-105"
               loading="lazy"
             />
@@ -138,6 +139,7 @@ export default function ImageGallery({ images, projectTitle }: ImageGalleryProps
                 src={galleryImages[selectedImage]}
                 alt={`${projectTitle} screenshot ${selectedImage + 2}`}
                 fill
+                sizes="100vw"
                 className="object-contain"
                 priority
               />

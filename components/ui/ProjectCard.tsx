@@ -71,6 +71,7 @@ export default function ProjectCard({ project, variant = 'default' }: ProjectCar
               src={project.thumbnail}
               alt={project.title}
               fill
+              sizes="(min-width: 768px) 400px, 100vw"
               className="object-cover transition-transform duration-300 group-hover:scale-105"
               onError={() => setImgError(true)}
             />
