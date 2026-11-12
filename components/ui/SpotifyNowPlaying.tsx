@@ -14,16 +14,6 @@ async function fetchNowPlaying(): Promise<SpotifyNowPlayingData> {
   return res.json();
 }
 
-function EqualizerBars() {
-  return (
-    <div className="flex items-end gap-px h-3" aria-hidden>
-      <span className="eq-bar h-3" style={{ background: '#fff', opacity: 0.9 }} />
-      <span className="eq-bar h-2" style={{ background: '#fff', opacity: 0.9 }} />
-      <span className="eq-bar h-3" style={{ background: '#fff', opacity: 0.9 }} />
-    </div>
-  );
-}
-
 export default function SpotifyNowPlaying() {
   const { data } = useQuery<SpotifyNowPlayingData>({
     queryKey:        ['spotify-now-playing'],
@@ -34,7 +24,6 @@ export default function SpotifyNowPlaying() {
   });
 
   const isPlaying = data?.isPlaying ?? false;
-  const isRecent  = data?.isRecent  ?? false;
   const track     = data?.track     ?? null;
 
   if (!track) return null;

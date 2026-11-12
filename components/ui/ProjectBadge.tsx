@@ -1,6 +1,6 @@
 'use client';
 
-import { Star, TrendingUp, CheckCircle, Clock } from 'lucide-react';
+import { Star, TrendingUp, CheckCircle } from 'lucide-react';
 
 interface ProjectBadgeProps {
   variant: 'complexity' | 'impact' | 'status' | 'featured';

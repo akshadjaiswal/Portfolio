@@ -11,7 +11,7 @@ export function formatDate(dateString: string): string {
       month: 'long',
       day: 'numeric',
     });
-  } catch (error) {
+  } catch {
     return 'Unknown';
   }
 }
@@ -28,7 +28,7 @@ export function formatMonthYear(dateString: string): string {
       year: 'numeric',
       month: 'long',
     });
-  } catch (error) {
+  } catch {
     return 'Unknown';
   }
 }
@@ -76,7 +76,7 @@ export function formatRelativeTime(dateString: string): string {
     // Years
     const diffInYears = Math.floor(diffInMonths / 12);
     return `${diffInYears} ${diffInYears === 1 ? 'year' : 'years'} ago`;
-  } catch (error) {
+  } catch {
     return 'Unknown';
   }
 }

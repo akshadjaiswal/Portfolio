@@ -23,10 +23,6 @@ interface GitHubRepo {
   };
 }
 
-interface GitHubLanguages {
-  [key: string]: number;
-}
-
 interface GitHubReadme {
   content: string;
   encoding: string;
@@ -64,31 +60,6 @@ export async function fetchRepositoryData(repoUrl: string): Promise<GitHubRepo> 
       hasToken: !!GITHUB_TOKEN,
     });
     throw new Error(`Failed to fetch repository: ${repoPath} (Status: ${response.status})`);
-  }
-
-  return response.json();
-}
-
-/**
- * Fetch repository languages
- */
-async function fetchRepositoryLanguages(repoPath: string): Promise<GitHubLanguages> {
-  const headers: HeadersInit = {
-    Accept: 'application/vnd.github.v3+json',
-  };
-
-  if (GITHUB_TOKEN) {
-    headers.Authorization = `Bearer ${GITHUB_TOKEN}`;
-  }
-
-  const response = await fetch(`${GITHUB_API_BASE}/repos/${repoPath}/languages`, {
-    headers,
-    next: { revalidate: GITHUB_REVALIDATE_SECONDS },
-  });
-
-  if (!response.ok) {
-    console.error(`Failed to fetch languages for ${repoPath}: ${response.status}`);
-    return {};
   }
 
   return response.json();
@@ -405,11 +376,7 @@ export async function fetchAllProjects(repoUrls: string[]): Promise<Project[]> {
       const repo = await fetchRepositoryData(repoUrl);
       const repoPath = repoUrl.replace('https://github.com/', '');
 
-      // Fetch additional data in parallel
-      const [readme, languages] = await Promise.all([
-        fetchRepositoryReadme(repoPath),
-        fetchRepositoryLanguages(repoPath),
-      ]);
+      const readme = await fetchRepositoryReadme(repoPath);
 
       const deploymentUrl = await extractDeploymentUrl(repo, readme);
       const project = await transformGitHubRepoToProject(repo, readme, deploymentUrl);

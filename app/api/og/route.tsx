@@ -62,6 +62,7 @@ export async function GET(request: NextRequest) {
           {/* Top Section: Profile Picture + Title & Description */}
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: 32, width: '100%' }}>
             {/* Profile Picture */}
+            {/* eslint-disable-next-line @next/next/no-img-element -- next/og renders plain <img>, next/image is unsupported */}
             <img
               src={profileImageBase64}
               alt="Profile"
