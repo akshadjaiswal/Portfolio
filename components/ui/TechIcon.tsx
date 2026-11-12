@@ -80,6 +80,11 @@ export default function TechIcon({ tech, index }: TechIconProps) {
           onMouseMove={handleMouseMove}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={handleMouseLeave}
+          onFocus={() => setHovered(true)}
+          onBlur={handleMouseLeave}
+          tabIndex={0}
+          role="img"
+          aria-label={tech.name}
           className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-xl border border-portfolio-light-border dark:border-portfolio-border bg-portfolio-light-surface dark:bg-portfolio-surface/60 hover:border-portfolio-light-accent/40 dark:hover:border-portfolio-silver/30 hover:shadow-card dark:hover:shadow-dark-card transition-colors duration-200 cursor-default"
         >
           {IconComponent ? (

@@ -45,8 +45,13 @@ function daysAgoLabel(date: string): string {
 function ShippingLine() {
   const { data } = useQuery<GitHubActivity>({
     queryKey: ['github-activity'],
-    queryFn: () => fetch('/api/github/activity').then((r) => r.json()),
+    queryFn: async () => {
+      const r = await fetch('/api/github/activity');
+      if (!r.ok) throw new Error(`activity ${r.status}`);
+      return r.json();
+    },
     staleTime: 5 * 60 * 1000,
+    retry: 1,
   });
 
   if (!data || data.week === 0) return null;

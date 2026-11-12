@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { ANIMATION_CONFIG } from '@/lib/constants';
 
@@ -17,17 +17,43 @@ export default function ImageGallery({ images, projectTitle }: ImageGalleryProps
   // Skip first image (already shown as hero)
   const galleryImages = images.slice(1);
 
-  // Don't render if no gallery images
-  if (galleryImages.length === 0) {
-    return null;
-  }
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const openerRef = useRef<HTMLElement | null>(null);
+  const isOpen = selectedImage !== null;
 
-  // Keyboard navigation
+  // Focus management: move focus into the dialog on open, restore it on close
+  useEffect(() => {
+    if (isOpen) {
+      openerRef.current = document.activeElement as HTMLElement;
+      closeRef.current?.focus();
+      document.body.style.overflow = 'hidden';
+    } else {
+      openerRef.current?.focus();
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  // Keyboard navigation + focus trap
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (selectedImage === null) return;
 
-      if (e.key === 'Escape') {
+      if (e.key === 'Tab' && dialogRef.current) {
+        const focusable = dialogRef.current.querySelectorAll<HTMLElement>('button');
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      } else if (e.key === 'Escape') {
         setSelectedImage(null);
       } else if (e.key === 'ArrowLeft') {
         setSelectedImage((prev) => (prev === null || prev === 0 ? galleryImages.length - 1 : prev - 1));
@@ -39,6 +65,11 @@ export default function ImageGallery({ images, projectTitle }: ImageGalleryProps
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedImage, galleryImages.length]);
+
+  // Don't render if no gallery images (after hooks — hooks must run unconditionally)
+  if (galleryImages.length === 0) {
+    return null;
+  }
 
   const handlePrevious = () => {
     setSelectedImage((prev) => (prev === null || prev === 0 ? galleryImages.length - 1 : prev - 1));
@@ -55,6 +86,8 @@ export default function ImageGallery({ images, projectTitle }: ImageGalleryProps
           <motion.button
             key={index}
             onClick={() => setSelectedImage(index)}
+            type="button"
+            aria-label={`Open ${projectTitle} screenshot ${index + 1}`}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
@@ -82,6 +115,10 @@ export default function ImageGallery({ images, projectTitle }: ImageGalleryProps
       <AnimatePresence>
         {selectedImage !== null && (
           <motion.div
+            ref={dialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${projectTitle} screenshot ${selectedImage + 1} of ${galleryImages.length}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -90,6 +127,9 @@ export default function ImageGallery({ images, projectTitle }: ImageGalleryProps
           >
             {/* Close button */}
             <button
+              ref={closeRef}
+              type="button"
+              aria-label="Close gallery"
               onClick={(e) => {
                 e.stopPropagation();
                 setSelectedImage(null);
@@ -105,6 +145,8 @@ export default function ImageGallery({ images, projectTitle }: ImageGalleryProps
                 e.stopPropagation();
                 handlePrevious();
               }}
+              type="button"
+              aria-label="Previous image"
               className="absolute left-4 z-10 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
             >
               <ChevronLeft size={24} className="text-white" />
@@ -116,6 +158,8 @@ export default function ImageGallery({ images, projectTitle }: ImageGalleryProps
                 e.stopPropagation();
                 handleNext();
               }}
+              type="button"
+              aria-label="Next image"
               className="absolute right-4 z-10 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
             >
               <ChevronRight size={24} className="text-white" />

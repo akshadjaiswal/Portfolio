@@ -20,7 +20,7 @@ module.exports = {
           border: '#2A2A2A',
           silver: '#C0C0C0',
           text: '#E8E8E8',
-          muted: '#6B7280',
+          muted: 'rgb(var(--portfolio-muted) / <alpha-value>)', // #6B7280 light, #9CA3AF dark (see globals.css)
 
           // Light mode colors (new)
           light: {
