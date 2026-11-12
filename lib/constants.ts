@@ -4,14 +4,22 @@ import { SocialLink } from './types';
 export const PERSONAL_INFO = {
   name: 'Akshad Jaiswal',
   tagline: 'Building things that work, and work well',
-  currentRole: 'Software Developer',
-  roles: ['Software Developer', 'Full-Stack Engineer', 'Founding SDE', 'Product-Minded Builder'],
+  currentRole: 'Engineering Lead',
+  roles: ['Engineering Lead', 'Full-Stack Engineer', 'Software Developer', 'Product-Minded Builder'],
   location: 'India',
   email: 'your.email@example.com', // Update with your email
   githubUsername: 'akshadjaiswal',
   calComLink: 'https://cal.com/akshad-jaiswal/15min',
   coverQuote: 'Building the future, one line of code at a time.', // Update with your quote
-  bio: 'Full-stack engineer who thrives on end-to-end ownership from product discovery and rapid prototyping to scalable backends and polished UX. As a Founding SDE at a startup while freelancing, I balance delivery speed, reliability, and cost daily. My approach is simple: ship small, learn fast, and iterate with real user feedback.',
+  bio: "I turn people's headaches into shipped products. That's the job, and I love it.",
+  // Hero lead line, split so the highlighted phrase can be underlined
+  bioLead: {
+    before: "I turn people's headaches into ",
+    highlight: 'shipped products',
+    after: '.',
+    tail: "That's the job, and I love it.",
+  },
+  humanLine: 'Off the clock, I freelance with early-stage founders and build side projects to learn new stacks, lately scaling.',
 };
 
 // Social links

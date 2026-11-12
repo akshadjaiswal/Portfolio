@@ -2,12 +2,11 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { ChevronDown } from 'lucide-react';
 import { PERSONAL_INFO, ANIMATION_CONFIG, SOCIAL_LINKS } from '@/lib/constants';
 import { Github, Linkedin } from 'lucide-react';
 import { SiX } from 'react-icons/si';
 import StatusBadge from '@/components/ui/StatusBadge';
-import { useState, useEffect } from 'react';
+import HeroBio from '@/components/hero/HeroBio';
 import * as Tooltip from '@radix-ui/react-tooltip';
 
 const iconMap = {
@@ -17,14 +16,6 @@ const iconMap = {
 };
 
 export default function ProfileHeader() {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 100);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <div className="relative bg-portfolio-light-bg dark:bg-portfolio-bg">
       <div className="max-w-portfolio mx-auto">
@@ -131,30 +122,9 @@ export default function ProfileHeader() {
             </Tooltip.Provider>
           </motion.div>
 
-          {/* Bio — left-aligned */}
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: ANIMATION_CONFIG.fadeInDuration, delay: 0.45 }}
-            className="text-base text-portfolio-light-text dark:text-portfolio-text leading-relaxed pb-10"
-          >
-            {PERSONAL_INFO.bio}
-          </motion.p>
+          {/* Bio — lead line, companies, human line, live status, CTAs */}
+          <HeroBio />
         </div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          className="flex justify-center pb-4"
-          animate={{ opacity: scrolled ? 0 : 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          <motion.div
-            animate={{ y: [0, 6, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <ChevronDown size={20} className="text-portfolio-muted" />
-          </motion.div>
-        </motion.div>
 
       </div>
     </div>
