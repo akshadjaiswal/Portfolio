@@ -13,7 +13,7 @@ export const PERSONAL_INFO = {
   email: 'your.email@example.com', // Update with your email
   githubUsername: 'akshadjaiswal',
   calComLink: 'https://cal.com/akshad-jaiswal/15min',
-  coverQuote: 'Building the future, one line of code at a time.', // Update with your quote
+  coverQuote: 'Ship small. Learn fast. Repeat.',
   bio: "I turn people's headaches into shipped products. That's the job, and I love it.",
   // Hero lead line, split so the highlighted phrase can be underlined
   bioLead: {

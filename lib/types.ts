@@ -32,7 +32,6 @@ export interface Experience {
 
   // For multiple positions
   positions?: Position[];
-  totalDuration?: string;    // e.g., "1 yr 1 mo"
 }
 
 export interface Project {

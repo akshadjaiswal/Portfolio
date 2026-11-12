@@ -8,7 +8,6 @@ export const EXPERIENCES: Experience[] = [
     logo: '/images/companies/erlin_ai_logo.jpeg',
     logoAlt: 'Erlin AI Logo',
     location: 'Pune, Maharashtra, India',
-    totalDuration: '1 yr 11 mo',
     positions: [
       {
         id: 'pos-erlin-0',

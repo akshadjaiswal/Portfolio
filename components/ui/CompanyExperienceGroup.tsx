@@ -17,6 +17,16 @@ function formatDate(iso: string | null | undefined) {
   return d.toLocaleString('default', { month: 'short' }) + ' ' + d.getFullYear();
 }
 
+// LinkedIn-style inclusive duration, e.g. Jan 2025 → Nov 2026 = "1 yr 11 mo"
+function totalDuration(startIso: string, endIso: string | null | undefined) {
+  const start = new Date(startIso);
+  const end = endIso ? new Date(endIso) : new Date();
+  const months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth()) + 1;
+  const y = Math.floor(months / 12);
+  const m = months % 12;
+  return [y && `${y} yr${y > 1 ? 's' : ''}`, m && `${m} mo`].filter(Boolean).join(' ');
+}
+
 export default function CompanyExperienceGroup({ experience }: CompanyExperienceGroupProps) {
   const [openPos, setOpenPos] = useState<string | null>(null);
 
@@ -26,6 +36,7 @@ export default function CompanyExperienceGroup({ experience }: CompanyExperience
   const lastPos  = experience.positions[experience.positions.length - 1];
   const rangeStart = formatDate(lastPos.startDate);
   const rangeEnd   = firstPos.endDate ? formatDate(firstPos.endDate) : 'Present';
+  const duration   = lastPos.startDate ? totalDuration(lastPos.startDate, firstPos.endDate) : null;
 
   return (
     <motion.div
@@ -39,9 +50,9 @@ export default function CompanyExperienceGroup({ experience }: CompanyExperience
       <div className="pt-1 flex flex-col gap-0.5">
         <span className="font-mono text-xs text-portfolio-muted leading-tight">{rangeStart}</span>
         <span className="font-mono text-xs text-portfolio-muted leading-tight">{rangeEnd}</span>
-        {experience.totalDuration && (
-          <span className="font-mono text-[10px] text-portfolio-muted/50 mt-1 leading-tight">
-            {experience.totalDuration}
+        {duration && (
+          <span className="font-mono text-[10px] text-portfolio-muted/50 mt-1 leading-tight" suppressHydrationWarning>
+            {duration}
           </span>
         )}
       </div>

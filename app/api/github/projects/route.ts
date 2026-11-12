@@ -2,14 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { fetchAllProjects, fetchProjectBySlug } from '@/lib/services/github';
 import { GITHUB_PROJECT_REPOS, FALLBACK_PROJECTS } from '@/lib/data/projects';
 
-export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
-// Headers to prevent Vercel CDN caching
-const NO_CACHE_HEADERS = {
-  'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
-  'CDN-Cache-Control': 'no-store',
-  'Vercel-CDN-Cache-Control': 'no-store',
+// GitHub fetches are cached for 1h in lib/services/github.ts; let the CDN cache responses too
+const CACHE_HEADERS = {
+  'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
 };
 
 export async function GET(request: NextRequest) {
@@ -25,15 +22,15 @@ export async function GET(request: NextRequest) {
         // Try finding in fallback data
         const fallbackProject = FALLBACK_PROJECTS.find(p => p.slug === slug);
         if (fallbackProject) {
-          return NextResponse.json(fallbackProject, { headers: NO_CACHE_HEADERS });
+          return NextResponse.json(fallbackProject, { headers: CACHE_HEADERS });
         }
         return NextResponse.json(
           { error: 'Project not found' },
-          { status: 404, headers: NO_CACHE_HEADERS }
+          { status: 404, headers: CACHE_HEADERS }
         );
       }
 
-      return NextResponse.json(project, { headers: NO_CACHE_HEADERS });
+      return NextResponse.json(project, { headers: CACHE_HEADERS });
     }
 
     // Fetch all projects
@@ -42,7 +39,7 @@ export async function GET(request: NextRequest) {
     // If GitHub API completely failed, use fallback
     if (projects.length === 0) {
       console.warn('API: Using fallback project data');
-      return NextResponse.json(FALLBACK_PROJECTS, { headers: NO_CACHE_HEADERS });
+      return NextResponse.json(FALLBACK_PROJECTS, { headers: CACHE_HEADERS });
     }
 
     // Merge in manual-only projects (e.g. private repos not in GITHUB_PROJECT_REPOS)
@@ -51,11 +48,11 @@ export async function GET(request: NextRequest) {
     const allProjects = [...projects, ...manualProjects]
       .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
-    return NextResponse.json(allProjects, { headers: NO_CACHE_HEADERS });
+    return NextResponse.json(allProjects, { headers: CACHE_HEADERS });
   } catch (error) {
     console.error('API Error fetching projects:', error);
 
     // Return fallback data on error
-    return NextResponse.json(FALLBACK_PROJECTS, { headers: NO_CACHE_HEADERS });
+    return NextResponse.json(FALLBACK_PROJECTS, { headers: CACHE_HEADERS });
   }
 }

@@ -1,5 +1,8 @@
 import { Project } from '@/lib/types';
-import { GITHUB_PROJECT_REPOS } from '@/lib/data/projects';
+import { GITHUB_PROJECT_REPOS, FALLBACK_PROJECTS } from '@/lib/data/projects';
+
+// Cache GitHub responses for 1 hour (Next data cache) — avoids refetching every repo + README per visit
+const GITHUB_REVALIDATE_SECONDS = 3600;
 
 interface GitHubRepo {
   id: number;
@@ -49,6 +52,7 @@ export async function fetchRepositoryData(repoUrl: string): Promise<GitHubRepo> 
 
   const response = await fetch(`${GITHUB_API_BASE}/repos/${repoPath}`, {
     headers,
+    next: { revalidate: GITHUB_REVALIDATE_SECONDS },
   });
 
   if (!response.ok) {
@@ -79,6 +83,7 @@ async function fetchRepositoryLanguages(repoPath: string): Promise<GitHubLanguag
 
   const response = await fetch(`${GITHUB_API_BASE}/repos/${repoPath}/languages`, {
     headers,
+    next: { revalidate: GITHUB_REVALIDATE_SECONDS },
   });
 
   if (!response.ok) {
@@ -104,6 +109,7 @@ async function fetchRepositoryReadme(repoPath: string): Promise<string> {
 
     const response = await fetch(`${GITHUB_API_BASE}/repos/${repoPath}/readme`, {
       headers,
+      next: { revalidate: GITHUB_REVALIDATE_SECONDS },
     });
 
     if (!response.ok) {
@@ -357,6 +363,10 @@ export async function transformGitHubRepoToProject(
   const tagline = repo.description || readmeDescription.slice(0, 60);
   const description = repo.description ? readmeDescription : 'A project built with modern web technologies.';
 
+  // Curation flags come from project data, not hardcoded repo names
+  const meta = FALLBACK_PROJECTS.find((p) => p.slug === generateSlug(repo.name));
+  const freshBuild = !!meta?.freshBuild;
+
   return {
     id: repo.id.toString(),
     slug: generateSlug(repo.name),
@@ -369,7 +379,7 @@ export async function transformGitHubRepoToProject(
     category: 'Web Development',
     liveUrl: deploymentUrl || undefined,
     githubUrl: repo.html_url,
-    featured: repo.name === 'git-history-visualizer' || repo.name === 'freebase' || repo.stargazers_count > 0,
+    featured: freshBuild || repo.stargazers_count > 0,
     createdAt: repo.created_at,
     images: [thumbnail],
 
@@ -380,7 +390,7 @@ export async function transformGitHubRepoToProject(
     lastUpdated: repo.updated_at,
     autoFetched: true,
     repositoryUrl: repo.html_url,
-    freshBuild: repo.name === 'git-history-visualizer' || repo.name === 'freebase',
+    freshBuild,
   };
 }
 
